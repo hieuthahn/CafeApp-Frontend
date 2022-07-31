@@ -21,6 +21,7 @@
         "@vechaiui/core": "^0.6.0",
         "@vechaiui/react": "^0.2.2",
         "antd": "^4.22.1",
+        "axios": "^0.27.2",
         "moment": "^2.29.4",
         "mongodb": "^4.8.1",
         "next": "12.2.3",
