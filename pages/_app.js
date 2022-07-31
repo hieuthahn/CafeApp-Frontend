@@ -1,7 +1,31 @@
-import '../styles/globals.css'
+import "../styles/globals.css"
+import "antd/dist/antd.css"
+import Layout from "/components/Layout"
+import { useState, useEffect } from "react"
+import { VechaiProvider, Button } from "@vechaiui/react"
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+    const getLayout = Component.getLayout || ((page) => page)
+    const [showChild, setShowChild] = useState(false)
+    useEffect(() => {
+        setShowChild(true)
+    }, [])
+
+    if (!showChild) {
+        return null
+    }
+
+    if (typeof window === "undefined") {
+        return <></>
+    } else {
+        return getLayout(
+            <Layout>
+                <VechaiProvider>
+                    <Component {...pageProps} />
+                </VechaiProvider>
+            </Layout>
+        )
+    }
 }
 
 export default MyApp
