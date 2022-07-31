@@ -3,9 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+    /* :root {
+        --color-primary: #8b5e3b;
+        --color-secondary: #700f0f;
+    } */
+
     body {
-        @apply bg-gray-100;
-        font-family: "Cera Round Pro Regular", "Open Sans", "Segoe UI", Roboto,
-            "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        @apply bg-gray-100 !important;
+        /* // font-size: 1.6rem; */
+        /* line-height: 1.5; */
+        text-rendering: optimizespeed;
+        overflow-y: overlay;
+        font-family: "Quicksand", "Open Sans", sans-serif !important;
+        color: #161823 !important;
+    }
+
+    ul,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0 !important;
     }
 }
