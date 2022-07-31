@@ -17,173 +17,41 @@ import {
 import { PlusOutlined } from "@ant-design/icons"
 import moment from "moment"
 import { toSlug, getBase64 } from "../../lib/utils"
+import { tags, benefits, regions } from "../../lib/data/sample"
+import axios from "axios"
 
 const { Option } = Select
 const format = "HH:mm"
-const purposes = [
-    {
-        name: "Cafe Acoustic",
-        slug: "cafe-acoustic",
-        icon: null,
-    },
-    {
-        name: "Cafe Bình Dân",
-        slug: "cafe-binh-dan",
-        icon: null,
-    },
-    {
-        name: "Cafe Cổ Điển",
-        slug: "cafe-co-dien",
-        icon: null,
-    },
-    {
-        name: "Cafe Lounge",
-        slug: "cafe-lounge",
-        icon: null,
-    },
-    {
-        name: "Cafe Ngoài Trời",
-        slug: "cafe-ngoai-troi",
-        icon: null,
-    },
-    {
-        name: "Cafe Sách",
-        slug: "cafe-sach",
-        icon: null,
-    },
-    {
-        name: "Cafe Sang Trọng",
-        slug: "cafe-sang-trong",
-        icon: null,
-    },
-    {
-        name: "Cafe Thú Cưng",
-        slug: "cafe-thu-cung",
-        icon: null,
-    },
-    {
-        name: "Cafe Tone Màu",
-        slug: "cafe-tone-mau",
-        icon: null,
-    },
-    {
-        name: "Cafe Trên Cao",
-        slug: "cafe-tren-cao",
-        icon: null,
-    },
-    {
-        name: "Cafe View Đẹp",
-        slug: "cafe-view-dep",
-        icon: null,
-    },
-    {
-        name: "Cafe Vườn",
-        slug: "cafe-vuon",
-        icon: null,
-    },
-    {
-        name: "PUB",
-        slug: "pub",
-        icon: null,
-    },
-]
-
-const benefits = [
-    {
-        name: "Bàn ngoài trời",
-        slug: "cafe-acoustic",
-        icon: null,
-    },
-    {
-        name: "Bánh ngọt",
-        slug: "cafe-binh-dan",
-        icon: null,
-    },
-    {
-        name: "Chiếu bóng đá",
-        slug: "cafe-co-dien",
-        icon: null,
-    },
-    {
-        name: "Chỗ chơi cho trẻ em",
-        slug: "cafe-lounge",
-        icon: null,
-    },
-    {
-        name: "Chỗ đậu ôtô",
-        slug: "cafe-ngoai-troi",
-        icon: null,
-    },
-    {
-        name: "Giao hàng",
-        slug: "cafe-sach",
-        icon: null,
-    },
-    {
-        name: "Giữ xe máy",
-        slug: "cafe-sang-trong",
-        icon: null,
-    },
-    {
-        name: "Khu vực hút thuốc",
-        slug: "cafe-thu-cung",
-        icon: null,
-    },
-    {
-        name: "Mang đồ ăn ngoài",
-        slug: "cafe-tone-mau",
-        icon: null,
-    },
-    {
-        name: "Mang thú cưng",
-        slug: "cafe-tren-cao",
-        icon: null,
-    },
-    {
-        name: "Máy lạnh & điều hòa",
-        slug: "cafe-view-dep",
-        icon: null,
-    },
-    {
-        name: "Nhạc sống",
-        slug: "cafe-vuon",
-        icon: null,
-    },
-    {
-        name: "Thanh toán bằng thẻ",
-        slug: "pub",
-        icon: null,
-    },
-    {
-        name: "Wi-Fi miễn phí",
-        slug: "pub",
-        icon: null,
-    },
-]
 
 const PlaceForm = () => {
+    const [previewVisible, setPreviewVisible] = useState(false)
+    const [previewImage, setPreviewImage] = useState("")
+    const [previewTitle, setPreviewTitle] = useState("")
+    const [fileListPhotos, setFileListPhotos] = useState([])
+    const [fileListMenu, setFileListMenu] = useState([])
+
     const onFinish = (values) => {
-        console.log("Success:", values)
+        const placeForm = { ...values, fileListPhotos, fileListMenu }
+        // console.log("Success:", JSON.stringify(placeForm))
+        try {
+            const res = axios.post("http://localhost:8000/api/v1/place", values)
+            console.log(res)
+        } catch (error) {
+            console.log("Error:", error)
+        }
     }
 
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo)
     }
 
-    const onChange = (value) => {
-        console.log(`selected ${value}`)
+    const onRegionChange = (value) => {
+        // console.log(`selected ${value}`)
     }
 
-    const onSearch = (value) => {
-        console.log("search:", value)
+    const onRegionSearch = (value) => {
+        // console.log("search:", value)
     }
-
-    const [previewVisible, setPreviewVisible] = useState(false)
-    const [previewImage, setPreviewImage] = useState("")
-    const [previewTitle, setPreviewTitle] = useState("")
-    const [fileList, setFileList] = useState([])
-
-    console.log(fileList)
 
     const handleCancel = () => setPreviewVisible(false)
 
@@ -199,7 +67,10 @@ const PlaceForm = () => {
         )
     }
 
-    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList)
+    const handleChangePhotos = ({ fileList: newFileList }) =>
+        setFileListPhotos(newFileList)
+    const handleChangeMenu = ({ fileList: newFileList }) =>
+        setFileListMenu(newFileList)
 
     const uploadButton = (
         <div>
@@ -213,6 +84,10 @@ const PlaceForm = () => {
             </div>
         </div>
     )
+
+    const handlePlaceFormChange = (name) => {
+        // console.log(name)
+    }
 
     return (
         <Form
@@ -236,7 +111,7 @@ const PlaceForm = () => {
                 </h2>
                 <hr />
 
-                <div className="py-4 md:px-4">
+                <div className="py-4 lg:px-4">
                     <Form.Item
                         label="Tên quán"
                         name="name"
@@ -247,7 +122,10 @@ const PlaceForm = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Nhập tên quán" />
+                        <Input
+                            placeholder="Nhập tên quán"
+                            onChange={handlePlaceFormChange("name")}
+                        />
                     </Form.Item>
                     <Form.Item
                         label="Khu vực"
@@ -263,46 +141,66 @@ const PlaceForm = () => {
                             showSearch
                             placeholder="Chọn 1 quận"
                             optionFilterProp="children"
-                            onChange={onChange}
-                            onSearch={onSearch}
+                            onChange={onRegionChange}
+                            onSearch={onRegionSearch}
                             filterOption={(input, option) =>
                                 option.children
                                     .toLowerCase()
                                     .includes(input.toLowerCase())
                             }
                         >
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="disabled" disabled>
-                                Disabled
-                            </Option>
-                            <Option value="Yiminghe">yiminghe</Option>
+                            {regions.map((region, i) => {
+                                return (
+                                    <Option key={i} value={region.label}>
+                                        {region.label}
+                                    </Option>
+                                )
+                            })}
                         </Select>
                     </Form.Item>
-                    <Form.Item
-                        label="Địa chỉ"
-                        name="address"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Vui lòng nhập địa chỉ!",
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Nhập địa chỉ cụ thể" />
+                    <Form.Item>
+                        <Form.Item
+                            labelAlign="left"
+                            labelWrap
+                            labelCol={{
+                                span: 4,
+                            }}
+                            label="Địa chỉ"
+                            name={["address", "specific"]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Vui lòng nhập địa chỉ!",
+                                },
+                            ]}
+                        >
+                            <Input placeholder="Nhập địa chỉ cụ thể" />
+                        </Form.Item>
+                        <Form.Item
+                            labelAlign="left"
+                            labelWrap
+                            labelCol={{
+                                span: 4,
+                            }}
+                            label="Chỉ đường"
+                            name={["address", "desc"]}
+                        >
+                            <Input placeholder="Nhập chỉ đường chi tiết nếu có thể" />
+                        </Form.Item>
                     </Form.Item>
-                    <Form.Item label="Chỉ đường" name="direction">
-                        <Input placeholder="Nhập chỉ đường chi tiết nếu có thể" />
-                    </Form.Item>
+
                     <Form.Item label="Giới thiệu" name="intro">
                         <Input.TextArea placeholder="Nhập giới thiệu về quán" />
                     </Form.Item>
                     <Form.Item
                         label="Bạn là chủ quán"
-                        name="isBoss"
+                        name="isOwner"
                         valuePropName="checked"
                     >
-                        <Switch checked={false} onChange={onChange} />
+                        <Switch
+                            checked={false}
+                            onChange={handlePlaceFormChange("isBoss")}
+                        />
                     </Form.Item>
                 </div>
             </div>
@@ -312,10 +210,10 @@ const PlaceForm = () => {
                 </h2>
                 <hr />
 
-                <div className="py-4 md:px-4">
+                <div className="py-4 lg:px-4">
                     <Form.Item label="Thời gian mở cửa">
                         <Form.Item
-                            name={["time", "opening"]}
+                            name={["time", "open"]}
                             style={{
                                 marginBottom: 0,
                                 display: "inline-block",
@@ -436,37 +334,41 @@ const PlaceForm = () => {
 
                     <Form.Item
                         label="Kiểu quán"
-                        name="purpose"
+                        name="tags"
                         valuePropName="checked"
                     >
-                        <Row>
-                            {purposes.map((purpose, index) => {
-                                return (
-                                    <Col key={index} span={8}>
-                                        <Checkbox value={purpose.name}>
-                                            {purpose.name}
-                                        </Checkbox>
-                                    </Col>
-                                )
-                            })}
-                        </Row>
+                        <Checkbox.Group>
+                            <Row>
+                                {tags.map((purpose, index) => {
+                                    return (
+                                        <Col key={index} xs={12} lg={8}>
+                                            <Checkbox value={purpose.label}>
+                                                {purpose.label}
+                                            </Checkbox>
+                                        </Col>
+                                    )
+                                })}
+                            </Row>
+                        </Checkbox.Group>
                     </Form.Item>
                     <Form.Item
                         label="Tiện ích"
-                        name="benefit"
+                        name="benefits"
                         valuePropName="checked"
                     >
-                        <Row>
-                            {benefits.map((benefit, index) => {
-                                return (
-                                    <Col key={index} span={8}>
-                                        <Checkbox value={benefit.name}>
-                                            {benefit.name}
-                                        </Checkbox>
-                                    </Col>
-                                )
-                            })}
-                        </Row>
+                        <Checkbox.Group>
+                            <Row>
+                                {benefits.map((benefit, index) => {
+                                    return (
+                                        <Col key={index} xs={12} lg={8}>
+                                            <Checkbox value={benefit.label}>
+                                                {benefit.label}
+                                            </Checkbox>
+                                        </Col>
+                                    )
+                                })}
+                            </Row>
+                        </Checkbox.Group>
                     </Form.Item>
                 </div>
                 <div className="mt-4">
@@ -475,7 +377,7 @@ const PlaceForm = () => {
                     </h2>
                     <hr />
 
-                    <div className="py-4 md:px-4">
+                    <div className="py-4 lg:px-4">
                         <Form.Item label="Điện thoại" name="phone">
                             <Input placeholder="Nhập số điện thoại" />
                         </Form.Item>
@@ -499,18 +401,19 @@ const PlaceForm = () => {
                     </h2>
                     <hr />
 
-                    <div className="py-4 md:px-4">
+                    <div className="py-4 lg:px-4">
                         <Upload
                             // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
-                            fileList={fileList}
+                            fileList={fileListPhotos}
                             onPreview={handlePreview}
-                            onChange={handleChange}
+                            onChange={handleChangePhotos}
                             multiple
                             maxCount={20}
                         >
-                            {fileList.length > 20 ? null : uploadButton}
+                            {fileListPhotos.length > 20 ? null : uploadButton}
                         </Upload>
+
                         <Modal
                             visible={previewVisible}
                             title={previewTitle}
@@ -531,18 +434,17 @@ const PlaceForm = () => {
                 <div className="mt-4">
                     <h2 className="font-bold text-xl text-rose-500">Menu</h2>
                     <hr />
-
-                    <div className="py-4 md:px-4">
+                    <div className="py-4 lg:px-4">
                         <Upload
                             // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
-                            fileList={fileList}
+                            fileList={fileListMenu}
                             onPreview={handlePreview}
-                            onChange={handleChange}
+                            onChange={handleChangeMenu}
                             multiple
                             maxCount={20}
                         >
-                            {fileList.length > 20 ? null : uploadButton}
+                            {fileListMenu.length > 20 ? null : uploadButton}
                         </Upload>
                         <Modal
                             visible={previewVisible}
