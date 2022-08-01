@@ -1,7 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const withLess = require("next-with-less")
+const path = require("path")
 
-module.exports = nextConfig
+const pathToLessFileWithVariables = path.resolve("styles/antd-custom.less")
+
+module.exports = withLess({
+    lessLoaderOptions: {
+        /* ... */
+        additionalData: (content) =>
+            `${content}\n\n@import '${pathToLessFileWithVariables}';`,
+    },
+})

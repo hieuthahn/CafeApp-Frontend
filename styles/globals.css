@@ -16,6 +16,7 @@
         overflow-y: overlay;
         font-family: "Quicksand", "Open Sans", sans-serif !important;
         color: #161823 !important;
+        font-weight: 500;
     }
 
     ul,
@@ -26,5 +27,9 @@
     h5,
     h6 {
         margin: 0 !important;
+    }
+
+    input {
+        box-shadow: none !important;
     }
 }

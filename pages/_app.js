@@ -1,5 +1,7 @@
 import "../styles/globals.css"
-import "antd/dist/antd.css"
+// import "antd/dist/antd.css"
+// import "/src/styles/variables.less"
+import "../styles/antd-custom.less"
 import Layout from "/components/Layout"
 import { useState, useEffect } from "react"
 import { VechaiProvider, Button } from "@vechaiui/react"
