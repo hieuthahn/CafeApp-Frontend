@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from "react"
 import { Input } from "antd"
 const { Search } = Input
 
-import useOutsideAlerter from "../../lib/hooks/useOutsideAlert"
+import useOutsideAlerter from "../../../lib/hooks/useOutsideAlert"
 import Divider from "@vechaiui/core/src/components/divider"
+import { Button } from "@vechaiui/react"
 
 const SearchBar = () => {
     const [openChild, setOpenChild] = useState(false)
@@ -20,7 +21,7 @@ const SearchBar = () => {
     console.log(options)
     return (
         <>
-            <div className="py-12 px-4">
+            <div className="py-8 px-4">
                 <div
                     ref={wrapperRef}
                     className={`lg:max-w-[1096px] md:max-w-[696px] max-w-[375px] mx-auto bg-white overflow-hidden shadow-lg ${
@@ -32,36 +33,45 @@ const SearchBar = () => {
                             openChild ? "border-b border-slate-300" : ""
                         }`}
                     >
-                        <div className="flex items-center gap-2 w-full">
-                            <svg
-                                width={20}
-                                height={20}
-                                viewBox="0 0 20 20"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
-                                    stroke="#4B5563"
-                                    strokeWidth="1.25"
-                                    strokeMiterlimit={10}
-                                />
-                                <path
-                                    d="M13.2144 13.2148L17.4999 17.5004"
-                                    stroke="#4B5563"
-                                    strokeWidth="1.25"
-                                    strokeMiterlimit={10}
-                                    strokeLinecap="round"
-                                />
-                            </svg>
+                        <div className="flex items-center justify-center gap-2 w-full flex-wrap">
                             <input
                                 onClick={() => setOpenChild(true)}
                                 type="text"
                                 placeholder="Search"
                                 className="focus:outline-none border-none grow"
                             />
+                            <Button
+                                className="font-semibold cursor-pointer p-5"
+                                variant="solid"
+                                color="rose"
+                            >
+                                <svg
+                                    // className="fill-white"
+                                    width={20}
+                                    height={20}
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
+                                        stroke="#fff"
+                                        strokeWidth="1.25"
+                                        strokeMiterlimit={10}
+                                    />
+                                    <path
+                                        d="M13.2144 13.2148L17.4999 17.5004"
+                                        stroke="#fff"
+                                        strokeWidth="1.25"
+                                        strokeMiterlimit={10}
+                                        strokeLinecap="round"
+                                    />
+                                </svg>
+                                {"Tìm kiếm"}
+                            </Button>
                         </div>
                     </div>
+
                     <div
                         className={`overflow-y-scroll h-[400px] absolute bg-slate-50 z-10 lg:min-w-[1096px] md:min-w-[696px] min-w-[375px] px-4 ${
                             openChild ? "block shadow-sm" : "hidden"
