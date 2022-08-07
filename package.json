@@ -31,7 +31,8 @@
         "react-dom": "18.2.0",
         "react-hook-form": "^7.34.0",
         "sass": "^1.54.0",
-        "scss": "^0.2.4"
+        "scss": "^0.2.4",
+        "swiper": "^8.3.2"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.7",

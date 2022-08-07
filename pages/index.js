@@ -1,5 +1,5 @@
 import Head from "next/head"
-import HeroSection from "../components/HeroSection"
+import HomeSection from "../components/HomeSection"
 
 export default function Home() {
     return (
@@ -10,7 +10,7 @@ export default function Home() {
                 </title>
             </Head>
 
-            <HeroSection />
+            <HomeSection />
         </div>
     )
 }

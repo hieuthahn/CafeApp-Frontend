@@ -19,6 +19,9 @@ module.exports = {
                 orange: colors.orange,
                 rose: colors.rose,
             },
+            blur: {
+                xs: "2px",
+            },
         },
     },
     variants: {

@@ -27,7 +27,7 @@ const Footer = () => {
     ]
 
     return (
-        <div className="mx-auto border-t-2 border-gray-300 xl:px-20 lg:px-12 sm:px-6 px-4 py-12">
+        <div className="w-full bg-[url('https://ik.imagekit.io/reviewcafe/bg-dark_XOhLpLNAe0S.jpg')] xl:px-20 lg:px-12 sm:px-6 px-4 py-12">
             <div className="flex flex-col items-center justify-center">
                 <div>
                     <Link href="/">
@@ -46,7 +46,7 @@ const Footer = () => {
                         return (
                             <Link key={index} href={item.path}>
                                 <a>
-                                    <p className="hover:text-gray-500 text-base cursor-pointer leading-4 text-gray-800">
+                                    <p className="hover:text-rose-500 text-base text-semibold cursor-pointer leading-4 text-slate-50">
                                         {item.title}
                                     </p>
                                 </a>
@@ -57,7 +57,7 @@ const Footer = () => {
                 <div className="flex items-center gap-x-8 mt-6">
                     <div className="cursor-pointer">
                         <svg
-                            className="fill-current text-gray-800 hover:text-gray-500"
+                            className="fill-current text-slate-50 hover:text-rose-500"
                             width="22"
                             height="22"
                             viewBox="0 0 22 22"
@@ -74,7 +74,7 @@ const Footer = () => {
                     </div>
                     <div className="cursor-pointer">
                         <svg
-                            className="fill-current text-gray-800 hover:text-gray-500"
+                            className="fill-current text-slate-50 hover:text-rose-500"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -97,7 +97,7 @@ const Footer = () => {
                     </div>
                     <div className="cursor-pointer">
                         <svg
-                            className="fill-current text-gray-800 hover:text-gray-500"
+                            className="fill-current text-slate-50 hover:text-rose-500"
                             width="24"
                             height="25"
                             viewBox="0 0 24 25"
@@ -112,12 +112,12 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="flex items-center mt-6">
-                    <p className="text-base leading-4 text-gray-800">
+                    <p className="text-base leading-4 text-slate-50 mb-0">
                         2022 <span className="font-semibold">Coffee Soul</span>
                     </p>
-                    <div className="border-l border-gray-800 pl-2 ml-2">
-                        <p className="text-base leading-4 text-gray-800">
-                            Inc. All righys reserved
+                    <div className="border-l border-slate-50 pl-2 ml-2">
+                        <p className="text-base leading-4 text-slate-50 mb-0">
+                            All Rights Reserved.
                         </p>
                     </div>
                 </div>
