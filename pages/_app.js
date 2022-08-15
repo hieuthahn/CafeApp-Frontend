@@ -8,6 +8,11 @@ import Layout from "/components/Layout"
 import { useState, useEffect } from "react"
 import { VechaiProvider, Button } from "@vechaiui/react"
 
+// import styles
+import "lightgallery/css/lightgallery.css"
+import "lightgallery/css/lg-zoom.css"
+import "lightgallery/css/lg-thumbnail.css"
+
 function MyApp({ Component, pageProps }) {
     const getLayout = Component.getLayout || ((page) => page)
     const [showChild, setShowChild] = useState(false)

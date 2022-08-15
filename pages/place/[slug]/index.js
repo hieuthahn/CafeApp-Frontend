@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import Link from "next/link"
-// import Header from "../../../components/header"
+import SinglePlace from "../../../components/SinglePlace"
 
 const Place = () => {
     const router = useRouter()
@@ -8,6 +8,7 @@ const Place = () => {
 
     return (
         <>
+            <SinglePlace />
             <h1 className="text-3xl text-center font-bold text-rose-500 !m-12">
                 Post: {slug}
             </h1>
