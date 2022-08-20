@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { Progress } from "antd"
 import { Button } from "@vechaiui/react"
-import MapBox from "../../MapBox"
 import { Rate, Tooltip } from "antd"
 
 import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
