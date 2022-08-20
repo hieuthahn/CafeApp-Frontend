@@ -1,10 +1,10 @@
 import { useState } from "react"
 
-import { purposes, regions, place } from "../../../lib/data/sample"
 import Fancybox from "../../Fancybox"
 import PlaceMedia from "./PlaceMedia"
 
-const PlaceContent = () => {
+const PlaceContent = (props) => {
+    const { place } = props
     return (
         <>
             {place && (
