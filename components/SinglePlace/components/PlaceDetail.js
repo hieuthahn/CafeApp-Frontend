@@ -337,22 +337,22 @@ const PlaceAddress = () => {
                     onClick={() => setShowPopup(true)}
                 >
                     <svg
-                        class="property-marker"
+                        className="property-marker"
                         height="34"
                         width="34"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 18 29"
                     >
                         <ellipse
-                            class="shadow"
-                            fill-opacity=".24"
+                            className="shadow"
+                            fillOpacity=".24"
                             cx="9"
                             cy="27"
                             rx="6"
                             ry="2"
                         />
                         <path
-                            class="pin"
+                            className="pin"
                             fill="#ee0033"
                             d="M9 27C7 27 0 16.97 0 9a9 9 0 1 1 18 0c0 7.97-7 18-9 18zm0-14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
                         />

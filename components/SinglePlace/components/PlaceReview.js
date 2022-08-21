@@ -1,9 +1,26 @@
-import React from "react"
+import { useState, useEffect } from "react"
 import { UserOutlined } from "@ant-design/icons"
-import { Avatar } from "antd"
+import { Avatar, Button, Modal, Rate, Input, Switch } from "antd"
+const { TextArea } = Input
 
 const PlaceReview = (props) => {
     const { place } = props
+    const [openReview, setOpenReview] = useState(false)
+    const [reviewValue, setReviewValue] = useState({
+        ratePosition: 5,
+        rateView: 5,
+        rateDrink: 5,
+        rateService: 5,
+        ratePrice: 5,
+    })
+
+    // ratePosition: 5,
+    //         ratePrice: 5,
+    //         rateService: 5,
+    //         rateView: 5,
+    const [value, setValue] = useState(5)
+    const desc = ["Quá tệ", "Trung bình", "Bình thường", "Tốt", "Tuyệt vời"]
+    const rates = ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"]
     const hasReview = false
 
     return (
@@ -14,9 +31,99 @@ const PlaceReview = (props) => {
                     <span className="hidden md-block">{" từ cộng đồng"}</span>
                     {" (0)"}
                 </h2>
-                <button className="bg-rose-500 text-white text-base font-bold rounded-lg px-2 py-1 hover:bg-rose-700">
+                <button
+                    onClick={() => setOpenReview(true)}
+                    className="bg-rose-500 text-white text-base font-bold rounded-lg px-2 py-1 hover:bg-rose-700"
+                >
                     {"Viết đánh giá"}
                 </button>
+                <Modal
+                    title={
+                        <h3 className="font-bold text-center text-xl">{`Đánh giá ${"Ban công cafe"}`}</h3>
+                    }
+                    centered
+                    visible={openReview}
+                    onOk={() => setOpenReview(false)}
+                    onCancel={() => setOpenReview(false)}
+                    footer={[
+                        <button
+                            className="text-white bg-rose-500 hover:bg-rose-700 py-1 px-2 text-base font-semibold rounded-lg my-1"
+                            type="submit"
+                            onClick={() => setOpenReview(false)}
+                        >
+                            {"Gửi đánh giá"}
+                        </button>,
+                    ]}
+                >
+                    <div>
+                        <h4 className="!mb-1 text-base font-semibold">
+                            {"Xếp hạng của bạn"}
+                        </h4>
+                        <div className="flex flex-col gap-2 pl-3 mb-3">
+                            {/* ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"] */}
+                            {Object.keys(reviewValue).map((key, index) => {
+                                return (
+                                    <div className="flex gap-4 items-center">
+                                        <span className="basis-1/5 mt-2 text-sm">
+                                            {rates[index]}
+                                        </span>
+                                        <span className="flex gap-4 items-center">
+                                            <Rate
+                                                className="!text-rose-500 !text-3xl"
+                                                onChange={(value) =>
+                                                    setReviewValue((prev) => ({
+                                                        ...prev,
+                                                        [key]: value,
+                                                    }))
+                                                }
+                                                value={reviewValue[key]}
+                                                allowClear={false}
+                                            />
+                                            {reviewValue[key] ? (
+                                                <span className="ant-rate-text !hidden md:!block text-lg bg-rose-500 text-white font-semibold rounded-lg px-2 !mt-2">
+                                                    {desc[reviewValue[key] - 1]}
+                                                </span>
+                                            ) : (
+                                                ""
+                                            )}
+                                        </span>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 className="!mb-3 text-base font-semibold">
+                            {"Đánh giá của bạn"}
+                        </h4>
+                        <div className="flex flex-col gap-2">
+                            <Input
+                                placeholder="Nhập tiêu đề đánh giá"
+                                value={`Đánh giá của ${"Nguyễn Thành Hiếu"} cho ${"Ban Công Cafe"}`}
+                                allowClear
+                            />
+                            <TextArea
+                                placeholder="Nhập nội dung đánh giá"
+                                showCount
+                                maxLength={100}
+                                autoSize={{ minRows: 5, maxRows: 8 }}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-between mt-3">
+                        <div className="basis-5/6">
+                            <h4 className="text-base font-semibold">
+                                {"Đánh giá ẩn danh"}
+                            </h4>
+                            <span className="text-xs">
+                                {
+                                    "Tên của bạn sẽ hiển thị như h*****g và không hiển thị trên dòng thời gian của bạn"
+                                }
+                            </span>
+                        </div>
+                        <Switch />
+                    </div>
+                </Modal>
             </div>
 
             {/* linear-gradient(90deg,#ffb8b8,#ffddd8) */}
@@ -28,21 +135,21 @@ const PlaceReview = (props) => {
                         src="https://ik.imagekit.io/reviewcafe/Online_Review-cuate_wG_WzURJF.svg"
                     />
                 </div>
-                <div className="basis-2/3">
+                <div className="basis-2/3 px-2">
                     <h3 className="text-xl font-bold !mb-3">
                         {"Bạn đã từng đến đây?"}
                     </h3>
-                    <span>
+                    <div>
                         {
                             "Chia sẻ trải nghiệm và cảm nhận của bản thân cho mọi người cùng biết "
                         }
                         <i className="fas fa-heart text-rose-500"></i>
-                    </span>
-                    <span>
+                    </div>
+                    <div>
                         {
                             "Những review chất lượng sẽ được xuất hiện ở bảng tin đấy!"
                         }
-                    </span>
+                    </div>
                 </div>
             </div>
             {hasReview ? (

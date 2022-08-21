@@ -54,11 +54,7 @@ const PlaceCard = () => {
                 <div className="truncate pointer-events-none">
                     <span>
                         <Rate
-                            style={{
-                                color: "rgb(244, 63, 94)",
-                                fontSize: "15px",
-                                marginRight: "0",
-                            }}
+                            className="!text-rose-500 !text-sm"
                             disabled
                             allowHalf
                             defaultValue={4.5}

@@ -9,7 +9,7 @@ import { purposes, regions, place, benefits } from "../../lib/data/sample"
 
 const SinglePlace = () => {
     return (
-        <div className="flex flex-col gap-4 mx-auto container max-w-[1200px] pt-4">
+        <div className="flex flex-col gap-4 mx-auto container pt-4">
             <PlaceContent place={place} benefits={benefits} />
             <PlaceDetail place={place} benefits={benefits} />
             <PlaceBenefit place={place} benefits={benefits} />
