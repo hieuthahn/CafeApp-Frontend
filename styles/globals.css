@@ -33,3 +33,25 @@
         box-shadow: none !important;
     }
 }
+
+@layer components {
+    .scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 8px;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        border-radius: 100vh;
+        background: transparent;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #eee;
+        border-radius: 100vh;
+        border: 1px solid #eee;
+    }
+
+    /* .scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #c0a0b9;
+    } */
+}
