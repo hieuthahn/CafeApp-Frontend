@@ -7,8 +7,8 @@ const PlaceItem = () => {
     return (
         <div className="mb-5 rounded-lg shadow-sm bg-white flex ">
             <Link href="/place/ban-cong-coffee">
-                <a className="py-3 pl-3">
-                    <div className="w-[270px] h-full rounded-lg">
+                <a className="py-2 pl-2">
+                    <div className="w-[120px] md:w-[270px] h-full rounded-lg">
                         <figure className="relative w-full h-full overflow-hidden">
                             <Image
                                 layout="fill"
@@ -21,7 +21,7 @@ const PlaceItem = () => {
                 </a>
             </Link>
 
-            <div className="pl-4 py-3 pr-3 flex flex-col gap-2 grow">
+            <div className="pl-4 py-2 pr-2 flex flex-col md:gap-2 grow">
                 <Link href="/place/ban-cong-coffee">
                     <a>
                         <h4 className="text-xl font-bold hover:underline ">
