@@ -2,9 +2,9 @@ import { useState } from "react"
 import { Collapse, Checkbox, Slider } from "antd"
 const { Panel } = Collapse
 import { toSlug } from "../../../lib/utils"
-import { regions, purposes, benefits, tags } from "../../../lib/data/sample"
 
-const Sidebar = () => {
+const Sidebar = (props) => {
+    const { regions, purposes, benefits, tags } = props
     const [price, setPrice] = useState([0, 3000000])
 
     const onChange = (e) => {
