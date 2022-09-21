@@ -49,10 +49,10 @@ const PlaceListing = () => {
                                         <path
                                             fill="#eee"
                                             stroke="#999"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-miterlimit="10"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeMiterlimit="10"
+                                            strokeWidth="2"
                                             d="M9.197 19.803L19.803 9.197M9.197 9.197l10.606 10.606"
                                         />
                                     </svg>
