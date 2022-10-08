@@ -1,0 +1,878 @@
+[
+    {
+        "name": "EEBakery Coffee",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "5",
+        "price": "30.000đ - 60.000đ",
+        "address": "8 Ngõ 24 Đào Tấn, Ba Đình",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Sunny Garden Coffee",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "5",
+        "price": "35.000đ - 45.000đ",
+        "address": "3 Võ Quý Huân, Bắc Từ Liêm",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "The XX - Coffee Bar",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "40.000đ - 120.000đ",
+        "address": "136 Hồ Tùng Mậu (332 Hoàng Công Chất), Bắc Từ Liêm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Ban Công Cafe",
+        "reviewCount": "- 3 đánh giá",
+        "avgRate": "4.9",
+        "price": "50.000đ - 75.000đ",
+        "address": "2 Đinh Liệt, Hoàn Kiếm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Joie Coffee",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "25.000đ - 55.000đ",
+        "address": "116 C3 Hoàng Ngọc Phách, Đống Đa",
+        "openingTime": "07:30 - 21:30"
+    },
+    {
+        "name": "REFINED",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "58.000đ - 108.000đ",
+        "address": "11 NGÔ TẤT TỐ, ĐỐNG ĐA",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "CAFE KOEM",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 80.000đ",
+        "address": "70 Trần Quang Diệu, Đống Đa  10000",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Flamant Bistro",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "75.000đ - 200.000đ",
+        "address": "100A Xuân Diệu, Quảng An, Tây Hồ",
+        "openingTime": "09:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "2 Friday",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "29.000đ - 45.000đ",
+        "address": "177 Lê Lai-Hà Đông",
+        "openingTime": "07:30 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "The Shelter cafe &amp; pub",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Tầng 7 Số 277 Quan Hoa, Cầu Giấy",
+        "openingTime": "14:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Para by Hannah",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 60.000đ",
+        "address": "94 Phạm Ngọc Thạch - Đống Đa",
+        "openingTime": "09:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Tony's coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "20.000đ - 50.000đ",
+        "address": "63 Nguyễn Đình Thi, Tây Hồ",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Labonté Artsy Kitchen",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "20.000đ - 55.000đ",
+        "address": "33 Kim Mã Thượng, Ba Đình",
+        "openingTime": "08:00 - 18:00"
+    },
+    {
+        "name": "C'Laudi Café",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 43.000đ",
+        "address": "38a Hoàng Cầu mới, Thịnh Liệt, Đống Đa",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "De Ville Cafe",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "4.8",
+        "price": "30.000đ - 65.000đ",
+        "address": "Tòa A2, Vinhome Gardenia, Hàm Nghi, Mỹ Đình, Nam Từ Liêm",
+        "openingTime": "07:00 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "C’est Si Bon",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 60.000đ",
+        "address": "18 Điện Biên Phủ, Ba Đình",
+        "openingTime": "08:30 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Nhà sàn Art Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Ngõ 6 Vĩnh Phú, Hoàng Hoa Thám, Ba Đình",
+        "openingTime": "07:00 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "The Cappi cafe",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "30.000đ - 50.000đ",
+        "address": "55A Phan Chu Trinh, Hoàn Kiếm",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Minh Tien Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 60.000đ",
+        "address": "137 Chùa Láng, Đống Đa",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Roji Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 65.000đ",
+        "address": "38 Ngõ 36 Đào Tấn, Ba Đình",
+        "openingTime": "07:00 - 21:00"
+    },
+    {
+        "name": "Treeland - Coffee, Tea and More",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "4.9",
+        "price": "25.000đ - 60.000đ",
+        "address": "Số 3, Ngõ 47 Nghĩa Tân, Cầu Giấy",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Be You Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 45.000đ",
+        "address": "Số 6 Ngõ 58 Nguyễn Chí Thanh, Láng Thượng, Đống Đa",
+        "openingTime": "07:30 - 22:45",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Top Of Hanoi",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "200.000đ - 250.000đ",
+        "address": "Floor 65, Lotte Hotel Hanoi, 54 Lieu Giai, Ba Đình",
+        "openingTime": "- 17:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "7th Heaven Cafe &amp; Brunch",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "40.000đ - 75.000đ",
+        "address": "1 Ngõ 84 Chùa Láng, Đống Đa",
+        "openingTime": "09:30 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "EM Rooftop Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 60.000đ",
+        "address": "Tầng 8-9 Số 126 Hoàng Ngân, Trung Hoà, Cầu Giấy",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "IHouse Coworking Space",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Số 131 Yên Hoà, Cầu Giấy",
+        "openingTime": "08:00 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Otaru Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 60.000đ",
+        "address": "8B E4 ngõ 1A Tôn Thất Tùng, Đống Đa",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "All Day Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "50.000đ - 100.000đ",
+        "address": "37 Quang Trung, Trần Hưng Đạo, Hoàn Kiếm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Piccadilly Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Số 4 Trương Hán Siêu, Trần Hưng Đạo, Hoàn Kiếm",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "An garden cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 80.000đ",
+        "address": "56 BT8 Hồ Văn Quán, Hà Đông, Hà Nội.",
+        "openingTime": "06:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "WOODEN HOUSE COFFEE",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Số 20 BT-1B, Khu Đô Thị Văn Quán, Hà Đông",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "TÁCH SPACES Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "15.000đ - 90.000đ",
+        "address": "20 Hai Bà Trưng, Hoàn Kiếm",
+        "openingTime": "08:00 - 21:00"
+    },
+    {
+        "name": "One Roaster Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 85.000đ",
+        "address": "33 Kim Mã Thượng, Ba Đình",
+        "openingTime": "07:30 - 21:30"
+    },
+    {
+        "name": "Đây Đó cà phê",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 130.000đ",
+        "address": "Nhà Số 4 Ngõ 69 Đặng Văn Ngữ, Đống Đa",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Couchsurfing Café",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Số 103A Ngõ 84 Ngọc Khánh, Giảng Võ, Ba Đình",
+        "openingTime": "08:00 - 23:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Biên Cà Phê",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "104N3, Ngõ 34 – Vạn Bảo, Liễu Giai, Ba Đình",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Mezzico tea&amp;coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Tầng 2, Biệt Thự Cổ Số 25 Hàm Long, Hoàn Kiếm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Beatro - Gastro Lounge",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "65.000đ - 90.000đ",
+        "address": "1 Tràng Tiền, Hoàn Kiếm",
+        "openingTime": "- 10:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Rauta House Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "20.000đ - 60.000đ",
+        "address": "Số 1 ngõ 97 Nguyễn Chí Thanh, Đống Đa",
+        "openingTime": "08:30 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Momiji Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 50.000đ",
+        "address": "113B - D6 - Trung Tự - Đống Đa",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Hiên.Caphe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "1 Ngõ 14 Huỳnh Thúc Kháng, Đống Đa",
+        "openingTime": "07:00 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Le petit Tzô",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 50.000đ",
+        "address": "146 Ngõ 91 Trần Quang Diệu, Đống Đa",
+        "openingTime": "07:30 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Cà Phê Nhà Kho",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "599 Đê La Thành, Phường Thành Công, Ba Đình",
+        "openingTime": "09:00 - 21:00"
+    },
+    {
+        "name": "Bo/en",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "14 Lò Sũ, Hoàn Kiếm",
+        "openingTime": "- 18:00 - 00:00"
+    },
+    {
+        "name": "Eleven11 Coffee&amp;bistro",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 55.000đ",
+        "address": "11 Bà Triệu - Hoàn Kiếm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Trill Rooftop Cafe - Hoàng Quốc Việt",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "40.000đ - 140.000đ",
+        "address": "148 Hoàng Quốc Việt, Cầu Giấy",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Lofita Tea &amp; Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 100.000đ",
+        "address": "338 Phố Huế (Tầng 9,10)  10000",
+        "openingTime": "06:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Tầng Trệt Cosmo",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Số 10B Khúc Hạo, Ba Đình",
+        "openingTime": "07:30 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "O'Rey Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 70.000đ",
+        "address": "229 Trích Sài, Bưởi, Tây Hồ",
+        "openingTime": "08:30 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "ACID8 Specialty Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "34 Hạ Hồi, Hoàn Kiếm",
+        "openingTime": "07:00 - 21:00"
+    },
+    {
+        "name": "Daily Dose Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 65.000đ",
+        "address": "18 Lê Trực, Ba Đình",
+        "openingTime": "07:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Atelier Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 65.000đ",
+        "address": "65 Tôn Thất Thiệp, Ba Đình",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Little Pie Home",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 95.000đ",
+        "address": "Số 9, Ngõ 267 Bồ Đề, Long Biên",
+        "openingTime": "09:00 - 18:00"
+    },
+    {
+        "name": "La Mensa - Thái Hà",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "3.065.000đ - 50.000đ",
+        "address": "Số 8, ngõ 165 Thái Hà, Đống Đa",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "The Nammin House",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "3",
+        "price": "30.000đ - 60.000đ",
+        "address": "200 ngõ Xã Đàn 2, Nam Đồng, Đống Đa",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "KAM coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 55.000đ",
+        "address": "89 Trần Nguyên Đán, Định Công, Hoàng Mai",
+        "openingTime": "07:00 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Tranquil. Books &amp; Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "3 Hàng Mành, Hoàn Kiếm",
+        "openingTime": "08:00 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Givral Bakery - Tràng Tiền",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 55.000đ",
+        "address": "35 Tràng Tiền, Hoàn Kiếm",
+        "openingTime": "07:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Book In Bar",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 45.000đ",
+        "address": "108B5 Tập Thể Kim Liên, Hoàng Tích Trí, Đống Đa",
+        "openingTime": "07:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Blackbird Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 65.000đ",
+        "address": "5 Chân Cầm, Hoàn Kiếm",
+        "openingTime": "07:00 - 21:30"
+    },
+    {
+        "name": "Hoa 10 Giờ – Floral &amp; Book Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "15.000đ - 500.000đ",
+        "address": "26 Hàng Vôi,Hoàn Kiếm",
+        "openingTime": "07:30 - 22:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Maison de Éte’",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 60.000đ",
+        "address": "Ngách 17 (cạnh Số Nhà 17) Ngõ 4C Đặng Văn Ngữ, Đống Đa",
+        "openingTime": "09:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Laika Cafe - Trung Hòa",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "5",
+        "price": "30.000đ - 70.000đ",
+        "address": "91 Trung Hoà, Yên Hòa, Cầu Giấy",
+        "openingTime": "07:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Havana Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 55.000đ",
+        "address": "Tầng 8 Số 15 Ngõ 41 Thái Hà, Đống Đa",
+        "openingTime": "09:00 - 21:30"
+    },
+    {
+        "name": "Mị Cà Phê",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "10.000đ - 40.000đ",
+        "address": "Số 5, Ngõ 105 Láng Hạ, Đống Đa",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "La Farine",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "45.000đ - 70.000đ",
+        "address": "Số 14 Ngách 33 Ngõ 105 Doãn Kế Thiện, Cầu Giấy",
+        "openingTime": "- 10:00 - 19:00"
+    },
+    {
+        "name": "Soranchi",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "5",
+        "price": "38.000đ - 55.000đ",
+        "address": "L5-06* Khu Biệt Thự Liền Kề Thiên đường Bảo Sơn, Nam An Khánh",
+        "openingTime": "09:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "HIPPO Tea &amp; Tarot",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "20.000đ - 45.000đ",
+        "address": "14 Ngõ 11 Vương Thừa Vũ, Khương Trung, Thanh Xuân",
+        "openingTime": "- Mở cả ngày",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Mobius Space - Cafe &amp; Boardgame",
+        "reviewCount": "- 4 đánh giá",
+        "avgRate": "4",
+        "price": "30.000đ - 55.000đ",
+        "address": "137 Nguyễn Chí Thanh, Đống Đa",
+        "openingTime": "09:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Seven Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "Khu BT3-18 Đối Diện Đại Sứ Quán Hàn Quốc, Khu Ngoại Giao Đoàn, Q. Bắc Từ Liêm",
+        "openingTime": "07:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Pha Coffee - Giảng Võ",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "29.000đ - 55.000đ",
+        "address": "Số 101, C8 Trần Huy Liệu, Giảng Võ, Ba Đình",
+        "openingTime": "07:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "SI Cuisine &amp; Mixology",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "100.000đ - 200.000đ",
+        "address": "18 Hàng Bài, Hoàn Kiếm",
+        "openingTime": "- 18:30 - 02:00"
+    },
+    {
+        "name": "Oromia Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "60.000đ - 90.000đ",
+        "address": "18 Ngô Văn Sở, Hoàn Kiếm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "The Mob",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 50.000đ",
+        "address": "Số 40, Ngõ 181 Trường Chinh, Thanh Xuân",
+        "openingTime": "08:00 - 23:30",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Mila House - Mila Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 120.000đ",
+        "address": "Số 12 Ngõ 28 Nguyên Hồng, Đống Đa",
+        "openingTime": "06:30 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Dè Sens Coffee",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "4.6",
+        "price": "30.000đ - 55.000đ",
+        "address": "72 Quán Thánh, Ba Đình",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Out of nowhere",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 55.000đ",
+        "address": "5 Ngõ Trạm, Hàng Bông, Hoàn Kiếm",
+        "openingTime": "08:00 - 21:00"
+    },
+    {
+        "name": "Mành Cà phê",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "41B Triệu Việt Vương, Hai Bà Trưng",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "F29 Golden Beef Restaurant",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "B7 Giảng Võ, Ba Đình",
+        "openingTime": "07:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Nhà trong ngõ - Nguyễn Khuyến",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 55.000đ",
+        "address": "Số 76, Ngõ 23 Nguyễn Khuyến, Văn Quán, Hà Đông",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Kone Café",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 70.000đ",
+        "address": "295 Khâm Thiên, Đống Đa",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "MANOIR CAFE",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 80.000đ",
+        "address": "1A P. Nguyễn Gia Thiều, Trần Hưng Đạo, Hoàn Kiếm",
+        "openingTime": "08:00 - 21:00"
+    },
+    {
+        "name": "1 Nhà Coffee",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "5",
+        "price": "25.000đ - 50.000đ",
+        "address": "Số 32 Ngõ 113 Hoàng Cầu, Đống Đa",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Cotero Coffee Shop",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 105.000đ",
+        "address": "80 Tô Ngọc Vân, Tây Hồ",
+        "openingTime": "08:00 - 21:00"
+    },
+    {
+        "name": "Windmill Coffee - Nhật Chiêu",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 125.000đ",
+        "address": "181 Nhật Chiêu - Tây Hồ",
+        "openingTime": "08:00 - 23:59",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Cafe nhà sàn Liên Vũ",
+        "reviewCount": "- 4 đánh giá",
+        "avgRate": "4.9",
+        "price": "30.000đ - 50.000đ",
+        "address": "Hoàng Liên, Liên Mạc, Bắc Từ Liêm",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Zing House Cafe - Triều Khúc",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "28.000đ - 55.000đ",
+        "address": "Tòa PCC1 Thanh Xuân 44 Triều Khúc , Thanh Xuân",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Second Home",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 45.000đ",
+        "address": "Số 33, Ngõ 26 Vương Thừa Vũ, Thanh Xuân",
+        "openingTime": "07:30 - 23:15",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Sweet &amp; Soul Kafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 60.000đ",
+        "address": "số 5 ngõ Thái Hà, Đống Đa",
+        "openingTime": "- Mở cả ngày",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Maison de Tet Decor",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "3.2",
+        "price": "40.000đ - 130.000đ",
+        "address": "26 Quảng Bá, Quảng An, Tây Hồ",
+        "openingTime": "08:00 - 20:00"
+    },
+    {
+        "name": "Chill 'n Feel Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 70.000đ",
+        "address": "50 P. Trương Công Giai, Cầu Giấy",
+        "openingTime": "07:00 - 21:00"
+    },
+    {
+        "name": "Tropical T Coffee",
+        "reviewCount": "- 2 đánh giá",
+        "avgRate": "3.3",
+        "price": "25.000đ - 60.000đ",
+        "address": "124 Lê Lai, Hà Đông",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Moo:d Kafe",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "4.6",
+        "price": "25.000đ - 65.000đ",
+        "address": "Ngách 17( cạnh số nhà 17) ngõ 4c Đặng Văn Ngữ, Đống Đa",
+        "openingTime": "08:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Quán Của Minh",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "3D Tập Thể Dệt - Cuối Ngõ Ao Sen - Hà Đông",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Baker Bear",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 120.000đ",
+        "address": "33 Trung Yên 11B, Trung Hoà, Cầu Giấy",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Hầm Trú Ẩn",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "101 K17 Khu Tập Thể Bách Khoa (phố Nguyễn Hiền, Chếch Vinmart), Hai Bà Trưng",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "TOUS LES JOURS",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "45.000đ - 60.000đ",
+        "address": "Tầng 1 IPH 239 Xuân Thuỷ, Cầu Giấy",
+        "openingTime": "08:30 - 21:00"
+    },
+    {
+        "name": "TRUNG NGUYÊN E-COFFEE",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 80.000đ",
+        "address": "Minh Khai, Hai Bà Trưng  11600",
+        "openingTime": "- Mở cả ngày",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Tayta Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "40.000đ - 150.000đ",
+        "address": "170 Từ Hoa - Quảng An - Tây Hồ",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Sutori_Kohi",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "4.2",
+        "price": "30.000đ - 55.000đ",
+        "address": "70 Đường 19/5, Văn Quán, Hà Đông",
+        "openingTime": "08:00 - 21:00"
+    },
+    {
+        "name": "CAFE 1994",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 60.000đ",
+        "address": "Tầng 8, 85 Nguyễn Ngọc Vũ, Cầu Giấy",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Xofa Café &amp; Bistro",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "30.000đ - 50.000đ",
+        "address": "14 Tống Duy Tan, Hoàn Kiếm",
+        "openingTime": "07:00 - 21:00"
+    },
+    {
+        "name": "LaLam Coffee",
+        "reviewCount": "- 3 đánh giá",
+        "avgRate": "4.5",
+        "price": "35.000đ - 75.000đ",
+        "address": "62 Vũ Miên, Yên Phụ, Tây Hồ",
+        "openingTime": "09:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "The Retreats Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 120.000đ",
+        "address": "176 Nguyễn Văn Cừ, Ngọc Lâm, Long Biên",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "110 Centerpoint Rooftoop Cafe",
+        "reviewCount": "- 4 đánh giá",
+        "avgRate": "4.6",
+        "price": "10.000đ - 100.000đ",
+        "address": "Tầng 33, 110 Cầu Giấy",
+        "openingTime": "07:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Charm coffee",
+        "reviewCount": "- 1 đánh giá",
+        "avgRate": "5",
+        "price": "10.000đ - 60.000đ",
+        "address": "Ngõ 20 Láng Hạ, Láng Hạ, Đống Đa",
+        "openingTime": "07:00 - 22:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "AROI Dessert Cafe",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "35.000đ - 110.000đ",
+        "address": "9 Tống Duy Tân, Hoàn Kiếm",
+        "openingTime": "- Mở cả ngày",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Hidden Gem Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 80.000đ",
+        "address": "3B Hàng Tre, Hoàn Kiếm",
+        "openingTime": "08:00 - 23:00",
+        "openingType": "Đang mở cửa"
+    },
+    {
+        "name": "Dear November Coffee",
+        "reviewCount": "- chưa có đánh giá",
+        "price": "25.000đ - 50.000đ",
+        "address": "P112 T1 Tập thể Trường đoàn, cuối ngõ 59 Chùa Láng",
+        "openingTime": "08:30 - 22:30",
+        "openingType": "Đang mở cửa"
+    }
+]

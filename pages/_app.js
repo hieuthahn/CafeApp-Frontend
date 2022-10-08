@@ -5,9 +5,10 @@ import "../styles/antd-custom.less"
 import "swiper/scss"
 import "mapbox-gl/dist/mapbox-gl.css"
 import "swiper/css/bundle"
-import Layout from "/components/Layout"
+import Layout from "/components/Layouts"
 import { useState, useEffect } from "react"
 import { VechaiProvider, Button } from "@vechaiui/react"
+import AdminLayout from "../components/Layouts/AdminLayout"
 
 function MyApp({ Component, pageProps }) {
     const getLayout = Component.getLayout || ((page) => page)
@@ -23,13 +24,23 @@ function MyApp({ Component, pageProps }) {
     if (typeof window === "undefined") {
         return <></>
     } else {
-        return getLayout(
-            <Layout>
-                <VechaiProvider>
-                    <Component {...pageProps} />
-                </VechaiProvider>
-            </Layout>
-        )
+        if (Component.layout === "admin") {
+            return getLayout(
+                <AdminLayout>
+                    <VechaiProvider>
+                        <Component {...pageProps} />
+                    </VechaiProvider>
+                </AdminLayout>
+            )
+        } else {
+            return getLayout(
+                <Layout>
+                    <VechaiProvider>
+                        <Component {...pageProps} />
+                    </VechaiProvider>
+                </Layout>
+            )
+        }
     }
 }
 

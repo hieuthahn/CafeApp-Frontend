@@ -55,3 +55,11 @@
         background: #c0a0b9;
     } */
 }
+
+#__next {
+    height: auto !important;
+}
+
+.ant-table-pagination {
+    margin: 16px 0 !important;
+}
