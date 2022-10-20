@@ -14,10 +14,10 @@ const SinglePlace = () => {
             <PlaceDetail place={place} benefits={benefits} />
             <PlaceBenefit place={place} benefits={benefits} />
             <div className="md:flex gap-4">
-                <div className="md:basis-2/3 h-fit p-4 bg-white shadow-sm rounded-lg">
+                <div className="md:basis-3/4 h-fit p-4 bg-white shadow-sm rounded-lg">
                     <PlaceReview place={place} benefits={benefits} />
                 </div>
-                <div className="md:basis-1/3 h-fit p-4 bg-white shadow-sm rounded-lg">
+                <div className="md:basis-1/4 h-fit p-4 bg-white shadow-sm rounded-lg">
                     <PlaceRelated place={place} />
                 </div>
             </div>

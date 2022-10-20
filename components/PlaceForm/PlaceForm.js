@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import {
     Button,
     Form,
@@ -29,16 +29,37 @@ const PlaceForm = () => {
     const [previewTitle, setPreviewTitle] = useState("")
     const [fileListPhotos, setFileListPhotos] = useState([])
     const [fileListMenu, setFileListMenu] = useState([])
+    const [loading, setLoading] = useState(false)
 
-    const onFinish = (values) => {
-        const placeForm = { ...values, fileListPhotos, fileListMenu }
-        // console.log("Success:", JSON.stringify(placeForm))
+    const onFinish = async (values) => {
+        const data = JSON.stringify(values)
+        const formData = new FormData()
+        formData.append("data", data)
+        fileListPhotos.forEach((photo, index) => {
+            console.log(photo)
+            formData.append("photo", photo.originFileObj)
+        })
+        fileListMenu.forEach((menu, index) => {
+            formData.append("menu", menu.originFileObj)
+        })
+
         try {
-            const res = axios.post("http://localhost:8000/api/v1/place", values)
-            console.log(res)
+            setLoading(true)
+            const res = await axios.post(
+                "http://localhost:8000/api/v1/place",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            )
+            if (res.data) {
+            }
         } catch (error) {
             console.log("Error:", error)
         }
+        setLoading(false)
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -67,10 +88,13 @@ const PlaceForm = () => {
         )
     }
 
-    const handleChangePhotos = ({ fileList: newFileList }) =>
+    const handleChangePhotos = ({ file, fileList: newFileList }) => {
         setFileListPhotos(newFileList)
-    const handleChangeMenu = ({ fileList: newFileList }) =>
+    }
+
+    const handleChangeMenu = ({ file, fileList: newFileList }) => {
         setFileListMenu(newFileList)
+    }
 
     const uploadButton = (
         <div>
@@ -91,7 +115,7 @@ const PlaceForm = () => {
 
     return (
         <Form
-            name="basic"
+            name="place-form"
             labelAlign="left"
             labelWrap
             labelCol={{
@@ -471,6 +495,7 @@ const PlaceForm = () => {
                     type="primary"
                     shape="round"
                     size={"large"}
+                    disabled={loading}
                 >
                     Thêm địa điểm
                 </Button>

@@ -15,7 +15,7 @@ const Place = () => {
             />
             <SinglePlace />
             <h1 className="text-3xl text-center font-bold text-rose-500 !m-12">
-                Post: {slug}
+                {/* Post: {slug} */}
             </h1>
         </>
     )

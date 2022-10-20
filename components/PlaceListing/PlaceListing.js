@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar"
 import PlaceItem from "./components/PlaceItem"
 import { regions, purposes, benefits, tags } from "../../lib/data/sample"
 import { Pagination } from "antd"
+import listPlace from "../../pages/management/places/listPlace.json"
 
 const PlaceListing = () => {
     const [region, setRegion] = useState(regions)
@@ -28,7 +29,7 @@ const PlaceListing = () => {
                     </span>
                 </div>
                 <div className="mb-3 flex flex-wrap gap-2">
-                    {Array.from(Array(5)).map((item, index) => {
+                    {Array.from(Array(1)).map((item, index) => {
                         return (
                             <span
                                 key={index}
@@ -61,11 +62,13 @@ const PlaceListing = () => {
                         )
                     })}
                 </div>
-                {Array.from(Array(10)).map((item, index) => {
-                    return <PlaceItem key={index} />
+                {listPlace.map((place, index) => {
+                    if (index < 10) {
+                        return <PlaceItem place={place} key={index} />
+                    }
                 })}
                 <div className="flex justify-center">
-                    <Pagination defaultCurrent={1} total={50} />
+                    <Pagination defaultCurrent={1} total={listPlace.length} />
                 </div>
             </div>
         </div>

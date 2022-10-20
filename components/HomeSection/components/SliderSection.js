@@ -11,8 +11,9 @@ const SliderSection = () => {
         <Fragment>
             <section className="my-12">
                 <h2 className="text-center text-2xl font-bold text-slate-700">
-                    {"Find a Place That Fits Your Comfort"}
+                    {"Mục đích bạn cần ?"}
                 </h2>
+                <div className="mx-auto w-[90px] h-[2px] bg-rose-500 mt-2 rounded-lg"></div>
                 <Swiper
                     className="mySwiper"
                     pagination={{
@@ -51,8 +52,9 @@ const SliderSection = () => {
             </section>
             <section className="my-12">
                 <h2 className="text-center text-2xl font-bold text-slate-700">
-                    {"Find a Place That Fits Your Comfort"}
+                    {"Khu vực gần đây"}
                 </h2>
+                <div className="mx-auto w-[90px] h-[2px] bg-rose-500 mt-2 rounded-lg"></div>
                 <Swiper
                     className="mySwiper"
                     pagination={{

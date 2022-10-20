@@ -3,7 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Rate } from "antd"
 
-const PlaceItem = () => {
+const PlaceItem = ({ place }) => {
     return (
         <div className="mb-5 rounded-lg shadow-sm bg-white flex ">
             <Link href="/place/ban-cong-coffee">
@@ -13,7 +13,9 @@ const PlaceItem = () => {
                             <Image
                                 layout="fill"
                                 objectFit="cover"
-                                src="/static/images/purpose/chill-370x247.png"
+                                src={`/static/images/place/ban-cong-cafe/ban-cong-cafe-${Math.floor(
+                                    Math.floor(Math.random() * 10) + 1
+                                )}.jpeg`}
                                 className="object-cover object-center hover:scale-105 transition ease-in duration-500 rounded absolute top-0 left-0 w-full h-full"
                             />
                         </figure>
@@ -25,21 +27,21 @@ const PlaceItem = () => {
                 <Link href="/place/ban-cong-coffee">
                     <a>
                         <h4 className="text-xl font-bold hover:underline ">
-                            {"EEBakery Coffee"}
+                            {place?.name || "EEBakery Coffee"}
                         </h4>
                     </a>
                 </Link>
                 <div className="truncate pointer-events-none">
-                    <span>
+                    <span className="mr-2">
                         <Rate
-                            className="!text-rose-500 !text-sm"
+                            className="!text-rose-500 !text-sm "
                             disabled
                             allowHalf
-                            defaultValue={4.5}
+                            defaultValue={place?.avgRate || 4.5}
                         />
                     </span>
-                    {" - "}
-                    <span>{"1 đánh giá"}</span>
+                    {`${place?.avgRate} `}
+                    <span>{place?.reviewCount || "1 đánh giá"}</span>
                 </div>
                 <div className="flex gap-3 items-center">
                     <svg
@@ -52,11 +54,12 @@ const PlaceItem = () => {
                         <path d="M29.5,8H2.5A2.5,2.5,0,0,0,0,10.5v14A2.5,2.5,0,0,0,2.5,27h27A2.5,2.5,0,0,0,32,24.5v-14A2.5,2.5,0,0,0,29.5,8ZM1,10.5A1.5,1.5,0,0,1,2.5,9H4.483A2.466,2.466,0,0,1,5,10.5,2.5,2.5,0,0,1,2.5,13,2.466,2.466,0,0,1,1,12.483ZM4.483,26H2.5A1.5,1.5,0,0,1,1,24.5V22.517A2.466,2.466,0,0,1,2.5,22,2.5,2.5,0,0,1,5,24.5,2.466,2.466,0,0,1,4.483,26ZM31,24.5A1.5,1.5,0,0,1,29.5,26H27.517A2.466,2.466,0,0,1,27,24.5,2.5,2.5,0,0,1,29.5,22a2.466,2.466,0,0,1,1.5.517Zm0-3.145A3.464,3.464,0,0,0,29.5,21,3.5,3.5,0,0,0,26,24.5a3.464,3.464,0,0,0,.355,1.5H5.645A3.464,3.464,0,0,0,6,24.5,3.5,3.5,0,0,0,2.5,21a3.464,3.464,0,0,0-1.5.355V13.645A3.464,3.464,0,0,0,2.5,14,3.5,3.5,0,0,0,6,10.5,3.464,3.464,0,0,0,5.645,9H26.355A3.464,3.464,0,0,0,26,10.5,3.5,3.5,0,0,0,29.5,14a3.464,3.464,0,0,0,1.5-.355Zm0-8.872A2.466,2.466,0,0,1,29.5,13,2.5,2.5,0,0,1,27,10.5,2.466,2.466,0,0,1,27.517,9H29.5A1.5,1.5,0,0,1,31,10.5ZM15.5,15h1a1,1,0,0,1,1,1,.5.5,0,0,0,1,0,2,2,0,0,0-2-2v-.5a.5.5,0,0,0-1,0V14a2,2,0,0,0,0,4h1a1,1,0,0,1,0,2h-1a1,1,0,0,1-1-1,.5.5,0,0,0-1,0,2,2,0,0,0,2,2v.5a.5.5,0,0,0,1,0V21a2,2,0,0,0,0-4h-1a1,1,0,0,1,0-2Zm.5-4a6.5,6.5,0,1,0,6.5,6.5A6.508,6.508,0,0,0,16,11Zm0,12a5.5,5.5,0,1,1,5.5-5.5A5.506,5.506,0,0,1,16,23Z" />
                     </svg>
                     <span>
-                        {"30.000"}
+                        {/* {"30.000"}
                         {"đ"}
                         {" - "}
                         {"60.000"}
-                        {"đ"}
+                        {"đ"} */}
+                        {place?.price}
                     </span>
                 </div>
                 <address className="flex gap-3 items-center text-muted font-semibold mb-1 pointer-events-none">
@@ -71,7 +74,7 @@ const PlaceItem = () => {
                             <path d="M21,13a5,5,0,1,0-5,5A5,5,0,0,0,21,13Zm-8,0a3,3,0,1,1,3,3A3,3,0,0,1,13,13Z" />
                         </g>
                     </svg>
-                    <span>{"2 Đinh Liệt, Hoàn Kiếm"}</span>
+                    <span>{place?.address || "2 Đinh Liệt, Hoàn Kiếm"}</span>
                 </address>
                 <div className="flex gap-3 items-center">
                     <svg
@@ -85,10 +88,10 @@ const PlaceItem = () => {
                     </svg>
                     <div className="truncate pointer-events-none">
                         <span className="text-green-600 font-semibold">
-                            {"Đang mở cửa"}
+                            {place?.openingType || "Đang mở cửa"}
                         </span>
                         {" - "}
-                        <span>{"07:00 - 23:00"}</span>
+                        <span>{place?.openingTime || "07:00 - 23:00"}</span>
                     </div>
                 </div>
             </div>
