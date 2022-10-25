@@ -18,7 +18,7 @@ const SearchBar = () => {
     }, [clickOutside])
 
     const handleSearchOptions = () => {}
-    console.log(options)
+    
     return (
         <>
             <div className="py-8 px-4">
