@@ -4,12 +4,39 @@ import PlaceItem from "./components/PlaceItem"
 import { regions, purposes, benefits, tags } from "../../lib/data/sample"
 import { Pagination } from "antd"
 import listPlace from "../../pages/management/places/listPlace.json"
+import { searchPlaces } from "lib/services/place"
 
 const PlaceListing = () => {
+    const [places, setPlaces] = useState([])
     const [region, setRegion] = useState(regions)
     const [purpose, setPurpose] = useState(purposes)
     const [benefit, setBenefit] = useState(benefits)
     const [tag, setTag] = useState(tags)
+    const [body, setBody] = useState({
+        page: 1,
+        pagesize: 10,
+    })
+
+    const searchPlace = async () => {
+        try {
+            const res = await searchPlaces(body)
+            setPlaces(res.data)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        searchPlace()
+    }, [body])
+
+    const onPageChange = (page, pageSize) => {
+        setBody((prev) => ({
+            ...prev,
+            page,
+            pagesize: pageSize,
+        }))
+    }
 
     return (
         <div className="grid grid-cols-12 container mx-auto p-6">
@@ -62,13 +89,19 @@ const PlaceListing = () => {
                         )
                     })}
                 </div>
-                {listPlace.map((place, index) => {
-                    if (index < 10) {
+                {places &&
+                    places.map((place, index) => {
                         return <PlaceItem place={place} key={index} />
-                    }
-                })}
+                    })}
                 <div className="flex justify-center">
-                    <Pagination defaultCurrent={1} total={listPlace.length} />
+                    <Pagination
+                        defaultCurrent={1}
+                        pageSizeOptions={[10, 20, 30]}
+                        total={listPlace.length}
+                        pageSize={body?.pagesize}
+                        current={body?.page}
+                        onChange={onPageChange}
+                    />
                 </div>
             </div>
         </div>

@@ -9,4 +9,7 @@ module.exports = withLess({
         additionalData: (content) =>
             `${content}\n\n@import '${pathToLessFileWithVariables}';`,
     },
+    images: {
+        domains: ["toidicafe.vn"],
+    },
 })
