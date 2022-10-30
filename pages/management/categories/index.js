@@ -320,8 +320,9 @@ const App = () => {
                             dataSource={categories[category.value]}
                             renderItem={(item, index) => (
                                 <List.Item
+                                    key={index}
                                     actions={[
-                                        <Space size="small">
+                                        <Space key={index} size="small">
                                             {edit[category.value] !== item && (
                                                 <Button
                                                     onClick={() =>

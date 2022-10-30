@@ -45,15 +45,15 @@ const PlaceReview = (props) => {
                     visible={openReview}
                     onOk={() => setOpenReview(false)}
                     onCancel={() => setOpenReview(false)}
-                    footer={[
+                    footer={
                         <button
                             className="text-white bg-rose-500 hover:bg-rose-700 py-1 px-2 text-base font-semibold rounded-lg my-1"
                             type="submit"
                             onClick={() => setOpenReview(false)}
                         >
                             {"Gửi đánh giá"}
-                        </button>,
-                    ]}
+                        </button>
+                    }
                 >
                     <div>
                         <h4 className="!mb-1 text-base font-semibold">
@@ -63,7 +63,10 @@ const PlaceReview = (props) => {
                             {/* ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"] */}
                             {Object.keys(reviewValue).map((key, index) => {
                                 return (
-                                    <div className="flex gap-4 items-center">
+                                    <div
+                                        key={index}
+                                        className="flex gap-4 items-center"
+                                    >
                                         <span className="basis-1/5 mt-2 text-sm">
                                             {rates[index]}
                                         </span>
@@ -254,7 +257,7 @@ const PlaceReview = (props) => {
 
                             <div className="px-4 py-2">
                                 <button>
-                                    <i class="far fa-heart"></i>
+                                    <i className="far fa-heart"></i>
                                     <span>
                                         {" 0 "}
                                         {"Thích"}
@@ -363,7 +366,7 @@ const PlaceReview = (props) => {
 
                             <div className="px-4 py-2">
                                 <button>
-                                    <i class="far fa-heart"></i>
+                                    <i className="far fa-heart"></i>
                                     <span>
                                         {" 0 "}
                                         {"Thích"}

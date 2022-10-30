@@ -39,7 +39,10 @@ const NewReview = () => {
                             {/* ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"] */}
                             {Object.keys(reviewValue).map((key, index) => {
                                 return (
-                                    <div className="flex gap-4 items-center">
+                                    <div
+                                        key={index}
+                                        className="flex gap-4 items-center"
+                                    >
                                         <span className="basis-1/5 mt-2 text-sm">
                                             {rates[index]}
                                         </span>

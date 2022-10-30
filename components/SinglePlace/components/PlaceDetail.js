@@ -372,6 +372,7 @@ const PlaceAddress = ({ place }) => {
                         </svg>
                         <a
                             target="_blank"
+                            rel="noreferrer"
                             href={`https://www.google.com/maps/dir/?api=1&destination=${"21.028511"},${"105.804817"}`}
                             className="text-black"
                         >
