@@ -4,7 +4,7 @@ import PlaceItem from "./components/PlaceItem"
 import { regions, purposes, benefits, tags } from "../../lib/data/sample"
 import { Pagination } from "antd"
 import listPlace from "../../pages/management/places/listPlace.json"
-import { searchPlaces } from "lib/services/place"
+import { searchPlaces, updatePlaceById } from "lib/services/place"
 
 const PlaceListing = () => {
     const [places, setPlaces] = useState([])

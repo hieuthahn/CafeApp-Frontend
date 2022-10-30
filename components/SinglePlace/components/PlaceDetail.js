@@ -11,32 +11,33 @@ const Map = ReactMapboxGl({
         "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ",
 })
 
-const PlaceDetail = () => {
+const PlaceDetail = ({ place }) => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 rounded-lg min-h-[250px]">
-            <PlaceVote />
-            <PlaceInfo />
-            <PlaceAddress />
+            <PlaceVote place={place} />
+            <PlaceInfo place={place} />
+            <PlaceAddress place={place} />
         </div>
     )
 }
 
-const PlaceVote = () => {
-    let hasVote = false
+const PlaceVote = ({ place }) => {
     return (
         <div className="flex-1 bg-white rounded-lg shadow-sm p-4">
             <h2 className="text-xl font-bold !mb-2">{"Đánh giá"}</h2>
-            {hasVote ? (
+            {place?.rate?.avg ? (
                 <>
                     <div className="flex gap-1 justify-center items-center">
                         <span className="text-xl font-bold text-white bg-rose-500 min-w-[50] rounded-lg py-2 px-3">
-                            {"5.0"}
+                            {place?.rate?.avg}
                         </span>
                         <div className="flex flex-col">
                             <h3 className="text-lg font-bold">{"Tuyệt vời"}</h3>
                             <span className="font-semibold">
                                 {"/5 ("}
-                                {"0"}
+                                {place?.rate?.avg
+                                    ? Math.floor(place?.rate?.avg)
+                                    : "0"}
                                 {" đánh giá)"}
                             </span>
                         </div>
@@ -47,11 +48,13 @@ const PlaceVote = () => {
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
-                                percent={(4.5 / 5) * 100}
+                                percent={
+                                    ((place?.rate?.position || 5) / 5) * 100
+                                }
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {place?.rate?.position}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -59,11 +62,11 @@ const PlaceVote = () => {
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
-                                percent={(4.5 / 5) * 100}
+                                percent={((place?.rate?.view || 5) / 5) * 100}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {place?.rate?.view}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -71,11 +74,11 @@ const PlaceVote = () => {
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
-                                percent={(4.5 / 5) * 100}
+                                percent={((place?.rate?.drink || 5) / 5) * 100}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {place?.rate?.drink}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -83,11 +86,13 @@ const PlaceVote = () => {
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
-                                percent={(4.5 / 5) * 100}
+                                percent={
+                                    ((place?.rate?.service || 5) / 5) * 100
+                                }
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {place?.rate?.service}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -95,11 +100,11 @@ const PlaceVote = () => {
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
-                                percent={(4.5 / 5) * 100}
+                                percent={((place?.rate?.price || 5) / 5) * 100}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {place?.rate?.price}
                             </span>
                         </div>
                     </div>
@@ -130,8 +135,8 @@ const PlaceVote = () => {
                                 percent={0}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {"0"}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -142,8 +147,8 @@ const PlaceVote = () => {
                                 percent={0}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {"0"}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -154,8 +159,8 @@ const PlaceVote = () => {
                                 percent={0}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {"0"}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -166,8 +171,8 @@ const PlaceVote = () => {
                                 percent={0}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {"0"}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
@@ -178,8 +183,8 @@ const PlaceVote = () => {
                                 percent={0}
                                 showInfo={false}
                             />
-                            <span className="text-right w-[15%] font-semibold">
-                                {"4.5"}
+                            <span className="text-center w-[15%] font-semibold">
+                                {"0"}
                             </span>
                         </div>
                         <div className="absolute z-10 flex justify-center items-center w-full h-full">
@@ -197,7 +202,7 @@ const PlaceVote = () => {
     )
 }
 
-const PlaceInfo = () => {
+const PlaceInfo = ({ place }) => {
     return (
         <div className="flex-1 bg-white rounded-lg shadow-sm p-4 h-full">
             <h2 className="text-xl font-bold !mb-2">{"Thông tin chi tiết"}</h2>
@@ -213,10 +218,10 @@ const PlaceInfo = () => {
                         <path d="M29.5,8H2.5A2.5,2.5,0,0,0,0,10.5v14A2.5,2.5,0,0,0,2.5,27h27A2.5,2.5,0,0,0,32,24.5v-14A2.5,2.5,0,0,0,29.5,8ZM1,10.5A1.5,1.5,0,0,1,2.5,9H4.483A2.466,2.466,0,0,1,5,10.5,2.5,2.5,0,0,1,2.5,13,2.466,2.466,0,0,1,1,12.483ZM4.483,26H2.5A1.5,1.5,0,0,1,1,24.5V22.517A2.466,2.466,0,0,1,2.5,22,2.5,2.5,0,0,1,5,24.5,2.466,2.466,0,0,1,4.483,26ZM31,24.5A1.5,1.5,0,0,1,29.5,26H27.517A2.466,2.466,0,0,1,27,24.5,2.5,2.5,0,0,1,29.5,22a2.466,2.466,0,0,1,1.5.517Zm0-3.145A3.464,3.464,0,0,0,29.5,21,3.5,3.5,0,0,0,26,24.5a3.464,3.464,0,0,0,.355,1.5H5.645A3.464,3.464,0,0,0,6,24.5,3.5,3.5,0,0,0,2.5,21a3.464,3.464,0,0,0-1.5.355V13.645A3.464,3.464,0,0,0,2.5,14,3.5,3.5,0,0,0,6,10.5,3.464,3.464,0,0,0,5.645,9H26.355A3.464,3.464,0,0,0,26,10.5,3.5,3.5,0,0,0,29.5,14a3.464,3.464,0,0,0,1.5-.355Zm0-8.872A2.466,2.466,0,0,1,29.5,13,2.5,2.5,0,0,1,27,10.5,2.466,2.466,0,0,1,27.517,9H29.5A1.5,1.5,0,0,1,31,10.5ZM15.5,15h1a1,1,0,0,1,1,1,.5.5,0,0,0,1,0,2,2,0,0,0-2-2v-.5a.5.5,0,0,0-1,0V14a2,2,0,0,0,0,4h1a1,1,0,0,1,0,2h-1a1,1,0,0,1-1-1,.5.5,0,0,0-1,0,2,2,0,0,0,2,2v.5a.5.5,0,0,0,1,0V21a2,2,0,0,0,0-4h-1a1,1,0,0,1,0-2Zm.5-4a6.5,6.5,0,1,0,6.5,6.5A6.508,6.508,0,0,0,16,11Zm0,12a5.5,5.5,0,1,1,5.5-5.5A5.506,5.506,0,0,1,16,23Z" />
                     </svg>
                     <span>
-                        {"30.000"}
+                        {place?.price?.min?.toLocaleString("vi-VN")}
                         {"đ"}
                         {" - "}
-                        {"60.000"}
+                        {place?.price?.max?.toLocaleString("vi-VN")}
                         {"đ"}
                     </span>
                 </div>
@@ -232,41 +237,77 @@ const PlaceInfo = () => {
                     </svg>
                     <div className="truncate pointer-events-none">
                         <span className="text-green-600 font-semibold">
-                            {"Đang mở cửa"}
+                            {place?.openingStatus}
                         </span>
                         {" - "}
-                        <span>{"07:00 - 23:00"}</span>
+                        <span>{place?.openingType}</span>
                     </div>
                 </div>
-                <div className="flex gap-4 items-center">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            fill="none"
-                            stroke="#000"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M8.8457,9.0332 L9.5547,7.9702 C9.7747,7.6402 9.7797,7.2122 9.5667,6.8782 L7.4417,3.5382 L4.9127,4.3812 C3.8857,4.7232 3.3017,5.8252 3.6297,6.8572 C4.2017,8.6542 5.5147,11.5112 8.5017,14.4982 C11.4887,17.4852 14.3457,18.7982 16.1427,19.3692 C17.1757,19.6982 18.2767,19.1152 18.6187,18.0872 L19.4617,15.5582 L16.1217,13.4332 C15.7877,13.2212 15.3597,13.2252 15.0307,13.4452 L13.9667,14.1542 C13.6417,14.3702 13.2237,14.3832 12.8917,14.1772 C12.3507,13.8402 11.4867,13.2412 10.6227,12.3772 C9.7587,11.5132 9.1587,10.6492 8.8237,10.1082 C8.6167,9.7762 8.6297,9.3582 8.8457,9.0332 Z"
-                        />
-                    </svg>
-                    <span>{"0969430169"}</span>
-                </div>
-                <div className="flex gap-4 items-center">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        enableBackground="new 0 0 24 24"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                    >
-                        <path d="M17.9902344,1.5957031c-1.0087891-0.1067505-2.0227051-0.1586304-3.0371094-0.1552734C11.5898438,1.4404297,9.5,3.5819702,9.5,7.0302734v2.3408203H6.6748047c-0.276001-0.0001831-0.4998779,0.2234497-0.5,0.4994507v3.8511353c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5H9.5v7.71875c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5h3.9780884c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507v-7.7192993h2.8164673c0.2512207-0.000061,0.463501-0.1864014,0.4960938-0.4355469l0.4970703-3.8505859c0.0357056-0.2736816-0.1572266-0.5245361-0.4309692-0.5602417c-0.0216064-0.0028076-0.043335-0.0042114-0.0651245-0.0042114h-3.3135376V7.4121094c0-0.9697266,0.1953125-1.375,1.4082031-1.375l2.0390625-0.0009766c0.276001,0.0001221,0.4998169-0.2234497,0.5-0.4994507V2.0917969C18.4248657,1.8408203,18.2390137,1.6286621,17.9902344,1.5957031z M17.4248047,5.0361328l-1.5390625,0.0009766c-2.1582031,0-2.4082031,1.3554688-2.4082031,2.375v2.4590454c-0.0001221,0.2759399,0.2234497,0.4998169,0.4994507,0.499939h3.2456665l-0.3681641,2.8505859h-2.8769531c-0.276001-0.0001221-0.4998169,0.2234497-0.5,0.4994507v7.7192993H10.5v-7.71875c0.0001831-0.276001-0.2234497-0.4998169-0.4993896-0.5H7.1748047v-2.8505859H10c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507V7.0302734c0-2.8740234,1.664978-4.5898438,4.453125-4.5898438c1.0087891,0,1.9199219,0.0546875,2.4716797,0.1025391V5.0361328z" />
-                    </svg>
-                    <a className="">{"Ban Công Coffee"}</a>
-                </div>
+                {place?.phone && (
+                    <div className="flex gap-4 items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="none"
+                                stroke="#000"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M8.8457,9.0332 L9.5547,7.9702 C9.7747,7.6402 9.7797,7.2122 9.5667,6.8782 L7.4417,3.5382 L4.9127,4.3812 C3.8857,4.7232 3.3017,5.8252 3.6297,6.8572 C4.2017,8.6542 5.5147,11.5112 8.5017,14.4982 C11.4887,17.4852 14.3457,18.7982 16.1427,19.3692 C17.1757,19.6982 18.2767,19.1152 18.6187,18.0872 L19.4617,15.5582 L16.1217,13.4332 C15.7877,13.2212 15.3597,13.2252 15.0307,13.4452 L13.9667,14.1542 C13.6417,14.3702 13.2237,14.3832 12.8917,14.1772 C12.3507,13.8402 11.4867,13.2412 10.6227,12.3772 C9.7587,11.5132 9.1587,10.6492 8.8237,10.1082 C8.6167,9.7762 8.6297,9.3582 8.8457,9.0332 Z"
+                            />
+                        </svg>
+                        <span>{place?.phone}</span>
+                    </div>
+                )}
+                {place?.email && (
+                    <div className="flex gap-4 items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            enableBackground="new 0 0 24 24"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M17.9902344,1.5957031c-1.0087891-0.1067505-2.0227051-0.1586304-3.0371094-0.1552734C11.5898438,1.4404297,9.5,3.5819702,9.5,7.0302734v2.3408203H6.6748047c-0.276001-0.0001831-0.4998779,0.2234497-0.5,0.4994507v3.8511353c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5H9.5v7.71875c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5h3.9780884c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507v-7.7192993h2.8164673c0.2512207-0.000061,0.463501-0.1864014,0.4960938-0.4355469l0.4970703-3.8505859c0.0357056-0.2736816-0.1572266-0.5245361-0.4309692-0.5602417c-0.0216064-0.0028076-0.043335-0.0042114-0.0651245-0.0042114h-3.3135376V7.4121094c0-0.9697266,0.1953125-1.375,1.4082031-1.375l2.0390625-0.0009766c0.276001,0.0001221,0.4998169-0.2234497,0.5-0.4994507V2.0917969C18.4248657,1.8408203,18.2390137,1.6286621,17.9902344,1.5957031z M17.4248047,5.0361328l-1.5390625,0.0009766c-2.1582031,0-2.4082031,1.3554688-2.4082031,2.375v2.4590454c-0.0001221,0.2759399,0.2234497,0.4998169,0.4994507,0.499939h3.2456665l-0.3681641,2.8505859h-2.8769531c-0.276001-0.0001221-0.4998169,0.2234497-0.5,0.4994507v7.7192993H10.5v-7.71875c0.0001831-0.276001-0.2234497-0.4998169-0.4993896-0.5H7.1748047v-2.8505859H10c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507V7.0302734c0-2.8740234,1.664978-4.5898438,4.453125-4.5898438c1.0087891,0,1.9199219,0.0546875,2.4716797,0.1025391V5.0361328z" />
+                        </svg>
+                        <span>{place?.email}</span>
+                    </div>
+                )}
+                {place?.facebook && (
+                    <div className="flex gap-4 items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            enableBackground="new 0 0 24 24"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M17.9902344,1.5957031c-1.0087891-0.1067505-2.0227051-0.1586304-3.0371094-0.1552734C11.5898438,1.4404297,9.5,3.5819702,9.5,7.0302734v2.3408203H6.6748047c-0.276001-0.0001831-0.4998779,0.2234497-0.5,0.4994507v3.8511353c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5H9.5v7.71875c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5h3.9780884c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507v-7.7192993h2.8164673c0.2512207-0.000061,0.463501-0.1864014,0.4960938-0.4355469l0.4970703-3.8505859c0.0357056-0.2736816-0.1572266-0.5245361-0.4309692-0.5602417c-0.0216064-0.0028076-0.043335-0.0042114-0.0651245-0.0042114h-3.3135376V7.4121094c0-0.9697266,0.1953125-1.375,1.4082031-1.375l2.0390625-0.0009766c0.276001,0.0001221,0.4998169-0.2234497,0.5-0.4994507V2.0917969C18.4248657,1.8408203,18.2390137,1.6286621,17.9902344,1.5957031z M17.4248047,5.0361328l-1.5390625,0.0009766c-2.1582031,0-2.4082031,1.3554688-2.4082031,2.375v2.4590454c-0.0001221,0.2759399,0.2234497,0.4998169,0.4994507,0.499939h3.2456665l-0.3681641,2.8505859h-2.8769531c-0.276001-0.0001221-0.4998169,0.2234497-0.5,0.4994507v7.7192993H10.5v-7.71875c0.0001831-0.276001-0.2234497-0.4998169-0.4993896-0.5H7.1748047v-2.8505859H10c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507V7.0302734c0-2.8740234,1.664978-4.5898438,4.453125-4.5898438c1.0087891,0,1.9199219,0.0546875,2.4716797,0.1025391V5.0361328z" />
+                        </svg>
+                        <a href={place?.facebook} className="">
+                            {place?.name}
+                        </a>
+                    </div>
+                )}
+                {place?.instagram && (
+                    <div className="flex gap-4 items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            enableBackground="new 0 0 24 24"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M17.9902344,1.5957031c-1.0087891-0.1067505-2.0227051-0.1586304-3.0371094-0.1552734C11.5898438,1.4404297,9.5,3.5819702,9.5,7.0302734v2.3408203H6.6748047c-0.276001-0.0001831-0.4998779,0.2234497-0.5,0.4994507v3.8511353c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5H9.5v7.71875c-0.0001831,0.276001,0.2234497,0.4998169,0.4994507,0.5h3.9780884c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507v-7.7192993h2.8164673c0.2512207-0.000061,0.463501-0.1864014,0.4960938-0.4355469l0.4970703-3.8505859c0.0357056-0.2736816-0.1572266-0.5245361-0.4309692-0.5602417c-0.0216064-0.0028076-0.043335-0.0042114-0.0651245-0.0042114h-3.3135376V7.4121094c0-0.9697266,0.1953125-1.375,1.4082031-1.375l2.0390625-0.0009766c0.276001,0.0001221,0.4998169-0.2234497,0.5-0.4994507V2.0917969C18.4248657,1.8408203,18.2390137,1.6286621,17.9902344,1.5957031z M17.4248047,5.0361328l-1.5390625,0.0009766c-2.1582031,0-2.4082031,1.3554688-2.4082031,2.375v2.4590454c-0.0001221,0.2759399,0.2234497,0.4998169,0.4994507,0.499939h3.2456665l-0.3681641,2.8505859h-2.8769531c-0.276001-0.0001221-0.4998169,0.2234497-0.5,0.4994507v7.7192993H10.5v-7.71875c0.0001831-0.276001-0.2234497-0.4998169-0.4993896-0.5H7.1748047v-2.8505859H10c0.276001,0.0001831,0.4998169-0.2234497,0.5-0.4994507V7.0302734c0-2.8740234,1.664978-4.5898438,4.453125-4.5898438c1.0087891,0,1.9199219,0.0546875,2.4716797,0.1025391V5.0361328z" />
+                        </svg>
+                        <a href={place?.instagram} className="">
+                            {place?.name}
+                        </a>
+                    </div>
+                )}
                 <div className="flex gap-4 items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -282,9 +323,18 @@ const PlaceInfo = () => {
                         <path d="M25.391 19.05c-.151 0-.29-.023-.418-.066a.999.999 0 0 1 .14-1.934c.138-.025.276-.039.416-.05.482-.04.945.28 1.06.762a1 1 0 0 1-.6 1.16l-.372-.927.354.936c-.098.04-.187.072-.293.094-.1.016-.196.024-.287.024zm.003-1.523.035.076.171-.517a.6.6 0 0 0-.282-.028l.076.47z" />
                     </svg>
                     <div className="">
-                        <a>{"Cafe Thú Cưng"}</a>
-                        {" - "}
-                        <a>{"Cafe Bình Dân"}</a>
+                        {place?.tags?.map((tag, index) => {
+                            if (place.tags.length === index + 1) {
+                                return <a key={index}>{tag}</a>
+                            } else {
+                                return (
+                                    <a key={index}>
+                                        {tag}
+                                        {" - "}
+                                    </a>
+                                )
+                            }
+                        })}
                     </div>
                 </div>
             </div>
@@ -292,7 +342,7 @@ const PlaceInfo = () => {
     )
 }
 
-const PlaceAddress = () => {
+const PlaceAddress = ({ place }) => {
     const [showPopup, setShowPopup] = useState(false)
 
     return (
@@ -325,7 +375,7 @@ const PlaceAddress = () => {
                             href={`https://www.google.com/maps/dir/?api=1&destination=${"21.028511"},${"105.804817"}`}
                             className="text-black"
                         >
-                            {"2 Đinh Liệt, Hoàn Kiếm"}
+                            {place?.address?.specific}
                         </a>
                     </div>
                 </Tooltip>
@@ -370,15 +420,15 @@ const PlaceAddress = () => {
                     >
                         <div className="relative flex justify-between items-center gap-3 font-['Quicksand']">
                             <img
-                                src="/static/images/place/ban-cong-cafe/ban-cong-cafe-10.jpeg"
+                                src={place?.photos[0]}
                                 className="rounded-md object-cover w-[40px] h-[40px]"
                             />
                             <div className="">
                                 <h3 className="text-base font-semibold">
-                                    {"Ban công cafe"}
+                                    {place?.name}
                                 </h3>
                                 <div className="text-sm">
-                                    {"2 Đinh Liệt, Hoàn Kiếm"}
+                                    {place?.address?.specific}
                                 </div>
                             </div>
                         </div>

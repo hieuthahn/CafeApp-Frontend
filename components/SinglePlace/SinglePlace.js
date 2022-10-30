@@ -7,7 +7,7 @@ import PlaceReview from "./components/PlaceReview"
 
 import { purposes, regions, place, benefits } from "../../lib/data/sample"
 
-const SinglePlace = () => {
+const SinglePlace = ({ place }) => {
     return (
         <div className="flex flex-col gap-4 mx-auto container pt-4">
             <PlaceContent place={place} benefits={benefits} />

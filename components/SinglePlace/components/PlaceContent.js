@@ -9,10 +9,10 @@ const PlaceContent = (props) => {
         <>
             {place && (
                 <div className="bg-white rounded-lg shadow-sm p-4">
-                    <h1 className="text-2xl font-bold !mb-2">{place.label}</h1>
-                    <p className="text-base mb-2">{place.desc}</p>
-                    <p className="text-base mb-2">
-                        {place.address}
+                    <h1 className="text-2xl font-bold !mb-2">{place?.name}</h1>
+                    <p className="text-base !mb-2">{place?.intro}</p>
+                    <p className="text-base !mb-2">
+                        {place?.address?.specific}
                         <span>{" — "}</span>
                         <a className="text-base font-semibold hover:underline">
                             {"Hiển thị bản đồ"}
