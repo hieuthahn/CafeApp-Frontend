@@ -9,7 +9,7 @@ import { toSlug } from "lib/utils"
 const Place = ({ place }) => {
     const router = useRouter()
     const { slug } = router.query
-    console.log(place)
+
     return (
         <>
             <Script

@@ -5,6 +5,7 @@ import { regions, purposes, benefits, tags } from "../../lib/data/sample"
 import { Pagination } from "antd"
 import listPlace from "../../pages/management/places/listPlace.json"
 import { searchPlaces, updatePlaceById } from "lib/services/place"
+import { getQueryVar } from "lib/utils/utils"
 
 const PlaceListing = () => {
     const [places, setPlaces] = useState([])
@@ -12,15 +13,22 @@ const PlaceListing = () => {
     const [purpose, setPurpose] = useState(purposes)
     const [benefit, setBenefit] = useState(benefits)
     const [tag, setTag] = useState(tags)
+    const [pagination, setPagination] = useState()
     const [body, setBody] = useState({
+        name: getQueryVar("q") || "",
         page: 1,
         pagesize: 10,
+        regions: [],
+        benefits: [],
+        tags: [],
+        purposes: [],
     })
 
     const searchPlace = async () => {
         try {
             const res = await searchPlaces(body)
             setPlaces(res.data)
+            setPagination(res.meta)
         } catch (e) {
             console.log(e)
         }
@@ -38,6 +46,11 @@ const PlaceListing = () => {
         }))
     }
 
+    const onDeleteTag = (name) => {
+        const filter = body.regions.filter((item) => item !== name)
+        setBody((prev) => ({ ...prev, regions: filter }))
+    }
+
     return (
         <div className="grid grid-cols-12 container mx-auto p-6">
             <div className="hidden md:block md:col-span-3 pr-3">
@@ -46,24 +59,31 @@ const PlaceListing = () => {
                     purposes={purpose}
                     benefits={benefit}
                     tags={tag}
+                    body={body}
+                    setBody={setBody}
+                    places={places}
+                    pagination={pagination}
                 />
             </div>
             <div className="col-span-12 md:col-span-9">
                 <div className="mb-3">
                     <span className="text-lg">
-                        <strong>{"100 "}</strong>
-                        {"Địa điểm khớp với tìm kiếm của bạn:"}
+                        <strong>{pagination?.totalItems || "0"}</strong>
+                        {" Địa điểm khớp với tìm kiếm của bạn:"}
                     </span>
                 </div>
                 <div className="mb-3 flex flex-wrap gap-2">
-                    {Array.from(Array(1)).map((item, index) => {
+                    {body.regions.map((item, index) => {
                         return (
                             <span
                                 key={index}
                                 className="flex gap-1 items-center text-rose-500 border border-rose-500 rounded-lg w-fit py-1 pl-2 pr-1 bg-white text-sm font-bold"
                             >
-                                {"Quận Ba Đình"}
-                                <span className="cursor-pointer mt-[2px]">
+                                {item}
+                                <span
+                                    className="cursor-pointer mt-[2px]"
+                                    onClick={() => onDeleteTag(item)}
+                                >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="20"
@@ -94,14 +114,16 @@ const PlaceListing = () => {
                         return <PlaceItem place={place} key={index} />
                     })}
                 <div className="flex justify-center">
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSizeOptions={[10, 20, 30]}
-                        total={listPlace.length}
-                        pageSize={body?.pagesize}
-                        current={body?.page}
-                        onChange={onPageChange}
-                    />
+                    {pagination && (
+                        <Pagination
+                            defaultCurrent={1}
+                            pageSizeOptions={[10, 20, 30]}
+                            total={pagination?.totalItems}
+                            pageSize={body?.pagesize}
+                            current={body?.page}
+                            onChange={onPageChange}
+                        />
+                    )}
                 </div>
             </div>
         </div>

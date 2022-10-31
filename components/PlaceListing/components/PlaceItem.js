@@ -7,7 +7,6 @@ import { toSlug } from "lib/utils"
 const BASE_URL = "/place"
 
 const PlaceItem = ({ place }) => {
-    console.log(place)
     return (
         <div className="mb-5 rounded-lg shadow-sm bg-white flex ">
             <Link href={`${BASE_URL}/${place?.slug}`}>
