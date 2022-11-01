@@ -31,7 +31,7 @@ const PlaceBenefit = ({ place }) => {
                     },
                     1200: {
                         slidesPerView:
-                            place?.benefits?.length < 4
+                            place?.benefits?.length < 6
                                 ? place?.benefits?.length
                                 : 6,
                     },

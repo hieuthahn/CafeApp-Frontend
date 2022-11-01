@@ -1,9 +1,9 @@
 import React from "react"
 import Link from "next/link"
 
-const RegionSlider = ({ label, image, desc }) => {
+const RegionSlider = ({ label, image, desc, slug }) => {
     return (
-        <Link href="#">
+        <Link href={`/search/?regions=${slug}`}>
             <a>
                 <div className="w-full h-full overflow-x-hidden overflow-y-hidden my-10 rounded-lg select-none">
                     <div className="flex flex-shrink-0 relative w-full sm:w-auto ">

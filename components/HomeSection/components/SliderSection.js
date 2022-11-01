@@ -1,12 +1,40 @@
 // Import Swiper React components
+import { useState, useEffect } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, Navigation, Autoplay } from "swiper"
 import { Fragment } from "react"
 import PurposeSlider from "../../CardSlider/PurposeSlider"
 import RegionSlider from "../../CardSlider/RegionSlider"
 import { purposes, regions } from "../../../lib/data/sample"
+import { getRegions, getPurposes } from "lib/services/category"
 
 const SliderSection = () => {
+    const [categories, setCategories] = useState({
+        regions: [],
+        purposes: [],
+    })
+
+    const getCategories = async () => {
+        try {
+            const _regions = getRegions()
+            const _purposes = getPurposes()
+            const regions = await _regions
+            const purposes = await _purposes
+            setCategories({
+                regions: regions.data,
+                purposes: purposes.data,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getCategories()
+    }, [])
+
+    console.log(categories)
+
     return (
         <Fragment>
             <section className="my-12">
@@ -44,6 +72,7 @@ const SliderSection = () => {
                                 <PurposeSlider
                                     label={purpose.label}
                                     image={purpose.image}
+                                    slug={purpose.value}
                                 />
                             </SwiperSlide>
                         )
@@ -87,6 +116,7 @@ const SliderSection = () => {
                                         label={region.label}
                                         image={region.image}
                                         desc={"50 quán cafe"}
+                                        slug={region.value}
                                     />
                                 </SwiperSlide>
                             )

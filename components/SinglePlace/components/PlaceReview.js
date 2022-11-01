@@ -4,8 +4,7 @@ import { Avatar, Button, Modal, Rate, Input, Switch } from "antd"
 const { TextArea } = Input
 
 const PlaceReview = (props) => {
-    const { place } = props
-    const [openReview, setOpenReview] = useState(false)
+    const { place, openReview, setOpenReview } = props
     const [reviewValue, setReviewValue] = useState({
         ratePosition: 5,
         rateView: 5,
@@ -21,7 +20,7 @@ const PlaceReview = (props) => {
     const [value, setValue] = useState(5)
     const desc = ["Quá tệ", "Trung bình", "Bình thường", "Tốt", "Tuyệt vời"]
     const rates = ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"]
-    const hasReview = false
+    const hasReview = true
 
     return (
         <>
@@ -45,6 +44,7 @@ const PlaceReview = (props) => {
                     visible={openReview}
                     onOk={() => setOpenReview(false)}
                     onCancel={() => setOpenReview(false)}
+                    destroyOnClose={true}
                     footer={
                         <button
                             className="text-white bg-rose-500 hover:bg-rose-700 py-1 px-2 text-base font-semibold rounded-lg my-1"

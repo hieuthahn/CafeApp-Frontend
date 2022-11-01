@@ -10,7 +10,7 @@ import "swiper/css/thumbs"
 
 // import required modules
 import { FreeMode, Navigation, Thumbs, Pagination } from "swiper"
-import Fancybox from "../../Fancybox"
+import Fancybox from "components/Fancybox"
 
 const PlaceMedia = (props) => {
     const { place } = props

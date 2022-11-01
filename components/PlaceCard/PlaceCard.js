@@ -10,42 +10,44 @@ const PlaceCard = ({ place }) => {
                 <span className="absolute left-4 top-4 bg-rose-500 text-white z-10 rounded-md px-2 py-1 text-xs font-semibold select-none pointer-events-none">
                     {"Hot"}
                 </span>
-                <Link href="/place/ban-cong-coffee">
+                <Link href={`/place/${place?.slug}`}>
                     <a>
                         <Image
                             width={450}
                             height={300}
                             objectFit="cover"
-                            src={`/static/images/place/ban-cong-cafe/ban-cong-cafe-${Math.floor(
-                                Math.floor(Math.random() * 10) + 1
-                            )}.jpeg`}
+                            src={
+                                (place?.photos && place?.photos[0]) ||
+                                `/static/images/place/ban-cong-cafe/ban-cong-cafe-${Math.floor(
+                                    Math.floor(Math.random() * 10) + 1
+                                )}.jpeg`
+                            }
                             className="object-cover object-center hover:scale-105 transition ease-in duration-500"
                         />
                     </a>
                 </Link>
                 <div className="absolute left-0 bottom-1 p-4 md:text-base text-sm font-semibold text-white w-full bg-gradient-to-b from-transparent to-gray-900/[.8] select-none pointer-events-none">
-                    {/* <span>
-                        {"50.000"}
+                    <span>
+                        {place?.price?.min?.toLocaleString("vi-VN")}
                         {"đ"}
                     </span>
                     {" - "}
                     <span>
-                        {"70.000"}
+                        {place?.price?.max?.toLocaleString("vi-VN")}
                         {"đ"}
-                    </span> */}
-                    {place?.price}
+                    </span>
                 </div>
             </div>
             <div className="p-4 pt-2 bg-white">
-                <Link href="/place/ban-cong-coffee">
+                <Link href={`/place/${place?.slug}`}>
                     <a>
                         <h2 className="truncate text-lg font-bold hover:text-rose-500">
                             {place?.name || "Ban Công Cafe"}
                         </h2>
                     </a>
                 </Link>
-                <address className="text-muted font-semibold mb-1 pointer-events-none">
-                    {"2 Đinh Liệt, Hoàn Kiếm"}
+                <address className="text-muted font-semibold mb-1 pointer-events-none truncate">
+                    {place?.address?.specific}
                 </address>
                 <div className="truncate pointer-events-none">
                     <span className="text-green-600 font-semibold text-sm">
@@ -60,11 +62,12 @@ const PlaceCard = ({ place }) => {
                             className="!text-rose-500 !text-sm"
                             disabled
                             allowHalf
-                            defaultValue={4.5}
+                            value={place?.rate?.avg}
+                            defaultValue={place?.rate?.avg}
                         />
                     </span>
-                    {/* {" - "} */}
-                    <span>{place?.reviewCount || "1 đánh giá"}</span>
+                    {" - "}
+                    <span>{Math.floor(place?.rate?.avg) + " đánh giá"}</span>
                 </div>
             </div>
         </div>
