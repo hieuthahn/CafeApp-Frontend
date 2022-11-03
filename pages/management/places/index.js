@@ -28,11 +28,11 @@ const getStatusLabel = (postStatus) => {
         },
     }
 
-    const { text, color } = map[postStatus]
+    // const { text, color } = map[postStatus]
 
     return (
-        <Tag color={color}>
-            <b>{text.toUpperCase()}</b>
+        <Tag color={map[postStatus]?.color}>
+            <b>{map[postStatus]?.text?.toUpperCase()}</b>
         </Tag>
     )
 }
@@ -77,7 +77,7 @@ const App = () => {
                     width={80}
                     height={80}
                     objectFit="cover"
-                    src={photos[0]}
+                    src={photos[0]?.url || photos[0]}
                 />
             ),
         },
