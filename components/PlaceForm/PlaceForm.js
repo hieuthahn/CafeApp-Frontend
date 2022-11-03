@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import {
     Button,
     Form,
@@ -13,23 +13,35 @@ import {
     Modal,
     Upload,
     BackTop,
+    message,
 } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
 import moment from "moment"
 import { toSlug, getBase64 } from "../../lib/utils"
 import { tags, benefits, regions } from "../../lib/data/sample"
 import axios from "axios"
+import { getBenefits, getTags, getRegions } from "lib/services/category"
+import { submitPlace, updatePlace } from "lib/services/place"
+import { useRouter } from "next/router"
 
 const { Option } = Select
 const format = "HH:mm"
 
-const PlaceForm = () => {
+const PlaceForm = (props) => {
+    const { place } = props
+    const router = useRouter()
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState("")
     const [previewTitle, setPreviewTitle] = useState("")
     const [fileListPhotos, setFileListPhotos] = useState([])
     const [fileListMenu, setFileListMenu] = useState([])
+    const [categories, setCategories] = useState({
+        tags: [],
+        benefits: [],
+        regions: [],
+    })
     const [loading, setLoading] = useState(false)
+    console.log("place-form", place)
 
     const onFinish = async (values) => {
         const data = JSON.stringify(values)
@@ -42,29 +54,71 @@ const PlaceForm = () => {
         fileListMenu.forEach((menu, index) => {
             formData.append("menu", menu.originFileObj)
         })
-
+        const key = "onFinish"
         try {
             setLoading(true)
-            const res = await axios.post(
-                "http://localhost:8000/api/v1/place",
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
+            message.loading({
+                content: "Loading...",
+                key,
+                style: {
+                    marginTop: "20vh",
+                },
+            })
+            let res
+            if (place) {
+                res = await updatePlace(formData)
+                console.log(res)
+                message.success({
+                    content: res?.message || "Cập nhật thành công",
+                    key,
+                    duration: 7,
+                    style: {
+                        marginTop: "20vh",
                     },
-                }
-            )
-            if (res.data) {
+                })
+            } else {
+                res = await submitPlace(formData)
+                console.log(res)
+                router.push("/add-place/success")
             }
         } catch (error) {
             console.log("Error:", error)
+            message.error({
+                content: error,
+                key,
+                duration: 4,
+                style: {
+                    marginTop: "20vh",
+                },
+            })
         }
+
         setLoading(false)
     }
 
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo)
     }
+
+    const getCategories = async () => {
+        try {
+            const _benefits = getBenefits()
+            const _tags = getTags()
+            const _regions = getRegions()
+            const benefits = await _benefits
+            const tags = await _tags
+            const regions = await _regions
+            setCategories({
+                tags: tags.data,
+                benefits: benefits.data,
+                regions: regions.data,
+            })
+        } catch (error) {}
+    }
+
+    useEffect(() => {
+        getCategories()
+    }, [])
 
     const onRegionChange = (value) => {
         // console.log(`selected ${value}`)
@@ -145,6 +199,7 @@ const PlaceForm = () => {
                                 message: "Vui lòng nhập tên quán!",
                             },
                         ]}
+                        initialValue={place?.name}
                     >
                         <Input
                             placeholder="Nhập tên quán"
@@ -160,6 +215,7 @@ const PlaceForm = () => {
                                 message: "Vui lòng chọn khu vực!",
                             },
                         ]}
+                        initialValue={place?.region}
                     >
                         <Select
                             showSearch
@@ -172,11 +228,12 @@ const PlaceForm = () => {
                                     .toLowerCase()
                                     .includes(input.toLowerCase())
                             }
+                            // value={"quan-ba-dinh"}
                         >
-                            {regions.map((region, i) => {
+                            {categories.regions.map((region, i) => {
                                 return (
-                                    <Option key={i} value={region.label}>
-                                        {region.label}
+                                    <Option key={i} value={region.slug}>
+                                        {region.name}
                                     </Option>
                                 )
                             })}
@@ -197,6 +254,7 @@ const PlaceForm = () => {
                                     message: "Vui lòng nhập địa chỉ!",
                                 },
                             ]}
+                            initialValue={place?.address?.specific}
                         >
                             <Input placeholder="Nhập địa chỉ cụ thể" />
                         </Form.Item>
@@ -213,8 +271,15 @@ const PlaceForm = () => {
                         </Form.Item>
                     </Form.Item>
 
-                    <Form.Item label="Giới thiệu" name="intro">
-                        <Input.TextArea placeholder="Nhập giới thiệu về quán" />
+                    <Form.Item
+                        label="Giới thiệu"
+                        name="intro"
+                        initialValue={place?.intro}
+                    >
+                        <Input.TextArea
+                            rows={5}
+                            placeholder="Nhập giới thiệu về quán"
+                        />
                     </Form.Item>
                     <Form.Item
                         label="Bạn là chủ quán"
@@ -243,10 +308,22 @@ const PlaceForm = () => {
                                 display: "inline-block",
                                 width: "calc(50% - 25px)",
                             }}
+                            initialValue={
+                                place
+                                    ? moment(
+                                          place?.openingType.slice(0, 5) ||
+                                              place?.time?.open,
+                                          format
+                                      )
+                                    : ""
+                            }
                         >
                             <TimePicker
                                 style={{ width: "100%" }}
-                                // defaultValue={moment("07:00", format)}
+                                // defaultValue={moment(
+                                //     place?.openingType.slice(0, 5),
+                                //     format
+                                // )}
                                 format={format}
                             />
                         </Form.Item>
@@ -269,6 +346,15 @@ const PlaceForm = () => {
                                 display: "inline-block",
                                 width: "calc(50% - 25px)",
                             }}
+                            initialValue={
+                                place
+                                    ? moment(
+                                          place?.openingType.slice(8, 13) ||
+                                              place?.time?.close,
+                                          format
+                                      )
+                                    : ""
+                            }
                         >
                             <TimePicker
                                 style={{ width: "100%" }}
@@ -285,6 +371,7 @@ const PlaceForm = () => {
                                 display: "inline-block",
                                 width: "calc(50% - 25px)",
                             }}
+                            initialValue={place?.price?.min}
                         >
                             <InputNumber
                                 style={{ width: "100%" }}
@@ -312,6 +399,7 @@ const PlaceForm = () => {
                                 display: "inline-block",
                                 width: "calc(50% - 25px)",
                             }}
+                            initialValue={place?.price?.max}
                         >
                             <InputNumber
                                 style={{ width: "100%" }}
@@ -329,6 +417,7 @@ const PlaceForm = () => {
                                 display: "inline-block",
                                 width: "calc(50% - 25px)",
                             }}
+                            initialValue={place?.wifi?.name}
                         >
                             <Input placeholder="Nhập tên wifi" />
                         </Form.Item>
@@ -351,6 +440,7 @@ const PlaceForm = () => {
                                 display: "inline-block",
                                 width: "calc(50% - 25px)",
                             }}
+                            initialValue={place?.wifi?.password}
                         >
                             <Input placeholder="Nhập mật khẩu wifi" />
                         </Form.Item>
@@ -360,14 +450,15 @@ const PlaceForm = () => {
                         label="Kiểu quán"
                         name="tags"
                         valuePropName="checked"
+                        initialValue={place?.tags}
                     >
-                        <Checkbox.Group>
+                        <Checkbox.Group defaultValue={place?.tags}>
                             <Row>
-                                {tags.map((purpose, index) => {
+                                {categories.tags.map((tags, index) => {
                                     return (
                                         <Col key={index} xs={12} lg={8}>
-                                            <Checkbox value={purpose.label}>
-                                                {purpose.label}
+                                            <Checkbox value={tags?.name}>
+                                                {tags?.name}
                                             </Checkbox>
                                         </Col>
                                     )
@@ -379,14 +470,15 @@ const PlaceForm = () => {
                         label="Tiện ích"
                         name="benefits"
                         valuePropName="checked"
+                        initialValue={place?.benefits}
                     >
-                        <Checkbox.Group>
+                        <Checkbox.Group defaultValue={place?.benefits}>
                             <Row>
-                                {benefits.map((benefit, index) => {
+                                {categories.benefits.map((benefit, index) => {
                                     return (
                                         <Col key={index} xs={12} lg={8}>
-                                            <Checkbox value={benefit.label}>
-                                                {benefit.label}
+                                            <Checkbox value={benefit?.name}>
+                                                {benefit?.name}
                                             </Checkbox>
                                         </Col>
                                     )
@@ -402,19 +494,39 @@ const PlaceForm = () => {
                     <hr />
 
                     <div className="py-4 lg:px-4">
-                        <Form.Item label="Điện thoại" name="phone">
+                        <Form.Item
+                            label="Điện thoại"
+                            name="phone"
+                            initialValue={place?.phone}
+                        >
                             <Input placeholder="Nhập số điện thoại" />
                         </Form.Item>
-                        <Form.Item label="Email" name="email">
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            initialValue={place?.email}
+                        >
                             <Input placeholder="Nhập địa chỉ email" />
                         </Form.Item>
-                        <Form.Item label="Facebook" name="facebook">
+                        <Form.Item
+                            label="Facebook"
+                            name="facebook"
+                            initialValue={place?.facebook}
+                        >
                             <Input placeholder="Nhập link facebook" />
                         </Form.Item>
-                        <Form.Item label="Instagram" name="instagram">
+                        <Form.Item
+                            label="Instagram"
+                            name="instagram"
+                            initialValue={place?.instagram}
+                        >
                             <Input placeholder="Nhập link instagram" />
                         </Form.Item>
-                        <Form.Item label="Website" name="website">
+                        <Form.Item
+                            label="Website"
+                            name="website"
+                            initialValue={place?.website}
+                        >
                             <Input placeholder="Nhập link website" />
                         </Form.Item>
                     </div>
@@ -497,7 +609,7 @@ const PlaceForm = () => {
                     size={"large"}
                     disabled={loading}
                 >
-                    Thêm địa điểm
+                    {place ? "Cập nhật" : "Thêm địa điểm"}
                 </Button>
             </Form.Item>
         </Form>
