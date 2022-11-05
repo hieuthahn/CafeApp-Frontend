@@ -1,7 +1,7 @@
 import { Space, Table, Tag, Button, Tooltip } from "antd"
 import React, { useState, useEffect } from "react"
 import listPlace from "./listPlace.json"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { EditOutlined, DeleteOutlined, LeftOutlined } from "@ant-design/icons"
 import { searchPlaces, getPlaceBySlug } from "lib/services/place"
 import Image from "next/image"
 import Link from "next/link"
@@ -43,6 +43,15 @@ const App = (props) => {
     console.log(props.place)
     return (
         <>
+            <div className="flex justify-between">
+                <Tooltip title="Quay lại">
+                    <Button
+                        onClick={() => router.back()}
+                        shape="circle"
+                        icon={<LeftOutlined />}
+                    />
+                </Tooltip>
+            </div>
             <PlaceForm place={props?.place} />
         </>
     )

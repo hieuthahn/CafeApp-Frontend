@@ -7,7 +7,7 @@ import Divider from "@vechaiui/core/src/components/divider"
 import { Button } from "@vechaiui/react"
 import { toSlug } from "lib/utils/"
 import { debounce } from "lib/utils/utils"
-import { searchPlace } from "lib/services/place"
+import { searchPlaces } from "lib/services/place"
 import Image from "next/image"
 
 const SearchBar = () => {
@@ -28,7 +28,7 @@ const SearchBar = () => {
             name,
         }
         try {
-            const res = await searchPlace(body)
+            const res = await searchPlaces(body)
             setSearchResult(res.data)
         } catch (error) {
             console.log(error)

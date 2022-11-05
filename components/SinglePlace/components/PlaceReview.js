@@ -1,26 +1,128 @@
 import { useState, useEffect } from "react"
 import { UserOutlined } from "@ant-design/icons"
-import { Avatar, Button, Modal, Rate, Input, Switch } from "antd"
+import {
+    Avatar,
+    Button,
+    Modal,
+    Rate,
+    Input,
+    Switch,
+    message,
+    Pagination,
+} from "antd"
 const { TextArea } = Input
+import { getReviews, createReview } from "lib/services/review"
+import useBearStore from "lib/data/zustand"
+import moment from "moment"
+moment.locale("vi")
+const format = "DD-MM-YYYY"
+message.config({
+    top: 100,
+    duration: 3,
+    maxCount: 3,
+})
+
+const getAnonymousText = (text) => {
+    return text.replace(/(?!^.?).(?!.{0}$)/g, "*")
+}
 
 const PlaceReview = (props) => {
-    const { place, openReview, setOpenReview } = props
-    const [reviewValue, setReviewValue] = useState({
-        ratePosition: 5,
-        rateView: 5,
-        rateDrink: 5,
-        rateService: 5,
-        ratePrice: 5,
+    const { place } = props
+    const state = useBearStore()
+    const [rate, setRate] = useState({
+        position: 5,
+        view: 5,
+        drink: 5,
+        service: 5,
+        price: 5,
     })
-
-    // ratePosition: 5,
-    //         ratePrice: 5,
-    //         rateService: 5,
-    //         rateView: 5,
-    const [value, setValue] = useState(5)
+    const [newReview, setNewReview] = useState({
+        title: "",
+        content: "",
+        anonymous: false,
+    })
+    const [pagination, setPagination] = useState({
+        page: 1,
+        pageSize: 6,
+    })
+    const [reviews, setReviews] = useState([])
     const desc = ["Quá tệ", "Trung bình", "Bình thường", "Tốt", "Tuyệt vời"]
     const rates = ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"]
-    const hasReview = true
+
+    const getListReview = async () => {
+        try {
+            const res = await getReviews(
+                place?._id,
+                pagination.page,
+                pagination.pageSize
+            )
+            if (res.success) {
+                setReviews(res)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getListReview()
+    }, [pagination])
+
+    const onSubmitReview = async () => {
+        if (!newReview.title || !newReview.content) {
+            message.error("Bạn cần nhập tiêu đề và nội dung đánh giá")
+            return
+        }
+
+        const body = {
+            rate,
+            ...newReview,
+            place: place?._id,
+        }
+        const formData = new FormData()
+        formData.append("data", JSON.stringify(body))
+        try {
+            const res = await createReview(formData)
+            if (res?.success) {
+                state.toggleModalReview()
+                message.success("Viết đánh giá thành công!")
+                resetNewReview()
+                getListReview()
+            }
+        } catch (error) {
+            message.error("Đánh giá thất bại")
+            console.log(error)
+        }
+    }
+
+    const handleReviewChange = (e, name) => {
+        setNewReview((prev) => ({
+            ...prev,
+            [name]: name === "anonymous" ? !prev[name] : e.target.value,
+        }))
+    }
+
+    const onPageChange = (page, pageSize) => {
+        setPagination({
+            page,
+            pageSize,
+        })
+    }
+
+    const resetNewReview = () => {
+        setRate({
+            position: 5,
+            view: 5,
+            drink: 5,
+            service: 5,
+            price: 5,
+        })
+        setNewReview({
+            title: "",
+            content: "",
+            anonymous: false,
+        })
+    }
 
     return (
         <>
@@ -31,25 +133,24 @@ const PlaceReview = (props) => {
                     {" (0)"}
                 </h2>
                 <button
-                    onClick={() => setOpenReview(true)}
+                    onClick={state.toggleModalReview}
                     className="bg-rose-500 text-white text-base font-bold rounded-lg px-2 py-1 hover:bg-rose-700"
                 >
                     {"Viết đánh giá"}
                 </button>
                 <Modal
                     title={
-                        <h3 className="font-bold text-center text-xl">{`Đánh giá ${"Ban công cafe"}`}</h3>
+                        <h3 className="font-bold text-center text-xl">{`Đánh giá ${place?.name}`}</h3>
                     }
                     centered
-                    visible={openReview}
-                    onOk={() => setOpenReview(false)}
-                    onCancel={() => setOpenReview(false)}
+                    visible={state.modalReview}
+                    onCancel={state.toggleModalReview}
                     destroyOnClose={true}
                     footer={
                         <button
                             className="text-white bg-rose-500 hover:bg-rose-700 py-1 px-2 text-base font-semibold rounded-lg my-1"
                             type="submit"
-                            onClick={() => setOpenReview(false)}
+                            onClick={onSubmitReview}
                         >
                             {"Gửi đánh giá"}
                         </button>
@@ -61,7 +162,7 @@ const PlaceReview = (props) => {
                         </h4>
                         <div className="flex flex-col gap-2 pl-3 mb-3">
                             {/* ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"] */}
-                            {Object.keys(reviewValue).map((key, index) => {
+                            {Object.keys(rate).map((key, index) => {
                                 return (
                                     <div
                                         key={index}
@@ -74,17 +175,17 @@ const PlaceReview = (props) => {
                                             <Rate
                                                 className="!text-rose-500 !text-3xl"
                                                 onChange={(value) =>
-                                                    setReviewValue((prev) => ({
+                                                    setRate((prev) => ({
                                                         ...prev,
                                                         [key]: value,
                                                     }))
                                                 }
-                                                value={reviewValue[key]}
+                                                value={rate[key]}
                                                 allowClear={false}
                                             />
-                                            {reviewValue[key] ? (
+                                            {rate[key] ? (
                                                 <span className="ant-rate-text !hidden md:!block text-lg bg-rose-500 text-white font-semibold rounded-lg px-2 !mt-2">
-                                                    {desc[reviewValue[key] - 1]}
+                                                    {desc[rate[key] - 1]}
                                                 </span>
                                             ) : (
                                                 ""
@@ -102,10 +203,15 @@ const PlaceReview = (props) => {
                         <div className="flex flex-col gap-2">
                             <Input
                                 placeholder="Nhập tiêu đề đánh giá"
-                                value={`Đánh giá của ${"Nguyễn Thành Hiếu"} cho ${"Ban Công Cafe"}`}
+                                value={newReview?.title}
+                                onChange={(e) => handleReviewChange(e, "title")}
                                 allowClear
                             />
                             <TextArea
+                                value={newReview?.content}
+                                onChange={(e) =>
+                                    handleReviewChange(e, "content")
+                                }
                                 placeholder="Nhập nội dung đánh giá"
                                 showCount
                                 maxLength={100}
@@ -124,7 +230,10 @@ const PlaceReview = (props) => {
                                 }
                             </span>
                         </div>
-                        <Switch />
+                        <Switch
+                            value={newReview?.anonymous}
+                            onChange={(e) => handleReviewChange(e, "anonymous")}
+                        />
                     </div>
                 </Modal>
             </div>
@@ -155,226 +264,105 @@ const PlaceReview = (props) => {
                     </div>
                 </div>
             </div>
-            {hasReview ? (
+            {reviews?.data?.length ? (
                 <div className="pt-4 mt-6 border-t">
-                    <div className="md:flex md:gap-4 mb-4">
-                        <img
-                            src="https://toidicafe.vn/anonymous.png"
-                            className="hidden md:block w-[64px] h-[64px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
-                        />
-                        <div>
-                            <div className="flex flex-col flex-1 rounded-lg bg-gray-100/80 p-4 shadow-sm">
-                                <div className="flex items-center justify-between w-full pb-2 mb-4 border-b-2">
-                                    <div className="flex gap-2 items-center">
-                                        <img
-                                            src="https://toidicafe.vn/anonymous.png"
-                                            className="block md:hidden w-[32px] h-[32px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
-                                        />
-                                        <div>
-                                            <h3 className="font-bold text-base">
-                                                {"Hiếu Thành"}
-                                            </h3>
-                                            <span className="text-xs">
-                                                {"Đã đánh giá 3 ngày trước"}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span className="bg-rose-500 text-white font-semibold rounded-full w-[32px] h-[32px] text-center leading-[32px]">
-                                        {"5.0"}
-                                    </span>
-                                </div>
-                                <div>
-                                    <div className="break-words whitespace-pre-wrap">
-                                        {
-                                            "Mình nghĩ ai ở HN đủ lâu cũng đều ít nhất 1 lần từng nghe/ từng đi qua chiếc “ban công” siêu thơ này. \nBan công cafe trong 1 căn biệt thự cổ, nằm ngay ngã 3 Đinh Liệt, Hàng Bạc, cùng với “giao diện” ko lẫn vào đâu được. Ko gian bên trong khá rộng, ấm cúng và gần gũi, đương nhiên ko thể thiếu những góc ban công signature của quán. Đặc biệt trên tầng 2 có 1 phòng hoa xinh ngất ngây, \nNgoài đồ uống ra ở đây còn phục vụ đồ ăn, highly recommend cho các đôi đi hẹn hò, hoặc muốn tổ chức tiệc nhỏ buổi tối, từ vị trí, ko gian, đến menu đều rất hợp lý. \nMn đến quán vào cuối tuần có phố đi bộ thì nên gửi xe trước ở 26 Lương Ngọc Quyến nha, hôm mình tới ko biết nên lúc sau phải dắt xe đi gửi nên cũng hơi vất vả. \nCre: Chi Linh Hoàng"
-                                        }
-                                    </div>
-                                    <div className="flex gap-2 w-full h-full mt-2">
-                                        <div
-                                            data-fancybox="1"
-                                            data-src={
-                                                "https://toidicafe.vn/static/images/2022/06/05/6916a657-902a-49bf-8f9a-279dcc87ba06-283993292_3680740732153027_274.jpeg?w=960"
-                                            }
-                                            style={{
-                                                backgroundImage: `url(${"https://toidicafe.vn/static/images/2022/06/05/6916a657-902a-49bf-8f9a-279dcc87ba06-283993292_3680740732153027_274.jpeg?w=960"})`,
-                                                backgroundPosition: "50%",
-                                            }}
-                                            className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
-                                        >
+                    {reviews.data.map((review, index) => (
+                        <div className="md:flex md:gap-4 mb-4" key={index}>
+                            <img
+                                src="https://toidicafe.vn/anonymous.png"
+                                className="hidden md:block w-[64px] h-[64px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
+                            />
+                            <div className="grow">
+                                <div className="flex flex-col flex-1 rounded-lg bg-gray-100/80 p-4 shadow-sm">
+                                    <div className="flex items-center justify-between w-full pb-2 mb-4 border-b-2">
+                                        <div className="flex gap-2 items-center">
                                             <img
-                                                src={
-                                                    "https://toidicafe.vn/static/images/2022/06/05/6916a657-902a-49bf-8f9a-279dcc87ba06-283993292_3680740732153027_274.jpeg?w=960"
-                                                }
-                                                className="hidden"
+                                                src="https://toidicafe.vn/anonymous.png"
+                                                className="block md:hidden w-[32px] h-[32px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
                                             />
-                                        </div>
-                                        <div
-                                            data-fancybox="1"
-                                            data-src={
-                                                "https://toidicafe.vn/static/images/2022/06/05/ad2d42f9-0fb2-420a-8ed8-5edebd61299d-283876858_3680740905486343_136.jpeg?w=960"
-                                            }
-                                            style={{
-                                                backgroundImage: `url(${"https://toidicafe.vn/static/images/2022/06/05/ad2d42f9-0fb2-420a-8ed8-5edebd61299d-283876858_3680740905486343_136.jpeg?w=960"})`,
-                                                backgroundPosition: "50%",
-                                            }}
-                                            className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
-                                        >
-                                            <img
-                                                src={
-                                                    "https://toidicafe.vn/static/images/2022/06/05/ad2d42f9-0fb2-420a-8ed8-5edebd61299d-283876858_3680740905486343_136.jpeg?w=960"
-                                                }
-                                                className="hidden"
-                                            />
-                                        </div>
-                                        <div
-                                            data-fancybox="gallery"
-                                            data-src={
-                                                "https://toidicafe.vn/static/images/2022/06/05/a2a1e1f5-92a1-4ea2-86fd-91ae1e65df85-284281730_3680740772153023_164.jpeg?w=960"
-                                            }
-                                            style={{
-                                                backgroundImage: `url(${"https://toidicafe.vn/static/images/2022/06/05/a2a1e1f5-92a1-4ea2-86fd-91ae1e65df85-284281730_3680740772153023_164.jpeg?w=960"})`,
-                                                backgroundPosition: "50%",
-                                            }}
-                                            className="relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-100 after:transition cursor-pointer"
-                                        >
-                                            <img
-                                                src={
-                                                    "https://toidicafe.vn/static/images/2022/06/05/a2a1e1f5-92a1-4ea2-86fd-91ae1e65df85-284281730_3680740772153023_164.jpeg?w=960"
-                                                }
-                                                className="hidden"
-                                            />
-                                            {place.photos.length > 5 && (
-                                                <span className="absolute z-10 flex justify-center items-center w-full h-full text-white text-base font-bold">
-                                                    {"+"}
-                                                    {place.photos.length - 5}
-                                                    {" ảnh"}
+                                            <div>
+                                                <h3 className="font-bold text-base">
+                                                    {review?.anonymous
+                                                        ? getAnonymousText(
+                                                              review?.author
+                                                                  ?.username
+                                                          )
+                                                        : review?.author
+                                                              ?.username}
+                                                </h3>
+                                                <span className="text-xs">
+                                                    {moment(
+                                                        review?.createdAt
+                                                    ).format(format)}
                                                 </span>
-                                            )}
+                                            </div>
+                                        </div>
+                                        <span className="bg-rose-500 text-white font-semibold rounded-full w-[32px] h-[32px] text-center leading-[32px]">
+                                            {review?.rate?.avg || 0}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <div className="break-all whitespace-pre-wrap">
+                                            {review?.content}
+                                        </div>
+                                        <div className="flex gap-2 w-full h-full mt-2">
+                                            {review?.images?.map((image, i) => {
+                                                return (
+                                                    <div
+                                                        key={i}
+                                                        data-fancybox="1"
+                                                        data-src={
+                                                            image?.url ||
+                                                            image ||
+                                                            ""
+                                                        }
+                                                        style={{
+                                                            backgroundImage: `url(${
+                                                                image?.url ||
+                                                                image ||
+                                                                ""
+                                                            })`,
+                                                            backgroundPosition:
+                                                                "50%",
+                                                        }}
+                                                        className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
+                                                    >
+                                                        <img
+                                                            src={
+                                                                image?.url ||
+                                                                image ||
+                                                                ""
+                                                            }
+                                                            className="hidden"
+                                                        />
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="px-4 py-2">
-                                <button>
-                                    <i className="far fa-heart"></i>
-                                    <span>
-                                        {" 0 "}
-                                        {"Thích"}
-                                    </span>
-                                </button>
+                                <div className="px-4 py-2">
+                                    <button>
+                                        <i className="far fa-heart"></i>
+                                        <span>
+                                            {" 0 "}
+                                            {"Thích"}
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="md:flex md:gap-4 mb-4">
-                        <img
-                            src="https://toidicafe.vn/anonymous.png"
-                            className="hidden md:block w-[64px] h-[64px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
-                        />
-                        <div>
-                            <div className="flex flex-col flex-1 rounded-lg bg-gray-100/80 p-4 shadow-sm">
-                                <div className="flex items-center justify-between w-full pb-2 mb-4 border-b-2">
-                                    <div className="flex gap-2 items-center">
-                                        <img
-                                            src="https://toidicafe.vn/anonymous.png"
-                                            className="block md:hidden w-[32px] h-[32px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
-                                        />
-                                        <div>
-                                            <h3 className="font-bold text-base">
-                                                {"Hiếu Thành"}
-                                            </h3>
-                                            <span className="text-xs">
-                                                {"Đã đánh giá 3 ngày trước"}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span className="bg-rose-500 text-white font-semibold rounded-full w-[32px] h-[32px] text-center leading-[32px]">
-                                        {"5.0"}
-                                    </span>
-                                </div>
-                                <div>
-                                    <div className="break-words whitespace-pre-wrap">
-                                        {
-                                            "Mình nghĩ ai ở HN đủ lâu cũng đều ít nhất 1 lần từng nghe/ từng đi qua chiếc “ban công” siêu thơ này. \nBan công cafe trong 1 căn biệt thự cổ, nằm ngay ngã 3 Đinh Liệt, Hàng Bạc, cùng với “giao diện” ko lẫn vào đâu được. Ko gian bên trong khá rộng, ấm cúng và gần gũi, đương nhiên ko thể thiếu những góc ban công signature của quán. Đặc biệt trên tầng 2 có 1 phòng hoa xinh ngất ngây, \nNgoài đồ uống ra ở đây còn phục vụ đồ ăn, highly recommend cho các đôi đi hẹn hò, hoặc muốn tổ chức tiệc nhỏ buổi tối, từ vị trí, ko gian, đến menu đều rất hợp lý. \nMn đến quán vào cuối tuần có phố đi bộ thì nên gửi xe trước ở 26 Lương Ngọc Quyến nha, hôm mình tới ko biết nên lúc sau phải dắt xe đi gửi nên cũng hơi vất vả. \nCre: Chi Linh Hoàng"
-                                        }
-                                    </div>
-                                    <div className="flex gap-2 w-full h-full mt-2">
-                                        <div
-                                            data-fancybox="1"
-                                            data-src={
-                                                "https://toidicafe.vn/static/images/2022/06/05/6916a657-902a-49bf-8f9a-279dcc87ba06-283993292_3680740732153027_274.jpeg?w=960"
-                                            }
-                                            style={{
-                                                backgroundImage: `url(${"https://toidicafe.vn/static/images/2022/06/05/6916a657-902a-49bf-8f9a-279dcc87ba06-283993292_3680740732153027_274.jpeg?w=960"})`,
-                                                backgroundPosition: "50%",
-                                            }}
-                                            className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
-                                        >
-                                            <img
-                                                src={
-                                                    "https://toidicafe.vn/static/images/2022/06/05/6916a657-902a-49bf-8f9a-279dcc87ba06-283993292_3680740732153027_274.jpeg?w=960"
-                                                }
-                                                className="hidden"
-                                            />
-                                        </div>
-                                        <div
-                                            data-fancybox="1"
-                                            data-src={
-                                                "https://toidicafe.vn/static/images/2022/06/05/ad2d42f9-0fb2-420a-8ed8-5edebd61299d-283876858_3680740905486343_136.jpeg?w=960"
-                                            }
-                                            style={{
-                                                backgroundImage: `url(${"https://toidicafe.vn/static/images/2022/06/05/ad2d42f9-0fb2-420a-8ed8-5edebd61299d-283876858_3680740905486343_136.jpeg?w=960"})`,
-                                                backgroundPosition: "50%",
-                                            }}
-                                            className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
-                                        >
-                                            <img
-                                                src={
-                                                    "https://toidicafe.vn/static/images/2022/06/05/ad2d42f9-0fb2-420a-8ed8-5edebd61299d-283876858_3680740905486343_136.jpeg?w=960"
-                                                }
-                                                className="hidden"
-                                            />
-                                        </div>
-                                        <div
-                                            data-fancybox="gallery"
-                                            data-src={
-                                                "https://toidicafe.vn/static/images/2022/06/05/a2a1e1f5-92a1-4ea2-86fd-91ae1e65df85-284281730_3680740772153023_164.jpeg?w=960"
-                                            }
-                                            style={{
-                                                backgroundImage: `url(${"https://toidicafe.vn/static/images/2022/06/05/a2a1e1f5-92a1-4ea2-86fd-91ae1e65df85-284281730_3680740772153023_164.jpeg?w=960"})`,
-                                                backgroundPosition: "50%",
-                                            }}
-                                            className="relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-100 after:transition cursor-pointer"
-                                        >
-                                            <img
-                                                src={
-                                                    "https://toidicafe.vn/static/images/2022/06/05/a2a1e1f5-92a1-4ea2-86fd-91ae1e65df85-284281730_3680740772153023_164.jpeg?w=960"
-                                                }
-                                                className="hidden"
-                                            />
-                                            {place.photos.length > 5 && (
-                                                <span className="absolute z-10 flex justify-center items-center w-full h-full text-white text-base font-bold">
-                                                    {"+"}
-                                                    {place.photos.length - 5}
-                                                    {" ảnh"}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    ))}
 
-                            <div className="px-4 py-2">
-                                <button>
-                                    <i className="far fa-heart"></i>
-                                    <span>
-                                        {" 0 "}
-                                        {"Thích"}
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <Pagination
+                        className="text-center"
+                        current={pagination?.page}
+                        onChange={onPageChange}
+                        pageSize={pagination?.pageSize}
+                        pageSizeOptions={[6, 10, 20]}
+                        total={reviews?.meta?.totalItems}
+                    />
                 </div>
             ) : (
                 <div className="min-h-[100px] text-base text-center flex items-center justify-center pt-4 mt-6 border-t">

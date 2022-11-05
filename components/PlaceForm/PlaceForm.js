@@ -14,6 +14,7 @@ import {
     Upload,
     BackTop,
     message,
+    Tag,
 } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
 import moment from "moment"
@@ -23,25 +24,74 @@ import axios from "axios"
 import { getBenefits, getTags, getRegions } from "lib/services/category"
 import { submitPlace, updatePlace } from "lib/services/place"
 import { useRouter } from "next/router"
+import useBearStore from "lib/data/zustand"
+import { useSession } from "next-auth/react"
 
 const { Option } = Select
 const format = "HH:mm"
+const listStatus = {
+    rejected: {
+        text: "Không duyệt",
+        color: "error",
+    },
+    published: {
+        text: "Đã duyệt",
+        color: "success",
+    },
+    pending: {
+        text: "Chờ duyệt",
+        color: "warning",
+    },
+    // draft: {
+    //     text: "Tin nháp",
+    //     color: "volcano",
+    // },
+}
 
 const PlaceForm = (props) => {
     const { place } = props
+    const { data: session } = useSession()
     const router = useRouter()
+    const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState("")
     const [previewTitle, setPreviewTitle] = useState("")
-    const [fileListPhotos, setFileListPhotos] = useState([])
-    const [fileListMenu, setFileListMenu] = useState([])
+    const [fileListPhotos, setFileListPhotos] = useState(() => {
+        if (place?.photos?.length) {
+            if (!place?.photos[0]?.url) {
+                return place?.photos.map((photo, index) => ({
+                    uid: index + 1,
+                    name: `Ảnh ${place?.name} ${index + 1}`,
+                    url: photo,
+                }))
+            } else {
+                return place?.photos
+            }
+        } else {
+            return []
+        }
+    })
+    const [fileListMenu, setFileListMenu] = useState(() => {
+        if (place?.menu?.length) {
+            if (!place?.menu[0]?.url) {
+                return place?.menu.map((item, index) => ({
+                    uid: index + 1,
+                    name: `Menu ${place?.name} ${index + 1}`,
+                    url: item,
+                }))
+            } else {
+                return place?.menu
+            }
+        } else {
+            return []
+        }
+    })
     const [categories, setCategories] = useState({
         tags: [],
         benefits: [],
         regions: [],
     })
     const [loading, setLoading] = useState(false)
-    console.log("place-form", place)
 
     const onFinish = async (values) => {
         const data = JSON.stringify(values)
@@ -66,7 +116,7 @@ const PlaceForm = (props) => {
             })
             let res
             if (place) {
-                res = await updatePlace(formData)
+                res = await updatePlace(place?._id, formData)
                 console.log(res)
                 message.success({
                     content: res?.message || "Cập nhật thành công",
@@ -135,7 +185,7 @@ const PlaceForm = (props) => {
             file.preview = await getBase64(file.originFileObj)
         }
 
-        setPreviewImage(file.url || file.preview)
+        setPreviewImage(file.url || file.preview || file)
         setPreviewVisible(true)
         setPreviewTitle(
             file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
@@ -190,6 +240,41 @@ const PlaceForm = (props) => {
                 <hr />
 
                 <div className="py-4 lg:px-4">
+                    {place && (
+                        <Form.Item
+                            label="Trạng thái"
+                            name="status"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Vui lòng chọn trạng thái!",
+                                },
+                            ]}
+                            initialValue={place?.status || "pending"}
+                        >
+                            <Select
+                                placeholder="Chọn trạng thái"
+                                optionFilterProp="children"
+                            >
+                                {Object.keys(listStatus).map((status, i) => {
+                                    return (
+                                        <Option key={i} value={status}>
+                                            {/* {listStatus[status]?.text} */}
+                                            <Tag
+                                                color={
+                                                    listStatus[status]?.color
+                                                }
+                                            >
+                                                <b>
+                                                    {listStatus[status]?.text}
+                                                </b>
+                                            </Tag>
+                                        </Option>
+                                    )
+                                })}
+                            </Select>
+                        </Form.Item>
+                    )}
                     <Form.Item
                         label="Tên quán"
                         name="name"
@@ -309,13 +394,7 @@ const PlaceForm = (props) => {
                                 width: "calc(50% - 25px)",
                             }}
                             initialValue={
-                                place
-                                    ? moment(
-                                          place?.openingType.slice(0, 5) ||
-                                              place?.time?.open,
-                                          format
-                                      )
-                                    : ""
+                                place ? moment(place?.time?.open, format) : ""
                             }
                         >
                             <TimePicker
@@ -347,13 +426,7 @@ const PlaceForm = (props) => {
                                 width: "calc(50% - 25px)",
                             }}
                             initialValue={
-                                place
-                                    ? moment(
-                                          place?.openingType.slice(8, 13) ||
-                                              place?.time?.close,
-                                          format
-                                      )
-                                    : ""
+                                place ? moment(place?.time?.close, format) : ""
                             }
                         >
                             <TimePicker
@@ -601,16 +674,28 @@ const PlaceForm = (props) => {
                 </div>
             </div>
             <Form.Item>
-                <Button
-                    block
-                    htmlType="submit"
-                    type="primary"
-                    shape="round"
-                    size={"large"}
-                    disabled={loading}
-                >
-                    {place ? "Cập nhật" : "Thêm địa điểm"}
-                </Button>
+                {session ? (
+                    <Button
+                        block
+                        htmlType="submit"
+                        type="primary"
+                        shape="round"
+                        size={"large"}
+                        disabled={loading}
+                    >
+                        {place ? "Cập nhật" : "Thêm địa điểm"}
+                    </Button>
+                ) : (
+                    <Button
+                        block
+                        type="primary"
+                        shape="round"
+                        size={"large"}
+                        onClick={toggleModalLogin}
+                    >
+                        {place ? "Cập nhật" : "Thêm địa điểm"}
+                    </Button>
+                )}
             </Form.Item>
         </Form>
     )

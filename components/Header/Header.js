@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react"
+import React, { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
@@ -20,6 +20,8 @@ import { Avatar, Alert, Tabs, Modal } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import Logo from "components/Logo"
 import { signUp } from "lib/services/user"
+import Cookies from "js-cookie"
+import useBearStore from "lib/data/zustand"
 
 const navLinkItems = [
     {
@@ -79,13 +81,15 @@ const navLinkUserItems = [
 
 const Header = () => {
     const { pathname } = useRouter()
+    const { data: session } = useSession()
     const [profile, setProfile] = useState(false)
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState({
         password: false,
         confirmPassword: false,
-        loginDialog: false,
     })
+    const modalLogin = useBearStore((state) => state.modalLogin)
+    const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
     const [alert, setAlert] = useState({
         register: {
             type: "",
@@ -97,14 +101,25 @@ const Header = () => {
         },
     })
 
+    useEffect(() => {
+        if (session) {
+            const data = JSON.stringify({
+                accessToken: session.accessToken,
+                refreshToken: session.refreshToken,
+                roles: session.roles,
+            })
+            Cookies.set("auth", data)
+        } else {
+            Cookies.remove("auth")
+        }
+    }, [session])
+
     const handleToggleShow = (name) => {
         return setShow((prev) => ({
             ...prev,
             [name]: !prev[name],
         }))
     }
-
-    const { data: session } = useSession()
 
     const {
         register,
@@ -137,7 +152,7 @@ const Header = () => {
             }))
             return
         }
-        handleToggleShow("loginDialog")
+        toggleModalLogin()
     }
 
     const onSubmitRegister = async (data) => {
@@ -302,9 +317,7 @@ const Header = () => {
                                         <Button
                                             className="font-semibold cursor-pointer"
                                             color="rose"
-                                            onClick={() =>
-                                                handleToggleShow("loginDialog")
-                                            }
+                                            onClick={toggleModalLogin}
                                         >
                                             Đăng nhập
                                         </Button>
@@ -489,10 +502,8 @@ const Header = () => {
                                                         className="font-semibold cursor-pointer"
                                                         color="rose"
                                                         size="sm"
-                                                        onClick={() =>
-                                                            handleToggleShow(
-                                                                "loginDialog"
-                                                            )
+                                                        onClick={
+                                                            toggleModalLogin
                                                         }
                                                     >
                                                         Đăng nhập
@@ -521,11 +532,7 @@ const Header = () => {
             </div>
 
             {/* Dialog login */}
-            <Modal
-                open={show.loginDialog}
-                onCancel={() => handleToggleShow("loginDialog")}
-                footer={null}
-            >
+            <Modal open={modalLogin} onCancel={toggleModalLogin} footer={null}>
                 <Tabs defaultActiveKey="1" destroyInactiveTabPane>
                     <Tabs.TabPane tab="Đăng nhập" key="1">
                         <form

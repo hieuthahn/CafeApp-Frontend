@@ -19,7 +19,6 @@ const PlaceLanding = () => {
         try {
             const res = await searchPlaces(body)
             setPlaces(res.data)
-            console.log(res)
         } catch (error) {
             console.log(error)
         }
@@ -37,7 +36,7 @@ const PlaceLanding = () => {
                 </h2>
                 <div className="mx-auto w-[90px] h-[2px] bg-rose-500 mt-2 rounded-lg"></div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8 justify-between items-center">
-                    {places.map((place, index) => {
+                    {places?.map((place, index) => {
                         return <PlaceCard place={place} key={index} />
                     })}
                 </div>

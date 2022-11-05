@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Progress } from "antd"
 import { Button } from "@vechaiui/react"
 import { Rate, Tooltip } from "antd"
+import useBearStore from "lib/data/zustand"
 
 import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
 
@@ -11,21 +12,19 @@ const Map = ReactMapboxGl({
         "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ",
 })
 
-const PlaceDetail = ({ place, openReview, setOpenReview }) => {
+const PlaceDetail = ({ place }) => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 rounded-lg min-h-[250px]">
-            <PlaceVote
-                place={place}
-                openReview={openReview}
-                setOpenReview={setOpenReview}
-            />
+            <PlaceVote place={place} />
             <PlaceInfo place={place} />
             <PlaceAddress place={place} />
         </div>
     )
 }
 
-const PlaceVote = ({ place, openReview, setOpenReview }) => {
+const PlaceVote = ({ place }) => {
+    const state = useBearStore()
+
     return (
         <div className="flex-1 bg-white rounded-lg shadow-sm p-4">
             <h2 className="text-xl font-bold !mb-2">{"Đánh giá"}</h2>
@@ -195,7 +194,7 @@ const PlaceVote = ({ place, openReview, setOpenReview }) => {
                             <Button
                                 className="hover:!bg-rose-600 hover:!border-rose-600  hover:text-white cursor-pointer text-lg font-bold !py-5 !border-rose-500 !border-[4px] rounded-lg animate-bounce hover:animate-none"
                                 color="rose"
-                                onClick={() => setOpenReview(true)}
+                                onClick={state.toggleModalReview}
                             >
                                 {"Đánh giá ngay"}
                             </Button>

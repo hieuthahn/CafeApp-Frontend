@@ -33,8 +33,6 @@ const SliderSection = () => {
         getCategories()
     }, [])
 
-    console.log(categories)
-
     return (
         <Fragment>
             <section className="my-12">
