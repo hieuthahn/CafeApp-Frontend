@@ -4,7 +4,7 @@ import Link from "next/link"
 
 const CardSlider = ({ label, image, slug }) => {
     return (
-        <Link href={`/search/?purposes=${slug}`}>
+        <Link href={`/search/?purposes=${label}`}>
             <a>
                 <div className="w-full h-auto mx-auto overflow-x-hidden overflow-y-hidden my-10 rounded-lg select-none">
                     <div className="flex flex-shrink-0 relative w-full sm:w-auto ">

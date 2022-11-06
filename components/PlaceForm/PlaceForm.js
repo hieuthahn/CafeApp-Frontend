@@ -19,9 +19,12 @@ import {
 import { PlusOutlined } from "@ant-design/icons"
 import moment from "moment"
 import { toSlug, getBase64 } from "../../lib/utils"
-import { tags, benefits, regions } from "../../lib/data/sample"
-import axios from "axios"
-import { getBenefits, getTags, getRegions } from "lib/services/category"
+import {
+    getBenefits,
+    getTags,
+    getRegions,
+    getPurposes,
+} from "lib/services/category"
 import { submitPlace, updatePlace } from "lib/services/place"
 import { useRouter } from "next/router"
 import useBearStore from "lib/data/zustand"
@@ -90,6 +93,7 @@ const PlaceForm = (props) => {
         tags: [],
         benefits: [],
         regions: [],
+        purposes: [],
     })
     const [loading, setLoading] = useState(false)
 
@@ -134,7 +138,7 @@ const PlaceForm = (props) => {
         } catch (error) {
             console.log("Error:", error)
             message.error({
-                content: error,
+                content: error || error.message,
                 key,
                 duration: 4,
                 style: {
@@ -147,6 +151,7 @@ const PlaceForm = (props) => {
     }
 
     const onFinishFailed = (errorInfo) => {
+        message.error(errorInfo || errorInfo.message)
         console.log("Failed:", errorInfo)
     }
 
@@ -155,15 +160,20 @@ const PlaceForm = (props) => {
             const _benefits = getBenefits()
             const _tags = getTags()
             const _regions = getRegions()
+            const _purposes = getPurposes()
             const benefits = await _benefits
             const tags = await _tags
             const regions = await _regions
+            const purposes = await _purposes
             setCategories({
                 tags: tags.data,
                 benefits: benefits.data,
                 regions: regions.data,
+                purposes: purposes.data,
             })
-        } catch (error) {}
+        } catch (error) {
+            message.error(error || error.message)
+        }
     }
 
     useEffect(() => {
@@ -317,7 +327,7 @@ const PlaceForm = (props) => {
                         >
                             {categories.regions.map((region, i) => {
                                 return (
-                                    <Option key={i} value={region.slug}>
+                                    <Option key={i} value={region.name}>
                                         {region.name}
                                     </Option>
                                 )
@@ -552,6 +562,26 @@ const PlaceForm = (props) => {
                                         <Col key={index} xs={12} lg={8}>
                                             <Checkbox value={benefit?.name}>
                                                 {benefit?.name}
+                                            </Checkbox>
+                                        </Col>
+                                    )
+                                })}
+                            </Row>
+                        </Checkbox.Group>
+                    </Form.Item>
+                    <Form.Item
+                        label="Tiện ích"
+                        name="purposes"
+                        valuePropName="checked"
+                        initialValue={place?.purposes}
+                    >
+                        <Checkbox.Group defaultValue={place?.purposes}>
+                            <Row>
+                                {categories.purposes.map((purpose, index) => {
+                                    return (
+                                        <Col key={index} xs={12} lg={24}>
+                                            <Checkbox value={purpose?.name}>
+                                                {purpose?.name}
                                             </Checkbox>
                                         </Col>
                                     )

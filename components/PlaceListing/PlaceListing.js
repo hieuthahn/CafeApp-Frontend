@@ -6,8 +6,10 @@ import { Pagination } from "antd"
 import listPlace from "../../pages/management/places/listPlace.json"
 import { searchPlaces, updatePlaceById } from "lib/services/place"
 import { getQueryVar } from "lib/utils/utils"
+import { useRouter } from "next/router"
 
 const PlaceListing = () => {
+    const router = useRouter()
     const [places, setPlaces] = useState([])
     const [region, setRegion] = useState(regions)
     const [purpose, setPurpose] = useState(purposes)
@@ -18,10 +20,10 @@ const PlaceListing = () => {
         name: getQueryVar("q") || "",
         page: 1,
         pagesize: 10,
-        regions: [],
+        regions: getQueryVar("regions") ? [getQueryVar("regions")] : [],
         benefits: [],
         tags: [],
-        purposes: [],
+        purposes: getQueryVar("purposes") ? [getQueryVar("purposes")] : [],
     })
 
     const searchPlace = async () => {

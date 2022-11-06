@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const RegionSlider = ({ label, image, desc, slug }) => {
     return (
-        <Link href={`/search/?regions=${slug}`}>
+        <Link href={`/search/?regions=${label}`}>
             <a>
                 <div className="w-full h-full overflow-x-hidden overflow-y-hidden my-10 rounded-lg select-none">
                     <div className="flex flex-shrink-0 relative w-full sm:w-auto ">

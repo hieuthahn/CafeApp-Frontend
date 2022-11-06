@@ -154,7 +154,7 @@ const SearchBar = () => {
                                     />
                                 </svg>
                             )}
-                            <Link href="/search?q=">
+                            <Link href={`/search?q=${textSearch}`}>
                                 <Button
                                     className="font-semibold cursor-pointer p-5"
                                     variant="solid"

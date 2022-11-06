@@ -6,7 +6,7 @@ import { searchPlaces } from "lib/services/place"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-
+import moment from "moment"
 const status = ["published", "pending", "rejected", "draft"]
 const getStatusLabel = (postStatus) => {
     const map = {
@@ -43,6 +43,7 @@ const App = () => {
     const [body, setBody] = useState({
         page: 1,
         pagesize: 10,
+        status: [],
     })
     const getPlaces = async () => {
         try {
@@ -59,11 +60,22 @@ const App = () => {
     }, [body])
 
     const handleChange = (pagination, filters, sorter) => {
-        setBody((prev) => ({
-            ...prev,
-            page: pagination.current,
-            pagesize: pagination.pageSize,
-        }))
+        if (pagination?.current !== body.page || filters?.status?.length)
+            setBody((prev) => ({
+                ...prev,
+                page: pagination.current,
+                pagesize: pagination.pageSize,
+                status: filters.status,
+            }))
+
+        if (!filters?.status) {
+            setBody((prev) => ({
+                ...prev,
+                page: pagination.current,
+                pagesize: pagination.pageSize,
+                status: [],
+            }))
+        }
     }
 
     const columns = [
@@ -97,14 +109,6 @@ const App = () => {
                 <div className="text-slate-800">{address.specific}</div>
             ),
         },
-        // {
-        //     title: "Đánh giá",
-        //     dataIndex: "review",
-        //     key: "review",
-        //     render: (_, record) => (
-        //         <>{`${record.avgRate || "/"} ${record.reviewCount}`}</>
-        //     ),
-        // },
         {
             title: "Giá tiền",
             dataIndex: "price",
@@ -120,6 +124,10 @@ const App = () => {
                     </span>
                 </div>
             ),
+            sorter: {
+                compare: (a, b) => a.price?.min - b.price?.min,
+                multiple: 1,
+            },
         },
         {
             title: "Đánh giá",
@@ -130,12 +138,43 @@ const App = () => {
                     <div>{rate?.avg}</div>
                 </div>
             ),
+            sorter: {
+                compare: (a, b) => a.rate.avg - b.rate.avg,
+                multiple: 2,
+            },
+        },
+        {
+            title: "Ngày gửi",
+            dataIndex: "createdAt",
+            key: "createdAt",
+            render: (_, createdAt) => (
+                <>{moment(createdAt).format("DD/MM/YYYY")}</>
+            ),
+            sorter: {
+                compare: (a, b) => a.createdAt - b.createdAt,
+                multiple: 3,
+            },
         },
         {
             title: "Trạng thái",
             key: "status",
             dataIndex: "status",
             render: (status) => <>{getStatusLabel(status)}</>,
+            filters: [
+                {
+                    text: "Đã duyệt",
+                    value: "published",
+                },
+                {
+                    text: "Chờ duyệt",
+                    value: "pending",
+                },
+                {
+                    text: "Không duyệt",
+                    value: "rejected",
+                },
+            ],
+            onFilter: (value, place) => place.status.startsWith(value),
         },
         {
             title: "Hành động",
@@ -164,6 +203,7 @@ const App = () => {
             pagination={{
                 defaultCurrent: +body?.page,
                 total: +places?.meta?.totalItems,
+                pageSizeOptions: [10, 20, 30],
             }}
         />
     )
