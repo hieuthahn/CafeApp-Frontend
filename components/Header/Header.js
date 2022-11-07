@@ -58,12 +58,12 @@ const navLinkItems = [
 
 const navLinkUserItems = [
     {
-        path: "/",
+        path: "/profile/setting",
         title: "Trang cá nhân",
         icon: null,
     },
     {
-        path: "/explore",
+        path: "/profile/setting",
         title: "Chỉnh sửa hồ sơ",
         icon: null,
     },
