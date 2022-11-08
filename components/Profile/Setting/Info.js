@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
-import { Button, Tooltip, Form, Input, Switch } from "antd"
+import { Button, Tooltip, Form, Input, Switch, message } from "antd"
 import {
     EditOutlined,
     UserOutlined,
@@ -11,26 +11,12 @@ import {
     FacebookOutlined,
     InstagramOutlined,
 } from "@ant-design/icons"
+import { updateProfile, getProfile } from "lib/services/profile"
 
 const Info = () => {
     const { data: session } = useSession()
-    const [info, setInfo] = useState({
-        name: "Hiếu Nguyễn Thành",
-        username: "Hiếu Admin",
-        hasPassword: true,
-        password: "********",
-        passwordChange: "",
-        confirmPassword: "",
-        email: "hieu@gmail.com",
-        phone: "0969430169",
-        facebook: "",
-        instagram: "",
-        publicSaved: true,
-        publicSocial: true,
-    })
-
+    const [info, setInfo] = useState({})
     const [editInfo, setEditInfo] = useState()
-
     const listInfo = [
         {
             label: "Tên hiển thị",
@@ -69,9 +55,34 @@ const Info = () => {
         },
     ]
 
-    const onEditInfo = (value) => {
-        console.log(value)
+    const onEditInfo = async (value) => {
+        try {
+            const res = await updateProfile(value)
+            if (res.success) {
+                message.success(res?.message)
+                setEditInfo()
+                getInfo()
+                return
+            }
+            message.error(res?.message)
+        } catch (error) {
+            message.error(error)
+            console.log(error)
+        }
     }
+
+    const getInfo = async () => {
+        const res = await getProfile()
+        if (res.success) {
+            setInfo(res.data)
+            return
+        }
+        message.error(res.message)
+    }
+
+    useEffect(() => {
+        getInfo()
+    }, [])
 
     const handleEdit = (name) => {
         if (editInfo !== name) {
@@ -79,18 +90,12 @@ const Info = () => {
         }
     }
 
-    const handleChangeInfoText = (e, name) => {
-        setInfo((prev) => ({
-            ...prev,
-            [name]: e.target.value,
-        }))
-    }
-
     const handleChangeInfoBoolean = (e, name) => {
         setInfo((prev) => ({
             ...prev,
             [name]: !prev[name],
         }))
+        onEditInfo({ [name]: !info[name] })
     }
 
     return (
@@ -121,7 +126,10 @@ const Info = () => {
                                                 <>
                                                     <Form.Item
                                                         className="!mb-3"
-                                                        name={"currentPassword"}
+                                                        name={[
+                                                            "password",
+                                                            "old",
+                                                        ]}
                                                         rules={[
                                                             {
                                                                 required: true,
@@ -136,7 +144,10 @@ const Info = () => {
                                                     </Form.Item>
                                                     <Form.Item
                                                         className="!mb-3"
-                                                        name={"newPassword"}
+                                                        name={[
+                                                            "password",
+                                                            "new",
+                                                        ]}
                                                         rules={[
                                                             {
                                                                 required: true,
@@ -151,9 +162,10 @@ const Info = () => {
                                                     </Form.Item>
                                                     <Form.Item
                                                         className="!mb-3"
-                                                        name={
-                                                            "confirmNewPassword"
-                                                        }
+                                                        name={[
+                                                            "password",
+                                                            "confirm",
+                                                        ]}
                                                         rules={[
                                                             {
                                                                 required: true,
@@ -203,7 +215,9 @@ const Info = () => {
                                         </Form>
                                     ) : (
                                         <div className="text-base ml-7">
-                                            {info[list.key] || `---`}
+                                            {info[list.key] === true
+                                                ? "********"
+                                                : info[list.key] || "---"}
                                         </div>
                                     )}
                                 </div>
