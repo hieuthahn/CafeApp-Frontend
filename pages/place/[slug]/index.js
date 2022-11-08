@@ -24,7 +24,7 @@ const Place = ({ place }) => {
 export const getStaticPaths = async () => {
     const body = {
         page: 1,
-        pagesize: -1,
+        pageSize: -1,
     }
     const res = await searchPlaces(body)
     const paths = res.data.map((place) => ({

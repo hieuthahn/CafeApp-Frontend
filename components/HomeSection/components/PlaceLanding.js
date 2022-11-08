@@ -14,7 +14,7 @@ const PlaceLanding = () => {
                 "price.min": 1,
             },
             page: 1,
-            pagesize: 8,
+            pageSize: 8,
         }
         try {
             const res = await searchPlaces(body)

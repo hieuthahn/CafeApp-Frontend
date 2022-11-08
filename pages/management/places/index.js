@@ -42,7 +42,7 @@ const App = () => {
     const [places, setPlaces] = useState([])
     const [body, setBody] = useState({
         page: 1,
-        pagesize: 10,
+        pageSize: 10,
         status: [],
     })
     const getPlaces = async () => {
@@ -64,7 +64,7 @@ const App = () => {
             setBody((prev) => ({
                 ...prev,
                 page: pagination.current,
-                pagesize: pagination.pageSize,
+                pageSize: pagination.pageSize,
                 status: filters.status,
             }))
 
@@ -72,7 +72,7 @@ const App = () => {
             setBody((prev) => ({
                 ...prev,
                 page: pagination.current,
-                pagesize: pagination.pageSize,
+                pageSize: pagination.pageSize,
                 status: [],
             }))
         }

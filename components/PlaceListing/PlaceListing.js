@@ -19,7 +19,7 @@ const PlaceListing = () => {
     const [body, setBody] = useState({
         name: getQueryVar("q") || "",
         page: 1,
-        pagesize: 10,
+        pageSize: 10,
         regions: getQueryVar("regions") ? [getQueryVar("regions")] : [],
         benefits: [],
         tags: [],
@@ -44,7 +44,7 @@ const PlaceListing = () => {
         setBody((prev) => ({
             ...prev,
             page,
-            pagesize: pageSize,
+            pageSize: pageSize,
         }))
     }
 
@@ -121,7 +121,7 @@ const PlaceListing = () => {
                             defaultCurrent={1}
                             pageSizeOptions={[10, 20, 30]}
                             total={pagination?.totalItems}
-                            pageSize={body?.pagesize}
+                            pageSize={body?.pageSize}
                             current={body?.page}
                             onChange={onPageChange}
                         />

@@ -72,7 +72,7 @@ export const getStaticProps = async (context) => {
 }
 
 export const getStaticPaths = async () => {
-    const res = await searchPlaces({ page: 1, pagesize: -1 })
+    const res = await searchPlaces({ page: 1, pageSize: -1 })
     const paths = res.data.map((post) => ({
         params: { id: post._id.toString() },
     }))

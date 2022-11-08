@@ -13,7 +13,7 @@ const PlaceRelated = () => {
                 "price.min": 1,
             },
             page: 1,
-            pagesize: 3,
+            pageSize: 3,
         }
         try {
             const res = await searchPlaces(body)
