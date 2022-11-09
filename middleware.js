@@ -8,13 +8,26 @@ export async function middleware(req, res) {
         req,
         secret: process.env.NEXTAUTH_SECRET,
     })
-    let allow = protectedRoutes.filter((route) => {
+
+    const allowUser = protectedRoutes.user.filter((route) => {
+        if (req.nextUrl.pathname.search(route) >= 0) {
+            return true
+        }
+    })
+    const allowAdmin = protectedRoutes.admin.filter((route) => {
         if (req.nextUrl.pathname.search(route) >= 0) {
             return true
         }
     })
 
-    if (allow.length > 0 && !session) {
+    if (allowUser.length > 0 && !session) {
+        return NextResponse.redirect(`${origin}`)
+    }
+
+    if (
+        allowAdmin.length > 0 &&
+        (!session || !session.roles.includes("ADMIN"))
+    ) {
         return NextResponse.redirect(`${origin}`)
     }
 }

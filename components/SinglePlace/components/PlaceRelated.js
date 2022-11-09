@@ -8,12 +8,13 @@ const PlaceRelated = () => {
     const getPlaces = async () => {
         const body = {
             sort: {
-                // updatedAt: 1,
+                createdAt: 1,
                 // name: -1,
                 "price.min": 1,
             },
             page: 1,
             pageSize: 3,
+            status: "published",
         }
         try {
             const res = await searchPlaces(body)

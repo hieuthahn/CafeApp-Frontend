@@ -28,7 +28,7 @@ const PlaceListing = () => {
 
     const searchPlace = async () => {
         try {
-            const res = await searchPlaces(body)
+            const res = await searchPlaces({ status: "published" })
             setPlaces(res.data)
             setPagination(res.meta)
         } catch (e) {
@@ -116,7 +116,7 @@ const PlaceListing = () => {
                         return <PlaceItem place={place} key={index} />
                     })}
                 <div className="flex justify-center">
-                    {pagination && (
+                    {pagination?.totalItems > body?.pageSize && (
                         <Pagination
                             defaultCurrent={1}
                             pageSizeOptions={[10, 20, 30]}

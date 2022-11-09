@@ -285,10 +285,9 @@ const PlaceReview = (props) => {
                                                     {review?.anonymous
                                                         ? getAnonymousText(
                                                               review?.author
-                                                                  ?.username
+                                                                  ?.name
                                                           )
-                                                        : review?.author
-                                                              ?.username}
+                                                        : review?.author?.name}
                                                 </h3>
                                                 <span className="text-xs">
                                                     {moment(
@@ -355,14 +354,16 @@ const PlaceReview = (props) => {
                         </div>
                     ))}
 
-                    <Pagination
-                        className="text-center"
-                        current={pagination?.page}
-                        onChange={onPageChange}
-                        pageSize={pagination?.pageSize}
-                        pageSizeOptions={[6, 10, 20]}
-                        total={reviews?.meta?.totalItems}
-                    />
+                    {reviews?.meta?.totalItems > 6 && (
+                        <Pagination
+                            className="text-center"
+                            current={pagination?.page}
+                            onChange={onPageChange}
+                            pageSize={pagination?.pageSize}
+                            pageSizeOptions={[6, 10, 20]}
+                            total={reviews?.meta?.totalItems}
+                        />
+                    )}
                 </div>
             ) : (
                 <div className="min-h-[100px] text-base text-center flex items-center justify-center pt-4 mt-6 border-t">

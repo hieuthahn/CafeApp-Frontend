@@ -6,16 +6,17 @@ import { signOut } from "next-auth/react"
 
 const Sidebar = () => {
     const { data: session } = useSession()
-    console.log(session)
 
     return (
         <div className="bg-white rounded-md p-4">
             <div className="flex gap-4 items-center border-b pb-4 mb-2">
                 <Avatar size={64} icon={<UserOutlined />} />
                 <div className>
-                    <h3 className="font-bold text-xl">{session?.username}</h3>
+                    <h3 className="font-bold text-xl">
+                        {session?.name || session?.username || session?.email}
+                    </h3>
                     {session?.roles.map((role, index) => (
-                        <span className="text-base lowercase">{role}</span>
+                        <span className="text-base">{role}</span>
                     ))}
                 </div>
             </div>

@@ -272,7 +272,7 @@ const Header = () => {
                                                     }
                                                 )}
                                                 {session.roles.includes(
-                                                    "ROLE_ADMIN"
+                                                    "ADMIN"
                                                 ) && (
                                                     <Link
                                                         href={
@@ -291,10 +291,9 @@ const Header = () => {
                                                         </a>
                                                     </Link>
                                                 )}
-
                                                 <li
                                                     onClick={() => signOut()}
-                                                    className="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-rose-500 focus:text-rose-500 focus:outline-none font-bold"
+                                                    className="border-t mt-2 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-rose-500 focus:text-rose-500 focus:outline-none font-bold"
                                                 >
                                                     <div className="flex items-center">
                                                         <span className="ml-2">
@@ -309,7 +308,9 @@ const Header = () => {
                                             icon={<UserOutlined />}
                                         />
                                         <p className="text-gray-800 text-sm mb-0 font-semibold">
-                                            {session.username}
+                                            {session?.name ||
+                                                session?.username ||
+                                                session?.email}
                                         </p>
                                     </div>
                                 ) : (
@@ -613,6 +614,21 @@ const Header = () => {
                             onSubmit={handleSubmit2(onSubmitRegister)}
                             className="space-y-4"
                         >
+                            <FormControl invalid={Boolean(errors2.name)}>
+                                <FormLabel>Tên hiển thị</FormLabel>
+                                <Input
+                                    {...register2("name", {
+                                        required: true,
+                                    })}
+                                    placeholder="Nhập tên hiển thị"
+                                />
+                                {errors2.name &&
+                                    errors2.name.type === "required" && (
+                                        <FormErrorMessage>
+                                            Bạn cần nhập tên hiển thị
+                                        </FormErrorMessage>
+                                    )}
+                            </FormControl>
                             <FormControl invalid={Boolean(errors2.username)}>
                                 <FormLabel>Tên đăng nhập</FormLabel>
                                 <Input
@@ -634,15 +650,21 @@ const Header = () => {
                                 <Input
                                     {...register2("email", {
                                         required: true,
+                                        pattern:
+                                            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                                     })}
                                     placeholder="Nhập địa chỉ email"
                                 />
-                                {errors2.email &&
-                                    errors2.email.type === "required" && (
-                                        <FormErrorMessage>
-                                            Bạn cần nhập Email
-                                        </FormErrorMessage>
-                                    )}
+                                {errors2?.email?.type === "required" && (
+                                    <FormErrorMessage>
+                                        Bạn cần nhập Email
+                                    </FormErrorMessage>
+                                )}
+                                {errors2?.email?.type === "pattern" && (
+                                    <FormErrorMessage>
+                                        Địa chỉ email không hợp lệ
+                                    </FormErrorMessage>
+                                )}
                             </FormControl>
                             <FormControl invalid={Boolean(errors2.password)}>
                                 <FormLabel>Mật khẩu</FormLabel>
@@ -655,6 +677,7 @@ const Header = () => {
                                         placeholder="Nhập mật khẩu của bạn"
                                         {...register2("password", {
                                             required: true,
+                                            minLength: 6,
                                         })}
                                     />
                                     <Input.RightElement className="w-16">
@@ -671,15 +694,20 @@ const Header = () => {
                                     </Input.RightElement>
                                 </Input.Group>
                             </FormControl>
-                            {errors2.password && (
+                            {errors2?.password?.type === "required" && (
                                 <FormErrorMessage>
                                     Bạn cần nhập mật khẩu
+                                </FormErrorMessage>
+                            )}
+                            {errors2?.password?.type === "minLength" && (
+                                <FormErrorMessage>
+                                    Mật khẩu phải có ít nhất 6 ký tự
                                 </FormErrorMessage>
                             )}
                             <FormControl
                                 invalid={Boolean(errors2.confirmPassword)}
                             >
-                                <FormLabel>Mật khẩu</FormLabel>
+                                <FormLabel>Nhập lại mật khẩu</FormLabel>
                                 <Input.Group>
                                     <Input
                                         className="pr-16"

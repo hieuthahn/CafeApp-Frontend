@@ -125,7 +125,7 @@ const PlaceForm = (props) => {
                 message.success({
                     content: res?.message || "Cập nhật thành công",
                     key,
-                    duration: 7,
+                    duration: 4,
                     style: {
                         marginTop: "20vh",
                     },
@@ -570,7 +570,7 @@ const PlaceForm = (props) => {
                         </Checkbox.Group>
                     </Form.Item>
                     <Form.Item
-                        label="Tiện ích"
+                        label="Mục đích"
                         name="purposes"
                         valuePropName="checked"
                         initialValue={place?.purposes}

@@ -27,12 +27,11 @@ export const getStaticPaths = async () => {
         pageSize: -1,
     }
     const res = await searchPlaces(body)
-    console.log(res)
-    // const paths = res?.data?.map((place) => ({
-    //     params: { slug: place?.slug },
-    // }))
+    const paths = res?.data?.map((place) => ({
+        params: { slug: place?.slug },
+    }))
     return {
-        paths: [],
+        paths,
         fallback: false, // can also be true or 'blocking'
     }
 }

@@ -1,12 +1,17 @@
-import { Space, Table, Tag, Button, Tooltip } from "antd"
+import { Space, Table, Tag, Button, Tooltip, Modal, message } from "antd"
 import React, { useState, useEffect } from "react"
-import listPlace from "./listPlace.json"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { searchPlaces } from "lib/services/place"
+import {
+    EditOutlined,
+    DeleteOutlined,
+    ExclamationCircleOutlined,
+} from "@ant-design/icons"
+import { searchPlaces, deletePlaceById } from "lib/services/place"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import moment from "moment"
+
+const { confirm } = Modal
 const status = ["published", "pending", "rejected", "draft"]
 const getStatusLabel = (postStatus) => {
     const map = {
@@ -78,6 +83,27 @@ const App = () => {
         }
     }
 
+    const handleRemovePlace = (place) => {
+        confirm({
+            title: `Bạn muốn xóa địa điểm ${place?.name}?`,
+            icon: <ExclamationCircleOutlined />,
+            async onOk() {
+                try {
+                    const res = await deletePlaceById(place?._id)
+                    if (res.success) {
+                        message.success(res.message)
+                        getPlaces()
+                        return
+                    }
+                    message.error(res.message)
+                } catch (error) {
+                    message.error(error.message || "Xóa không thành công")
+                }
+            },
+            onCancel() {},
+        })
+    }
+
     const columns = [
         {
             title: "Ảnh",
@@ -97,8 +123,13 @@ const App = () => {
             title: "Tên quán",
             dataIndex: "name",
             key: "name",
-            render: (name) => (
-                <a className="font-bold text-slate-800">{name}</a>
+            render: (name, record) => (
+                <a
+                    href={`/place/${record?.slug}`}
+                    className="font-bold text-slate-800"
+                >
+                    {name}
+                </a>
             ),
         },
         {
@@ -187,7 +218,11 @@ const App = () => {
                         </Tooltip>
                     </Link>
                     <Tooltip title="Xóa">
-                        <Button type="primary" icon={<DeleteOutlined />} />
+                        <Button
+                            type="primary"
+                            icon={<DeleteOutlined />}
+                            onClick={() => handleRemovePlace(record)}
+                        />
                     </Tooltip>
                 </Space>
             ),

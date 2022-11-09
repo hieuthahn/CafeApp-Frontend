@@ -65,6 +65,7 @@ const NewReview = () => {
     const handleSearchOptions = async (nextValue) => {
         const body = {
             name: nextValue,
+            status: "published",
         }
         try {
             const res = await searchPlaces(body)

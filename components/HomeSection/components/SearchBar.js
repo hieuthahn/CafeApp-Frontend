@@ -15,6 +15,7 @@ const SearchBar = () => {
     const [searchResult, setSearchResult] = useState([])
     const [textSearch, setTextSearch] = useState("")
     const [loading, setLoading] = useState(false)
+    const [placeRecommended, setPlaceRecommended] = useState([])
     const wrapperRef = useRef(null)
     const clickOutside = useOutsideAlerter(wrapperRef)
     useEffect(() => {
@@ -22,6 +23,20 @@ const SearchBar = () => {
             setOpenChild(false)
         }
     }, [clickOutside])
+
+    useEffect(() => {
+        if (openChild) {
+            ;(async () => {
+                const res = await searchPlaces({
+                    sort: { updatedAt: -1 },
+                    page: 1,
+                    pageSize: 5,
+                    status: "published",
+                })
+                setPlaceRecommended(res.data)
+            })()
+        }
+    }, [openChild])
 
     const handleSearchOptions = async (name) => {
         const body = {
@@ -194,65 +209,74 @@ const SearchBar = () => {
                         }`}
                     >
                         {textSearch !== "" ? (
-                            searchResult.length ? (
+                            !loading && searchResult.length ? (
                                 searchResult.map((item, index) => {
                                     if (index < 5) {
                                         return (
-                                            <div
+                                            <Link
+                                                href={`/place/${item?.slug}`}
                                                 key={index}
-                                                className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
                                             >
-                                                <div>
-                                                    <Image
-                                                        className="rounded"
-                                                        src={item?.photos[0]}
-                                                        width={50}
-                                                        height={50}
-                                                    />
+                                                <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                                    <div>
+                                                        <Image
+                                                            className="rounded"
+                                                            src={
+                                                                item
+                                                                    ?.photos[0] ||
+                                                                item?.photos[0]
+                                                                    ?.url
+                                                            }
+                                                            width={50}
+                                                            height={50}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-base font-bold text-gray-800">
+                                                            {item?.name}
+                                                        </p>
+                                                        <p className="text-sm font-medium text-gray-600 pt-0.5">
+                                                            {
+                                                                item?.address
+                                                                    ?.specific
+                                                            }
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="text-base font-bold text-gray-800">
-                                                        {item.name}
-                                                    </p>
-                                                    <p className="text-sm font-medium text-gray-600 pt-0.5">
-                                                        {
-                                                            item?.address
-                                                                ?.specific
-                                                        }
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            </Link>
                                         )
                                     }
                                 })
                             ) : (
-                                <div className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer">
-                                    <svg
-                                        width={24}
-                                        height={24}
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
-                                            stroke="#000"
-                                            strokeWidth="1.25"
-                                            strokeMiterlimit={10}
-                                        />
-                                        <path
-                                            d="M13.2144 13.2148L17.4999 17.5004"
-                                            stroke="#000"
-                                            strokeWidth="1.25"
-                                            strokeMiterlimit={10}
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                    <div className>
-                                        Xem tất cả tìm kiếm cho
-                                        {`"${textSearch}"`}
+                                <Link href={`/search?q=${textSearch}`}>
+                                    <div className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                        <svg
+                                            width={24}
+                                            height={24}
+                                            viewBox="0 0 20 20"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
+                                                stroke="#000"
+                                                strokeWidth="1.25"
+                                                strokeMiterlimit={10}
+                                            />
+                                            <path
+                                                d="M13.2144 13.2148L17.4999 17.5004"
+                                                stroke="#000"
+                                                strokeWidth="1.25"
+                                                strokeMiterlimit={10}
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                        <div className>
+                                            Xem tất cả tìm kiếm cho
+                                            {`"${textSearch}"`}
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             )
                         ) : (
                             <>
@@ -284,28 +308,42 @@ const SearchBar = () => {
                                     <div className="px-5 py-2 text-base font-bold leading-none text-gray-800">
                                         Đề xuất
                                     </div>
-                                    <Link href="/place/ban-cong-cafe">
-                                        <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
-                                            <div className>
-                                                <Image
-                                                    className="rounded"
-                                                    src="/static/images/place/ban-cong-cafe/ban-cong-cafe-10.jpeg"
-                                                    width={50}
-                                                    height={50}
-                                                />
-                                            </div>
-                                            <div>
-                                                <p className="text-base font-bold text-gray-800">
-                                                    Ban công coffee
-                                                </p>
-                                                <p className="text-sm text-gray-600 pt-0.5">
-                                                    2 Đinh Liệt, Hoàn Kiếm
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </Link>
+                                    {placeRecommended?.map((place, index) => {
+                                        return (
+                                            <Link
+                                                href={`/place/${place?.slug}`}
+                                            >
+                                                <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                                    <div className>
+                                                        <Image
+                                                            className="rounded"
+                                                            src={
+                                                                place
+                                                                    ?.photos[0] ||
+                                                                place?.photos[0]
+                                                                    ?.url
+                                                            }
+                                                            width={50}
+                                                            height={50}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-base font-bold text-gray-800">
+                                                            {place?.name}
+                                                        </p>
+                                                        <p className="text-sm text-gray-600 pt-0.5">
+                                                            {
+                                                                place?.address
+                                                                    ?.specific
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        )
+                                    })}
                                 </div>
-                                <div>
+                                {/* <div>
                                     <div className="px-5 py-2 text-base font-bold leading-none text-gray-800 pt-4">
                                         Đã xem gần đây
                                     </div>
@@ -329,7 +367,7 @@ const SearchBar = () => {
                                             </div>
                                         </div>
                                     </Link>
-                                </div>
+                                </div> */}
                             </>
                         )}
                     </div>

@@ -1,4 +1,7 @@
-const protectedRoutes = ["/management"]
+const protectedRoutes = {
+    user: ["/profile"],
+    admin: ["/management"],
+}
 
 const publicRoutes = ["/"]
 
