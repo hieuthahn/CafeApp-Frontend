@@ -40,7 +40,6 @@ const getStatusLabel = (postStatus) => {
 
 const App = (props) => {
     const router = useRouter()
-    console.log(props.place)
     return (
         <>
             <div className="flex justify-between">
@@ -57,7 +56,7 @@ const App = (props) => {
     )
 }
 
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
     const id = context.params.id
     let res
     try {
@@ -66,22 +65,30 @@ export const getStaticProps = async (context) => {
         console.log(error)
     }
 
+    if (!res.data) {
+        return {
+            notFound: true,
+        }
+    }
+
     return {
         props: { place: res?.data },
     }
 }
 
-export const getStaticPaths = async () => {
-    const res = await searchPlaces({ page: 1, pageSize: -1 })
-    const paths = res.data.map((post) => ({
-        params: { id: post._id.toString() },
-    }))
-
-    return {
-        paths,
-        fallback: false,
-    }
-}
+// export const getStaticPaths = async () => {
+//     const res = await searchPlaces({
+//         page: 1,
+//         pageSize: -1,
+//     })
+//     const paths = res.data.map((post) => ({
+//         params: { id: post._id.toString() },
+//     }))
+//     return {
+//         paths,
+//         fallback: false,
+//     }
+// }
 
 App.layout = "admin"
 

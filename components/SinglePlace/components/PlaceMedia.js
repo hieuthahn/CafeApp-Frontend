@@ -20,54 +20,77 @@ const PlaceMedia = (props) => {
         <>
             <div className="hidden md:flex items-center justify-center h-[355px] gap-1 rounded-lg overflow-hidden">
                 <Fancybox>
-                    {place.photos.map((url, index) => {
+                    {place?.photos?.map((photo, index) => {
                         if (index < 2) {
                             return (
                                 <div
                                     key={index}
                                     data-fancybox="gallery"
-                                    data-src={url}
+                                    data-src={photo?.url || photo}
                                     style={{
-                                        backgroundImage: `url(${url})`,
+                                        backgroundImage: `url(${
+                                            photo?.url || photo
+                                        })`,
                                         backgroundPosition: "50%",
                                     }}
                                     className={`relative w-full h-[355px] bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
                                 >
-                                    <img src={url} className="hidden" />
+                                    <img
+                                        src={photo?.url || photo}
+                                        className="hidden"
+                                    />
                                 </div>
                             )
                         }
                     })}
-                    {place.photos.length > 2 && (
+                    {place?.photos?.length > 2 && (
                         <div className="flex flex-col w-full h-[355px]">
                             {place?.photos[2] && (
                                 <div
                                     data-fancybox="gallery"
-                                    data-src={place?.photos[2]}
+                                    data-src={
+                                        place?.photos[2]?.url ||
+                                        place?.photos[2]
+                                    }
                                     style={{
-                                        backgroundImage: `url(${place?.photos[2]})`,
+                                        backgroundImage: `url(${
+                                            place?.photos[2]?.url ||
+                                            place?.photos[2]
+                                        })`,
                                         backgroundPosition: "50%",
                                     }}
                                     className="relative w-full h-full bg-white bg-cover mb-1 after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer"
                                 >
                                     <img
-                                        src={place?.photos[2]}
+                                        src={
+                                            place?.photos[2]?.url ||
+                                            place?.photos[2]
+                                        }
                                         className="hidden"
                                     />
                                 </div>
                             )}
-                            {place.photos.length === 4 && place?.photos[3] && (
+                            {place?.photos?.length === 4 && place?.photos[3] && (
                                 <div
                                     data-fancybox="gallery"
-                                    data-src={place?.photos[3]}
+                                    data-src={
+                                        place?.photos[3]?.url ||
+                                        place?.photos[3]
+                                    }
                                     style={{
-                                        backgroundImage: `url(${place?.photos[3]})`,
+                                        backgroundImage: `url(${
+                                            place?.photos[3]?.url ||
+                                            place?.photos[3]
+                                        })`,
                                         backgroundPosition: "50%",
                                     }}
                                     className="relative w-full h-full bg-white bg-cover mb-1 after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer"
                                 >
                                     <img
-                                        src={place?.photos[3]}
+                                        src={
+                                            place?.photos[3]?.url ||
+                                            place?.photos[3]
+                                        }
                                         className="hidden"
                                     />
                                 </div>
@@ -76,29 +99,47 @@ const PlaceMedia = (props) => {
                                 <div className="flex w-full h-full">
                                     <div
                                         data-fancybox="gallery"
-                                        data-src={place.photos[3]}
+                                        data-src={
+                                            place?.photos[3]?.url ||
+                                            place?.photos[3]
+                                        }
                                         style={{
-                                            backgroundImage: `url(${place.photos[3]})`,
+                                            backgroundImage: `url(${
+                                                place?.photos[3]?.url ||
+                                                place?.photos[3]
+                                            })`,
                                             backgroundPosition: "50%",
                                         }}
                                         className="relative w-full h-auto bg-white bg-cover mr-1 after:block after:absolute after:inset-0 after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer"
                                     >
                                         <img
-                                            src={place?.photos[3]}
+                                            src={
+                                                place?.photos[3]?.url ||
+                                                place?.photos[3]
+                                            }
                                             className="hidden"
                                         />
                                     </div>
                                     <div
                                         data-fancybox="gallery"
-                                        data-src={place.photos[4]}
+                                        data-src={
+                                            place?.photos[5]?.url ||
+                                            place?.photos[5]
+                                        }
                                         style={{
-                                            backgroundImage: `url(${place.photos[4]})`,
+                                            backgroundImage: `url(${
+                                                place?.photos[5]?.url ||
+                                                place?.photos[5]
+                                            })`,
                                             backgroundPosition: "50%",
                                         }}
                                         className="relative w-full h-auto bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-100 after:transition cursor-pointer"
                                     >
                                         <img
-                                            src={place?.photos[4]}
+                                            src={
+                                                place?.photos[5]?.url ||
+                                                place?.photos[5]
+                                            }
                                             className="hidden"
                                         />
                                         {place.photos.length > 5 && (
@@ -111,20 +152,25 @@ const PlaceMedia = (props) => {
                                     </div>
                                 </div>
                             )}
-                            {place.photos.map((url, index) => {
+                            {place?.photos?.map((photo, index) => {
                                 if (index > 4) {
                                     return (
                                         <div
                                             key={index}
                                             data-fancybox="gallery"
-                                            data-src={url}
+                                            data-src={photo?.url || photo}
                                             style={{
-                                                backgroundImage: `url(${url})`,
+                                                backgroundImage: `url(${
+                                                    photo?.url || photo
+                                                })`,
                                                 backgroundPosition: "50%",
                                             }}
                                             className={`hidden relative w-full h-[355px] bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
                                         >
-                                            <img src={url} className="hidden" />
+                                            <img
+                                                src={photo?.url || photo}
+                                                className="hidden"
+                                            />
                                         </div>
                                     )
                                 }
@@ -147,7 +193,7 @@ const PlaceMedia = (props) => {
                         modules={[FreeMode, Navigation, Thumbs, Pagination]}
                         className="!w-full !max-h-full rounded-[0.25rem] overflow-hidden"
                     >
-                        {place.photos.map((url, index) => {
+                        {place?.photos?.map((url, index) => {
                             return (
                                 <SwiperSlide
                                     key={index}
@@ -195,7 +241,7 @@ const PlaceMedia = (props) => {
                     modules={[FreeMode, Navigation, Thumbs]}
                     className="mt-2"
                 >
-                    {place.photos.map((url, index) => {
+                    {place?.photos?.map((url, index) => {
                         return (
                             <SwiperSlide
                                 key={index}

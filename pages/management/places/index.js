@@ -54,7 +54,6 @@ const App = () => {
         try {
             const res = await searchPlaces(body)
             setPlaces(res)
-            console.log(res)
         } catch (error) {
             console.log(error)
         }

@@ -295,7 +295,7 @@ const NewReview = () => {
                                     suffix={
                                         loading && (
                                             <svg
-                                                class="animate-spin h-5 w-5 mr-3"
+                                                className="animate-spin h-5 w-5 mr-3"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 enableBackground="new 0 0 24 24"
                                                 viewBox="0 0 24 24"

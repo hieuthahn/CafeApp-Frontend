@@ -41,6 +41,7 @@ const SearchBar = () => {
     const handleSearchOptions = async (name) => {
         const body = {
             name,
+            status: "published",
         }
         try {
             const res = await searchPlaces(body)
@@ -82,14 +83,14 @@ const SearchBar = () => {
                             <input
                                 onClick={() => setOpenChild(true)}
                                 type="text"
-                                placeholder="Search"
+                                placeholder="Nhập tên quán..."
                                 className="focus:outline-none border-none grow"
                                 value={textSearch}
                                 onChange={handleTextChange}
                             />
                             {loading && (
                                 <svg
-                                    class="animate-spin h-5 w-5 mr-3"
+                                    className="animate-spin h-5 w-5 mr-3"
                                     xmlns="http://www.w3.org/2000/svg"
                                     enableBackground="new 0 0 24 24"
                                     viewBox="0 0 24 24"
@@ -311,6 +312,7 @@ const SearchBar = () => {
                                     {placeRecommended?.map((place, index) => {
                                         return (
                                             <Link
+                                                key={index}
                                                 href={`/place/${place?.slug}`}
                                             >
                                                 <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">

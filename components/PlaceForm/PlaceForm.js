@@ -102,7 +102,6 @@ const PlaceForm = (props) => {
         const formData = new FormData()
         formData.append("data", data)
         fileListPhotos.forEach((photo, index) => {
-            console.log(photo)
             formData.append("photo", photo.originFileObj)
         })
         fileListMenu.forEach((menu, index) => {
@@ -121,7 +120,6 @@ const PlaceForm = (props) => {
             let res
             if (place) {
                 res = await updatePlace(place?._id, formData)
-                console.log(res)
                 message.success({
                     content: res?.message || "Cập nhật thành công",
                     key,
@@ -132,11 +130,9 @@ const PlaceForm = (props) => {
                 })
             } else {
                 res = await submitPlace(formData)
-                console.log(res)
                 router.push("/add-place/success")
             }
         } catch (error) {
-            console.log("Error:", error)
             message.error({
                 content: error || error.message,
                 key,
@@ -152,7 +148,6 @@ const PlaceForm = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         message.error(errorInfo || errorInfo.message)
-        console.log("Failed:", errorInfo)
     }
 
     const getCategories = async () => {

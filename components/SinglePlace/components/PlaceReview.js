@@ -88,6 +88,8 @@ const PlaceReview = (props) => {
                 message.success("Viết đánh giá thành công!")
                 resetNewReview()
                 getListReview()
+                props.getPlace()
+                return
             }
         } catch (error) {
             message.error("Đánh giá thất bại")

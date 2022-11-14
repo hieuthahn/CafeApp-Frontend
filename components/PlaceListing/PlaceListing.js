@@ -24,15 +24,16 @@ const PlaceListing = () => {
         benefits: [],
         tags: [],
         purposes: getQueryVar("purposes") ? [getQueryVar("purposes")] : [],
+        status: "published",
     })
 
     const searchPlace = async () => {
         try {
-            const res = await searchPlaces({ status: "published" })
+            const res = await searchPlaces(body)
             setPlaces(res.data)
             setPagination(res.meta)
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
+            console.log(error)
         }
     }
 

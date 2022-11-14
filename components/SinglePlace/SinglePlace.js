@@ -5,17 +5,29 @@ import PlaceBenefit from "./components/PlaceBenefit"
 import PlaceRelated from "./components/PlaceRelated"
 import PlaceReview from "./components/PlaceReview"
 
-import { purposes, regions, place, benefits } from "../../lib/data/sample"
+import { searchPlaces, getPlaceBySlug } from "lib/services/place"
 
-const SinglePlace = ({ place }) => {
+const SinglePlace = (props) => {
+    const [place, setPlace] = useState(props.place || {})
+    const getPlace = async () => {
+        if (props?.slug) {
+            try {
+                const res = await getPlaceBySlug(props?.slug)
+                setPlace(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
     return (
         <div className="flex flex-col gap-4 mx-auto container py-4">
-            <PlaceContent place={place} benefits={benefits} />
-            <PlaceDetail place={place} benefits={benefits} />
-            <PlaceBenefit place={place} benefits={benefits} />
+            <PlaceContent place={place} />
+            <PlaceDetail place={place} />
+            <PlaceBenefit place={place} />
             <div className="md:flex gap-4">
                 <div className="md:basis-3/4 h-fit p-4 bg-white shadow-sm rounded-lg">
-                    <PlaceReview place={place} benefits={benefits} />
+                    <PlaceReview place={place} getPlace={getPlace} />
                 </div>
                 <div className="md:basis-1/4 h-fit p-4 bg-white shadow-sm rounded-lg">
                     <PlaceRelated place={place} />

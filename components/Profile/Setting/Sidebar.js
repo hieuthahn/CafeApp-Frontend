@@ -16,7 +16,9 @@ const Sidebar = () => {
                         {session?.name || session?.username || session?.email}
                     </h3>
                     {session?.roles.map((role, index) => (
-                        <span className="text-base">{role}</span>
+                        <span key={index} className="text-base">
+                            {role}
+                        </span>
                     ))}
                 </div>
             </div>

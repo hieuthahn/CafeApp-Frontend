@@ -19,7 +19,6 @@ const PlaceRelated = () => {
         try {
             const res = await searchPlaces(body)
             setPlaces(res.data)
-            console.log(res)
         } catch (error) {
             console.log(error)
         }
