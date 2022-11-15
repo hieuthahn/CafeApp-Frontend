@@ -93,7 +93,7 @@ const PlaceContent = (props) => {
                             className="flex items-center gap-1 hover:text-rose-500"
                             onClick={() => setOpenShare(true)}
                         >
-                            <i class="far fa-share-square text-lg"></i>
+                            <i className="far fa-share-square text-lg"></i>
                             <span className="text-base">
                                 {""}
                                 {"Chia sẻ"}

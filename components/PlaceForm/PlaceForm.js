@@ -113,26 +113,42 @@ const PlaceForm = (props) => {
             message.loading({
                 content: "Loading...",
                 key,
-                style: {
-                    marginTop: "20vh",
-                },
             })
-            let res
+
             if (place) {
-                res = await updatePlace(place?._id, formData)
-                message.success({
-                    content: res?.message || "Cập nhật thành công",
-                    key,
-                    duration: 4,
-                    style: {
-                        marginTop: "20vh",
-                    },
-                })
+                const res = await updatePlace(place?._id, formData)
+                if (res.success) {
+                    message.success({
+                        content: res?.message || "Cập nhật thành công",
+                        key,
+                        duration: 4,
+                    })
+                } else {
+                    message.error({
+                        content: res?.message,
+                        key,
+                        duration: 4,
+                    })
+                }
             } else {
-                res = await submitPlace(formData)
-                router.push("/add-place/success")
+                const res = await submitPlace(formData)
+                if (res.success) {
+                    message.success({
+                        content: "Thàng công!",
+                        key,
+                        duration: 4,
+                    })
+                    router.push("/add-place/success")
+                } else {
+                    message.error({
+                        content: res?.message,
+                        key,
+                        duration: 4,
+                    })
+                }
             }
         } catch (error) {
+            console.log(error)
             message.error({
                 content: error || error.message,
                 key,
