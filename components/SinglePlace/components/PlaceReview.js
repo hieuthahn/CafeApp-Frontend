@@ -343,7 +343,7 @@ const PlaceReview = (props) => {
                                     </div>
                                 </div>
 
-                                <div className="px-4 py-2">
+                                {/* <div className="px-4 py-2">
                                     <button>
                                         <i className="far fa-heart"></i>
                                         <span>
@@ -351,7 +351,7 @@ const PlaceReview = (props) => {
                                             {"Thích"}
                                         </span>
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     ))}

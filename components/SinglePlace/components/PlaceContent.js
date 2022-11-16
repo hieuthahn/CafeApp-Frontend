@@ -14,9 +14,17 @@ import {
 import NotFoundImage from "public/static/images/file-not-found.png"
 import { select, selectAll, removeClass } from "lib/utils/dom"
 import QRCode from "qrcode.react"
+import { getLikeByPlaceId, likePlace } from "lib/services/like"
+import { useSession } from "next-auth/react"
+import useBearStore from "lib/data/zustand"
+import Cookies from "js-cookie"
 
 const PlaceContent = (props) => {
     const { place } = props
+    const { data: session } = useSession(session)
+
+    const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
+    const [like, setLike] = useState()
     const [showMenu, setShowMenu] = useState(false)
     const [openShare, setOpenShare] = useState(false)
 
@@ -40,14 +48,18 @@ const PlaceContent = (props) => {
             if (zaloShareEl) {
                 setTimeout(() => {
                     removeClass("zalo-share-button", zaloShareEl)
-                }, 100)
+                }, 200)
             }
 
-            return () => {
-                document.body.removeChild(script)
-            }
+            // return () => {
+            //     document.body.removeChild(script)
+            // }
         }
     }, [openShare])
+
+    useEffect(() => {
+        getLike()
+    }, [])
 
     const downloadQRCode = () => {
         // Generate download with use canvas and stream
@@ -61,6 +73,30 @@ const PlaceContent = (props) => {
         document.body.appendChild(downloadLink)
         downloadLink.click()
         document.body.removeChild(downloadLink)
+    }
+
+    const getLike = async () => {
+        try {
+            const res = await getLikeByPlaceId(props.place?._id)
+            setLike(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleLikePlace = async () => {
+        const token = Cookies.get("auth")
+        if (!token) {
+            toggleModalLogin()
+            return
+        }
+
+        try {
+            const res = await likePlace(place?._id)
+            getLike()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -145,8 +181,8 @@ const PlaceContent = (props) => {
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 48 48"
-                                        width="40"
-                                        height="40"
+                                        width="36"
+                                        height="36"
                                     >
                                         <path
                                             fill="#2962ff"
@@ -190,13 +226,22 @@ const PlaceContent = (props) => {
                             </div>
                         </Modal>
                         <span>{" — "}</span>
-                        <button className="flex items-center gap-1 hover:text-rose-500">
-                            <i className="far fa-heart text-lg"></i>
-
-                            {/* <i class="fas fa-heart text-rose-500 text-lg"></i> */}
+                        <button
+                            className={`flex items-center gap-1 ${
+                                like?.author?.includes(session?.id)
+                                    ? "text-rose-500"
+                                    : ""
+                            }`}
+                            onClick={() => handleLikePlace()}
+                        >
+                            {like?.author?.includes(session?.id) ? (
+                                <i class="fas fa-heart text-rose-500 text-lg"></i>
+                            ) : (
+                                <i className="far fa-heart text-base"></i>
+                            )}
                             <span className="text-base">
-                                {" 0 "}
-                                {"Thích"}
+                                {like?.likeCount || ""}
+                                {" Thích"}
                             </span>
                         </button>
                     </div>

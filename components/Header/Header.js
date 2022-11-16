@@ -22,6 +22,7 @@ import Logo from "components/Logo"
 import { signUp } from "lib/services/user"
 import Cookies from "js-cookie"
 import useBearStore from "lib/data/zustand"
+import axios from "config/axios"
 
 const navLinkItems = [
     {
@@ -109,6 +110,8 @@ const Header = () => {
                 roles: session.roles,
             })
             Cookies.set("auth", data)
+            axios.defaults.headers.common["Authorization"] =
+                "Token " + session.accessToken
         } else {
             Cookies.remove("auth")
         }
