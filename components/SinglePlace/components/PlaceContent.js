@@ -235,7 +235,7 @@ const PlaceContent = (props) => {
                             onClick={() => handleLikePlace()}
                         >
                             {like?.author?.includes(session?.id) ? (
-                                <i class="fas fa-heart text-rose-500 text-lg"></i>
+                                <i className="fas fa-heart text-rose-500 text-lg"></i>
                             ) : (
                                 <i className="far fa-heart text-base"></i>
                             )}
