@@ -1,13 +1,16 @@
 import React from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 const RegionSlider = ({ label, image, desc, slug }) => {
     return (
         <Link href={`/search/?regions=${label}`}>
             <a>
                 <div className="w-full h-full overflow-x-hidden overflow-y-hidden my-10 rounded-lg select-none">
-                    <div className="flex flex-shrink-0 relative w-full sm:w-auto ">
-                        <img
+                    <div className="flex flex-shrink-0 relative w-auto h-[350px] sm:w-auto ">
+                        <Image
+                            layout="fill"
+                            objectFit="cover"
                             src={image}
                             alt={label}
                             className="object-cover object-center w-[full] h-[300px] sm:h-[330px] hover:scale-105 transition ease-in duration-700"

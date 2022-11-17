@@ -61,7 +61,7 @@ const App = () => {
 
     useEffect(() => {
         getPlaces()
-    }, [body])
+    }, [body, places])
 
     const handleChange = (pagination, filters, sorter) => {
         if (pagination?.current !== body.page || filters?.status?.length)
@@ -110,6 +110,7 @@ const App = () => {
             key: "photos",
             render: (photos) => (
                 <Image
+                    alt="cafe-app"
                     className="rounded"
                     width={80}
                     height={80}

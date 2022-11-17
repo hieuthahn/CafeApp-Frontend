@@ -10,6 +10,6 @@ module.exports = withLess({
             `${content}\n\n@import '${pathToLessFileWithVariables}';`,
     },
     images: {
-        domains: ["toidicafe.vn", "res.cloudinary.com"],
+        domains: ["toidicafe.vn", "res.cloudinary.com", "ik.imagekit.io"],
     },
 })

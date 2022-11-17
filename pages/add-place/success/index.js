@@ -9,6 +9,7 @@ const AddPlace = () => {
     return (
         <div className="container mx-auto flex flex-col justify-center items-center p-8">
             <Image
+                alt="cafe-app"
                 src="https://toidicafe.vn/images/suggest-place.svg"
                 objectFit="cover"
                 width={450}

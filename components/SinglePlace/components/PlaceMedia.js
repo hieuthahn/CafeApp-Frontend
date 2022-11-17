@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react"
+import Image from "next/image"
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react"
 
@@ -35,7 +36,10 @@ const PlaceMedia = (props) => {
                                     }}
                                     className={`relative w-full h-[355px] bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
                                 >
-                                    <img
+                                    <Image
+                                        alt="cafe-app"
+                                        layout="fill"
+                                        objectFit="cover"
                                         src={photo?.url || photo}
                                         className="hidden"
                                     />
@@ -61,7 +65,10 @@ const PlaceMedia = (props) => {
                                     }}
                                     className="relative w-full h-full bg-white bg-cover mb-1 after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer"
                                 >
-                                    <img
+                                    <Image
+                                        alt="cafe-app"
+                                        layout="fill"
+                                        objectFit="cover"
                                         src={
                                             place?.photos[2]?.url ||
                                             place?.photos[2]
@@ -86,7 +93,10 @@ const PlaceMedia = (props) => {
                                     }}
                                     className="relative w-full h-full bg-white bg-cover mb-1 after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer"
                                 >
-                                    <img
+                                    <Image
+                                        alt="cafe-app"
+                                        layout="fill"
+                                        objectFit="cover"
                                         src={
                                             place?.photos[3]?.url ||
                                             place?.photos[3]
@@ -112,7 +122,10 @@ const PlaceMedia = (props) => {
                                         }}
                                         className="relative w-full h-auto bg-white bg-cover mr-1 after:block after:absolute after:inset-0 after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer"
                                     >
-                                        <img
+                                        <Image
+                                            alt="cafe-app"
+                                            layout="fill"
+                                            objectFit="cover"
                                             src={
                                                 place?.photos[3]?.url ||
                                                 place?.photos[3]
@@ -135,7 +148,10 @@ const PlaceMedia = (props) => {
                                         }}
                                         className="relative w-full h-auto bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-100 after:transition cursor-pointer"
                                     >
-                                        <img
+                                        <Image
+                                            alt="cafe-app"
+                                            layout="fill"
+                                            objectFit="cover"
                                             src={
                                                 place?.photos[5]?.url ||
                                                 place?.photos[5]
@@ -167,7 +183,10 @@ const PlaceMedia = (props) => {
                                             }}
                                             className={`hidden relative w-full h-[355px] bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
                                         >
-                                            <img
+                                            <Image
+                                                alt="cafe-app"
+                                                layout="fill"
+                                                objectFit="cover"
                                                 src={photo?.url || photo}
                                                 className="hidden"
                                             />
@@ -205,11 +224,17 @@ const PlaceMedia = (props) => {
                                         data-src={url}
                                     >
                                         <figure className="m-0 bg-black/[0.3] pb-[56.0141509434%] pe-none">
-                                            <img
+                                            <Image
+                                                alt="cafe-app"
+                                                layout="fill"
+                                                objectFit="cover"
                                                 className="w-full h-full object-cover absolute left-0 top-0 blur-[15px] z-[1]"
                                                 src={url}
                                             />
-                                            <img
+                                            <Image
+                                                alt="cafe-app"
+                                                layout="fill"
+                                                objectFit="cover"
                                                 className="w-full h-full object-contain absolute left-0 top-0 z-[2]"
                                                 src={url}
                                             />
@@ -253,7 +278,10 @@ const PlaceMedia = (props) => {
                                 } !transition !duration-300 rounded-[0.25rem] cursor-pointer`}
                             >
                                 <figure className="m-0 bg-slate-200 pb-[56.0141509434%] pe-none">
-                                    <img
+                                    <Image
+                                        alt="cafe-app"
+                                        layout="fill"
+                                        objectFit="cover"
                                         className="w-full h-full object-contain absolute left-0 top-0 z-[2]"
                                         src={url}
                                     />

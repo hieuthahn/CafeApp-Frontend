@@ -13,6 +13,7 @@ const PlaceCard = ({ place }) => {
                 <Link href={`/place/${place?.slug}`}>
                     <a>
                         <Image
+                            alt="cafe-app"
                             width={450}
                             height={300}
                             objectFit="cover"

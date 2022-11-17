@@ -18,11 +18,18 @@ import { getLikeByPlaceId, likePlace } from "lib/services/like"
 import { useSession } from "next-auth/react"
 import useBearStore from "lib/data/zustand"
 import Cookies from "js-cookie"
+import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
+
+const Map = ReactMapboxGl({
+    accessToken:
+        process.env.ACCESS_TOKEN_MAPBOX ||
+        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ",
+})
 
 const PlaceContent = (props) => {
     const { place } = props
     const { data: session } = useSession(session)
-
+    const [modalMapOpen, setModalMapOpen] = useState(false)
     const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
     const [like, setLike] = useState()
     const [showMenu, setShowMenu] = useState(false)
@@ -59,7 +66,7 @@ const PlaceContent = (props) => {
 
     useEffect(() => {
         getLike()
-    }, [])
+    }, [place])
 
     const downloadQRCode = () => {
         // Generate download with use canvas and stream
@@ -78,22 +85,37 @@ const PlaceContent = (props) => {
     const getLike = async () => {
         try {
             const res = await getLikeByPlaceId(props.place?._id)
-            setLike(res.data)
+            setLike(res)
         } catch (error) {
             console.log(error)
         }
     }
-
+    console.log(like)
     const handleLikePlace = async () => {
         const token = Cookies.get("auth")
         if (!token) {
             toggleModalLogin()
             return
         }
-
         try {
             const res = await likePlace(place?._id)
-            getLike()
+            if (res?.data?.modifiedCount > 0) {
+                if (res?.type === "LIKE") {
+                    setLike((prev) => ({
+                        ...prev,
+                        isLiked: true,
+                        likeCount: (prev.likeCount += 1),
+                    }))
+                }
+
+                if (res?.type === "UNLIKE") {
+                    setLike((prev) => ({
+                        ...prev,
+                        isLiked: false,
+                        likeCount: (prev.likeCount -= 1),
+                    }))
+                }
+            }
         } catch (error) {
             console.log(error)
         }
@@ -108,13 +130,46 @@ const PlaceContent = (props) => {
                     <p className="text-base !mb-2">
                         {place?.address?.specific}
                         <span>{" — "}</span>
-                        <a className="text-base font-semibold hover:underline">
+                        <a
+                            onClick={() => setModalMapOpen(true)}
+                            className="text-base font-semibold hover:underline"
+                        >
                             {"Hiển thị bản đồ"}
                         </a>
-                        <span>{" — "}</span>
+                        <Modal
+                            title={
+                                <div className="font-bold text-xl text-center">
+                                    {`${place?.name} - ${place?.address?.specific}`}
+                                </div>
+                            }
+                            width="90vw"
+                            style={{
+                                top: 20,
+                            }}
+                            bodyStyle={{
+                                height: "85vh",
+                                padding: "0px",
+                            }}
+                            open={modalMapOpen}
+                            onCancel={() => setModalMapOpen(false)}
+                            footer={null}
+                        >
+                            <Map
+                                className="col-span-12 md:col-span-8"
+                                style="mapbox://styles/mapbox/streets-v11"
+                                containerStyle={{
+                                    minHeight: "200px",
+                                    height: "100%",
+                                    width: "auto",
+                                    position: "relative",
+                                }}
+                                center={[105.804817, 21.028511]}
+                            ></Map>
+                        </Modal>
+                        {/* <span>{" — "}</span>
                         <a className="text-base font-semibold hover:underline">
                             {"Xem đường đi"}
-                        </a>
+                        </a> */}
                         <span>{" — "}</span>
                         <a
                             className="text-base font-semibold hover:underline"
@@ -228,13 +283,11 @@ const PlaceContent = (props) => {
                         <span>{" — "}</span>
                         <button
                             className={`flex items-center gap-1 ${
-                                like?.author?.includes(session?.id)
-                                    ? "text-rose-500"
-                                    : ""
+                                like?.isLiked ? "text-rose-500" : ""
                             }`}
                             onClick={() => handleLikePlace()}
                         >
-                            {like?.author?.includes(session?.id) ? (
+                            {like?.isLiked ? (
                                 <i className="fas fa-heart text-rose-500 text-lg"></i>
                             ) : (
                                 <i className="far fa-heart text-base"></i>
@@ -255,7 +308,6 @@ const PlaceContent = (props) => {
                         {`Menu của ${place?.name}`}
                     </div>
                 }
-                width="50vw"
                 style={{
                     top: 80,
                 }}
@@ -269,7 +321,7 @@ const PlaceContent = (props) => {
                 footer={null}
             >
                 <Fancybox>
-                    <div className="grid grid-cols-4 p-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 p-4">
                         {place?.menu?.length && place?.menu[0] ? (
                             place?.menu?.map((item, index) => {
                                 return (
@@ -277,15 +329,16 @@ const PlaceContent = (props) => {
                                         key={index}
                                         data-fancybox="gallery"
                                         data-src={item}
-                                        className="rounded text-center cursor-pointer"
+                                        className="rounded text-center cursor-pointer relative w-[auto] h-[150px]"
                                     >
                                         <Image
+                                            alt="cafe-app"
                                             className="rounded"
                                             key={index}
                                             src={item}
-                                            width={150}
-                                            height={150}
-                                            objectFit="contain"
+                                            quality={100}
+                                            objectFit="cover"
+                                            layout="fill"
                                         />
                                     </div>
                                 )
@@ -294,10 +347,11 @@ const PlaceContent = (props) => {
                             <>
                                 <div className="text-center">
                                     <Image
+                                        alt="cafe-app"
                                         src={NotFoundImage}
                                         width={250}
                                         height={250}
-                                        // layout={"fill"}
+                                        layout={"fill"}
                                         objectFit="contain"
                                     />
                                 </div>

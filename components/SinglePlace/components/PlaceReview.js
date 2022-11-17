@@ -11,6 +11,7 @@ import {
     Pagination,
 } from "antd"
 const { TextArea } = Input
+import Image from "next/image"
 import { getReviews, createReview } from "lib/services/review"
 import useBearStore from "lib/data/zustand"
 import moment from "moment"
@@ -66,7 +67,7 @@ const PlaceReview = (props) => {
 
     useEffect(() => {
         getListReview()
-    }, [pagination])
+    }, [pagination, place])
 
     const onSubmitReview = async () => {
         if (!newReview.title || !newReview.content) {
@@ -241,15 +242,18 @@ const PlaceReview = (props) => {
             </div>
 
             {/* linear-gradient(90deg,#ffb8b8,#ffddd8) */}
-            <div className="relative h-[180px] bg-gradient-to-r from-[#ffb8b8] to-[#ffddd8] rounded-lg mt-3 flex justify-center items-center">
+            <div className="relative h-[auto] bg-gradient-to-r from-[#ffb8b8] to-[#ffddd8] rounded-lg mt-3 flex justify-center items-center">
                 <span className="absolute -top-[10px] right-[36px] border-solid border-b-[#ffdcd8] border-b-[10px] border-x-transparent border-x-8 border-t-0"></span>
-                <div className="basis-1/3 h-full">
-                    <img
+                <div className="relative basis-1/3 h-[180px]">
+                    <Image
+                        alt="cafe-app"
+                        layout="fill"
+                        objectFit="contain"
                         className="w-full h-full"
                         src="https://ik.imagekit.io/reviewcafe/Online_Review-cuate_wG_WzURJF.svg"
                     />
                 </div>
-                <div className="basis-2/3 px-2">
+                <div className="basis-2/3 p-4">
                     <h3 className="text-xl font-bold !mb-3">
                         {"Bạn đã từng đến đây?"}
                     </h3>
@@ -270,18 +274,29 @@ const PlaceReview = (props) => {
                 <div className="pt-4 mt-6 border-t">
                     {reviews.data.map((review, index) => (
                         <div className="md:flex md:gap-4 mb-4" key={index}>
-                            <img
-                                src="https://toidicafe.vn/anonymous.png"
-                                className="hidden md:block w-[64px] h-[64px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
-                            />
+                            <div className="relative hidden md:block w-[64px] h-[64px] rounded-full border bg-gray-100/80 shadow-sm">
+                                <Image
+                                    alt="cafe-app"
+                                    layout="fill"
+                                    objectFit="cover"
+                                    src="https://toidicafe.vn/anonymous.png"
+                                    className=""
+                                />
+                            </div>
+
                             <div className="grow">
                                 <div className="flex flex-col flex-1 rounded-lg bg-gray-100/80 p-4 shadow-sm">
                                     <div className="flex items-center justify-between w-full pb-2 mb-4 border-b-2">
                                         <div className="flex gap-2 items-center">
-                                            <img
-                                                src="https://toidicafe.vn/anonymous.png"
-                                                className="block md:hidden w-[32px] h-[32px] rounded-full object-cover border bg-gray-100/80 shadow-sm"
-                                            />
+                                            <div className="relative block md:hidden  w-[32px] h-[32px] rounded-full border bg-gray-100/80 shadow-sm">
+                                                <Image
+                                                    alt="cafe-app"
+                                                    layout="fill"
+                                                    objectFit="cover"
+                                                    src="https://toidicafe.vn/anonymous.png"
+                                                    className=""
+                                                />
+                                            </div>
                                             <div>
                                                 <h3 className="font-bold text-base">
                                                     {review?.anonymous
@@ -328,7 +343,10 @@ const PlaceReview = (props) => {
                                                         }}
                                                         className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
                                                     >
-                                                        <img
+                                                        <Image
+                                                            alt="cafe-app"
+                                                            layout="fill"
+                                                            objectFit="cover"
                                                             src={
                                                                 image?.url ||
                                                                 image ||

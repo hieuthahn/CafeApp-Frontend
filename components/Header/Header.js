@@ -440,16 +440,6 @@ const Header = () => {
                                             {session ? (
                                                 <div className="border-t border-gray-300">
                                                     <div className="w-full flex items-center justify-between pt-1">
-                                                        <div className="flex items-center">
-                                                            <img
-                                                                alt="profile-pic"
-                                                                src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
-                                                                className="w-8 h-8 rounded-full"
-                                                            />
-                                                            <p className=" text-gray-800 text-base leading-4 ml-2 font-semibold">
-                                                                Jane Doe
-                                                            </p>
-                                                        </div>
                                                         <ul className="flex">
                                                             <li className="cursor-pointer text-gray-800 pt-5 pb-3">
                                                                 <div className="w-6 h-6 md:w-8 md:h-8">

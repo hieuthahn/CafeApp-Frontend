@@ -9,7 +9,6 @@ import { getQueryVar } from "lib/utils/utils"
 import { useRouter } from "next/router"
 
 const PlaceListing = () => {
-    const router = useRouter()
     const [places, setPlaces] = useState([])
     const [region, setRegion] = useState(regions)
     const [purpose, setPurpose] = useState(purposes)

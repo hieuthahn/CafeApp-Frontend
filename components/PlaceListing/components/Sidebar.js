@@ -173,6 +173,7 @@ const Sidebar = (props) => {
                                             </div>
                                         </div>
                                         <Image
+                                            alt="cafe-app"
                                             width="100%"
                                             height="100%"
                                             objectFit="cover"

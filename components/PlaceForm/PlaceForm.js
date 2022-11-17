@@ -29,6 +29,7 @@ import { submitPlace, updatePlace } from "lib/services/place"
 import { useRouter } from "next/router"
 import useBearStore from "lib/data/zustand"
 import { useSession } from "next-auth/react"
+import Image from "next/image"
 
 const { Option } = Select
 const format = "HH:mm"
@@ -213,7 +214,8 @@ const PlaceForm = (props) => {
         )
     }
 
-    const handleChangePhotos = ({ file, fileList: newFileList }) => {
+    const handleChangePhotos = ({ file, fileList: newFileList, event }) => {
+        // console.log(file, event)
         setFileListPhotos(newFileList)
     }
 
@@ -653,7 +655,7 @@ const PlaceForm = (props) => {
 
                     <div className="py-4 lg:px-4">
                         <Upload
-                            // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
                             fileList={fileListPhotos}
                             onPreview={handlePreview}
@@ -686,7 +688,7 @@ const PlaceForm = (props) => {
                     <hr />
                     <div className="py-4 lg:px-4">
                         <Upload
-                            // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
                             fileList={fileListMenu}
                             onPreview={handlePreview}

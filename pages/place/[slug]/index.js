@@ -5,6 +5,8 @@ import Script from "next/script"
 import { searchPlaces, getPlaceBySlug } from "lib/services/place"
 
 const Place = ({ place, slug }) => {
+    console.log(place)
+
     return (
         <>
             <Script

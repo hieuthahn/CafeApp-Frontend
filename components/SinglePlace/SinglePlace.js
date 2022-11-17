@@ -20,6 +20,10 @@ const SinglePlace = (props) => {
         }
     }
 
+    useEffect(() => {
+        setPlace(props.place)
+    }, [props.place])
+
     return (
         <div className="flex flex-col gap-4 mx-auto container py-4">
             <PlaceContent place={place} />

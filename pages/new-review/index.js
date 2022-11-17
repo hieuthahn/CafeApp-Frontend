@@ -77,7 +77,7 @@ const NewReview = () => {
     }
 
     const debounceSearch = useCallback(
-        debounce((nextValue) => handleSearchOptions(nextValue), 1000),
+        () => debounce((nextValue) => handleSearchOptions(nextValue), 1000),
         []
     )
 
@@ -191,6 +191,7 @@ const NewReview = () => {
                         <div className="border rounded-lg">
                             <div className="flex rounded-lg w-full overflow-hidden">
                                 <Image
+                                    alt="cafe-app"
                                     width="210px"
                                     height="160px"
                                     src={
@@ -424,6 +425,7 @@ const NewReview = () => {
                                                 >
                                                     <div>
                                                         <Image
+                                                            alt="cafe-app"
                                                             className="rounded"
                                                             src={
                                                                 place?.photos[0]
@@ -461,7 +463,7 @@ const NewReview = () => {
                                         className="flex items-center hover:bg-gray-100 rounded-lg cursor-pointer p-2"
                                         onClick={() => handleClickPlace()}
                                     >
-                                        <Image
+                                        <Image alt='cafe-app'
                                             width="40"
                                             height="40"
                                             src="/static/images/purpose/chill-370x247.png"

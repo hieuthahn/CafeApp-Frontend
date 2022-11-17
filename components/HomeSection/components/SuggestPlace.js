@@ -1,14 +1,17 @@
 import React from "react"
 import Link from "next/link"
 import { Button } from "@vechaiui/react"
+import Image from "next/image"
 
 const SuggestPlace = () => {
     return (
         <div className="flex justify-center items-center">
-            <div>
-                <img
+            <div className="relative w-[220px] h-[220px]">
+                <Image
+                    alt="cafe-app"
+                    layout="fill"
+                    objectFit="cover"
                     src="/static/images/suggest-place.svg"
-                    className="w-[220px]"
                 />
             </div>
             <div className="p-6">

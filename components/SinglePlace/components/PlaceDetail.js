@@ -6,6 +6,7 @@ import useBearStore from "lib/data/zustand"
 import moment from "moment"
 const format = "HH:mm"
 import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
+import Image from "next/image"
 
 const Map = ReactMapboxGl({
     accessToken:
@@ -438,7 +439,10 @@ const PlaceAddress = ({ place }) => {
                         }}
                     >
                         <div className="relative flex justify-between items-center gap-3 font-['Quicksand']">
-                            <img
+                            <Image
+                                alt="cafe-app"
+                                layout="fill"
+                                objectFit="cover"
                                 src={place?.photos[0]}
                                 className="rounded-md object-cover w-[40px] h-[40px]"
                             />

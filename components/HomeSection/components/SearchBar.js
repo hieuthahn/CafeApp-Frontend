@@ -53,7 +53,7 @@ const SearchBar = () => {
     }
 
     const debounceSearch = useCallback(
-        debounce((nextValue) => handleSearchOptions(nextValue), 1000),
+        () => debounce((nextValue) => handleSearchOptions(nextValue), 1000),
         []
     )
 
@@ -221,6 +221,7 @@ const SearchBar = () => {
                                                 <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
                                                     <div>
                                                         <Image
+                                                            alt="cafe-app"
                                                             className="rounded"
                                                             src={
                                                                 item
@@ -318,6 +319,7 @@ const SearchBar = () => {
                                                 <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
                                                     <div className>
                                                         <Image
+                                                            alt="cafe-app"
                                                             className="rounded"
                                                             src={
                                                                 place
@@ -352,7 +354,7 @@ const SearchBar = () => {
                                     <Link href="/place/ban-cong-cafe">
                                         <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
                                             <div className>
-                                                <Image
+                                                <Image alt='cafe-app'
                                                     className="rounded"
                                                     src="/static/images/place/ban-cong-cafe/ban-cong-cafe-10.jpeg"
                                                     width={50}

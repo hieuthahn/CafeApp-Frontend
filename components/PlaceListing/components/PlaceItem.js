@@ -14,6 +14,7 @@ const PlaceItem = ({ place }) => {
                     <div className="w-[120px] md:w-[270px] h-full rounded-lg">
                         <figure className="relative w-full h-full overflow-hidden">
                             <Image
+                                alt="cafe-app"
                                 layout="fill"
                                 objectFit="cover"
                                 src={
