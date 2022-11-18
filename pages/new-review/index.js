@@ -1,6 +1,15 @@
 import { useState, useEffect, useCallback } from "react"
 import { UserOutlined } from "@ant-design/icons"
-import { Avatar, Button, Modal, Rate, Input, Switch, Select } from "antd"
+import {
+    Avatar,
+    Button,
+    Modal,
+    Rate,
+    Input,
+    Switch,
+    Select,
+    message,
+} from "antd"
 import Link from "next/link"
 import Image from "next/image"
 const { TextArea } = Input
@@ -36,7 +45,13 @@ const NewReview = () => {
     const rates = ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"]
 
     const onSubmitReview = async () => {
-        if (!placeChosen || !rate || !review) {
+        if (!placeChosen || !rate) {
+            message.error("Bạn cần chọn địa điểm")
+            return
+        }
+
+        if (!review.title || !review.content) {
+            message.error("Bạn cần nhập tiêu đề và nội dung đánh giá")
             return
         }
 
@@ -77,7 +92,7 @@ const NewReview = () => {
     }
 
     const debounceSearch = useCallback(
-        () => debounce((nextValue) => handleSearchOptions(nextValue), 1000),
+        debounce((nextValue) => handleSearchOptions(nextValue), 1000),
         []
     )
 

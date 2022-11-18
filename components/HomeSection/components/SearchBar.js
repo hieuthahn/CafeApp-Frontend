@@ -53,7 +53,7 @@ const SearchBar = () => {
     }
 
     const debounceSearch = useCallback(
-        () => debounce((nextValue) => handleSearchOptions(nextValue), 1000),
+        debounce((nextValue) => handleSearchOptions(nextValue), 1000),
         []
     )
 
