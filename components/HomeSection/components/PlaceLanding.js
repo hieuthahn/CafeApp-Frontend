@@ -43,7 +43,7 @@ const PlaceLanding = () => {
                               return <PlaceCard place={place} key={index} />
                           })
                         : [...Array(8).keys()].map((item) => (
-                              <div className="flex flex-col gap-2">
+                              <div key={item} className="flex flex-col gap-2">
                                   <Skeleton.Avatar
                                       active
                                       size={220}

@@ -118,6 +118,7 @@ const PlaceListing = () => {
                 {loading ? (
                     [...Array(body?.pageSize).keys()].map((item) => (
                         <Skeleton
+                            key={item}
                             loading
                             active
                             avatar={{
