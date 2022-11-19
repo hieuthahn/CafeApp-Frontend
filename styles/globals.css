@@ -8,6 +8,10 @@
         --color-secondary: #700f0f;
     } */
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
         @apply bg-gray-100 !important;
         /* // font-size: 1.6rem; */
@@ -63,4 +67,16 @@
 
 .ant-table-pagination {
     margin: 16px 0 !important;
+}
+
+.ant-collapse-header {
+    padding: 12px 8px !important;
+}
+
+.ant-collapse-content-box {
+    padding: 4px 12px !important;
+}
+
+.active > svg > path {
+    fill: #f43f5e;
 }

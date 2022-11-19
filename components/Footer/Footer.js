@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="w-full bg-[url('https://ik.imagekit.io/reviewcafe/bg-dark_XOhLpLNAe0S.jpg')] xl:px-20 lg:px-12 sm:px-6 px-4 py-12">
             <div className="flex flex-col items-center justify-center">
                 <div>
-                    <Link href="/">
+                    <Link href="/" passHref legacyBehavior>
                         <a>
                             <svg
                                 viewBox="0 0 396 247"
@@ -149,7 +149,12 @@ const Footer = () => {
                 <div className="flex flex-wrap sm:gap-10 gap-8 items-center justify-center mt-4">
                     {footerLinkItems.map((item, index) => {
                         return (
-                            <Link key={index} href={item.path}>
+                            <Link
+                                key={index}
+                                href={item.path}
+                                passHref
+                                legacyBehavior
+                            >
                                 <a>
                                     <p className="hover:text-rose-500 text-base text-semibold cursor-pointer leading-4 text-slate-50">
                                         {item.title}

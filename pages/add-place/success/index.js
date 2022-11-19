@@ -20,7 +20,7 @@ const AddPlace = () => {
                 trong thời gian sớm nhất!
             </div>
             <div className="text-center">
-                <Link href={"/"}>
+                <Link href={"/"} passHref legacyBehavior>
                     <Button
                         size="large"
                         // type="primary"
@@ -30,7 +30,7 @@ const AddPlace = () => {
                         Quay về trang chủ
                     </Button>
                 </Link>
-                <Link href={"/add-place"}>
+                <Link href={"/add-place"} passHref legacyBehavior>
                     <Button
                         className="ml-4"
                         size="large"

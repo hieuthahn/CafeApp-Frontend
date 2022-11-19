@@ -172,7 +172,11 @@ const SearchBar = (props) => {
                                     />
                                 </svg>
                             )}
-                            <Link href={`/search?q=${textSearch}`}>
+                            <Link
+                                href={`/search?q=${textSearch}`}
+                                passHref
+                                legacyBehavior
+                            >
                                 {props.iconSearch ? (
                                     <svg
                                         // className="fill-white"
@@ -245,6 +249,8 @@ const SearchBar = (props) => {
                                                 <Link
                                                     href={`/place/${item?.slug}`}
                                                     key={index}
+                                                    passHref
+                                                    legacyBehavior
                                                 >
                                                     <div
                                                         onClick={() =>
@@ -285,7 +291,11 @@ const SearchBar = (props) => {
                                         }
                                     })
                                 ) : (
-                                    <Link href={`/search?q=${textSearch}`}>
+                                    <Link
+                                        href={`/search?q=${textSearch}`}
+                                        passHref
+                                        legacyBehavior
+                                    >
                                         <div
                                             className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer"
                                             onClick={() => setOpenChild(false)}
@@ -328,7 +338,7 @@ const SearchBar = (props) => {
                             )
                         ) : (
                             <>
-                                <Link href="/search?q=">
+                                <Link href="/search?q=" passHref legacyBehavior>
                                     <div
                                         onClick={() => setOpenChild(false)}
                                         className="flex items-center gap-2 text-base font-semibold leading-none text-gray-800 py-3 px-5 hover:bg-slate-100 cursor-pointer"
@@ -364,6 +374,8 @@ const SearchBar = (props) => {
                                             <Link
                                                 key={index}
                                                 href={`/place/${place?.slug}`}
+                                                passHref
+                                                legacyBehavior
                                             >
                                                 <div
                                                     className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
@@ -405,7 +417,7 @@ const SearchBar = (props) => {
                                     <div className="px-5 py-2 text-base font-bold leading-none text-gray-800 pt-4">
                                         Đã xem gần đây
                                     </div>
-                                    <Link href="/place/ban-cong-cafe">
+                                    <Link href="/place/ban-cong-cafe" passHref legacyBehavior>
                                         <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
                                             <div className>
                                                 <Image alt='cafe-app'

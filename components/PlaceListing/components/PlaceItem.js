@@ -6,10 +6,14 @@ import { toSlug } from "lib/utils"
 
 const BASE_URL = "/place"
 
-const PlaceItem = ({ place }) => {
+const PlaceItem = ({ place, className }) => {
     return (
-        <div className="mb-5 rounded-lg shadow-sm bg-white flex ">
-            <Link href={`${BASE_URL}/${place?.slug}`}>
+        <div
+            className={`rounded-lg shadow-sm bg-white flex ${
+                className ? className : "mb-5"
+            } `}
+        >
+            <Link href={`${BASE_URL}/${place?.slug}`} passHref legacyBehavior>
                 <a className="py-2 pl-2">
                     <div className="w-[120px] md:w-[270px] h-full rounded-lg">
                         <figure className="relative w-full h-full overflow-hidden">
@@ -32,7 +36,11 @@ const PlaceItem = ({ place }) => {
             </Link>
 
             <div className="pl-4 py-2 pr-2 flex flex-col md:gap-2 grow">
-                <Link href={`${BASE_URL}/${place?.slug}`}>
+                <Link
+                    href={`${BASE_URL}/${place?.slug}`}
+                    passHref
+                    legacyBehavior
+                >
                     <a>
                         <h4 className="text-xl font-bold hover:underline ">
                             {place?.name || "EEBakery Coffee"}

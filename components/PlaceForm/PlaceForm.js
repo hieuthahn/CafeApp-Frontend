@@ -164,7 +164,7 @@ const PlaceForm = (props) => {
     }
 
     const onFinishFailed = (errorInfo) => {
-        message.error(errorInfo || errorInfo.message)
+        message.error("Không thành công!")
     }
 
     const getCategories = async () => {
@@ -238,6 +238,12 @@ const PlaceForm = (props) => {
 
     const handlePlaceFormChange = (name) => {
         // console.log(name)
+    }
+
+    const dummyRequest = ({ file, onSuccess }) => {
+        setTimeout(() => {
+            onSuccess("ok")
+        }, 0)
     }
 
     return (
@@ -655,7 +661,7 @@ const PlaceForm = (props) => {
 
                     <div className="py-4 lg:px-4">
                         <Upload
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            customRequest={dummyRequest}
                             listType="picture-card"
                             fileList={fileListPhotos}
                             onPreview={handlePreview}
@@ -688,7 +694,7 @@ const PlaceForm = (props) => {
                     <hr />
                     <div className="py-4 lg:px-4">
                         <Upload
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            customRequest={dummyRequest}
                             listType="picture-card"
                             fileList={fileListMenu}
                             onPreview={handlePreview}

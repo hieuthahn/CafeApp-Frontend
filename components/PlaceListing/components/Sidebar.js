@@ -123,6 +123,8 @@ const Sidebar = (props) => {
                                         <div className="flex flex-col text-sm">
                                             <Link
                                                 href={`/place/${place?.slug}`}
+                                                passHref
+                                                legacyBehavior
                                             >
                                                 <a>
                                                     <h4 className="text-base font-bold hover:underline ">
@@ -210,7 +212,7 @@ const Sidebar = (props) => {
                     >
                         <Panel
                             header={
-                                <div className="text-base font-semibold pb-0">
+                                <div className="text-base font-semibold !pb-0">
                                     {"Khu vực"}
                                 </div>
                             }
@@ -222,7 +224,7 @@ const Sidebar = (props) => {
                                         (region, index) => {
                                             return (
                                                 <div
-                                                    className="mt-2"
+                                                    className="mb-2"
                                                     key={index}
                                                 >
                                                     <Checkbox
@@ -258,7 +260,7 @@ const Sidebar = (props) => {
                                         (purpose, index) => {
                                             return (
                                                 <div
-                                                    className="mt-2"
+                                                    className="mb-2"
                                                     key={index}
                                                 >
                                                     <Checkbox
@@ -292,7 +294,7 @@ const Sidebar = (props) => {
                                 {categories &&
                                     categories?.tags?.map((tag, index) => {
                                         return (
-                                            <div className="mt-2" key={index}>
+                                            <div className="mb-2" key={index}>
                                                 <Checkbox
                                                     checked={body.tags.includes(
                                                         tag?.name
@@ -349,7 +351,7 @@ const Sidebar = (props) => {
                                         (benefit, index) => {
                                             return (
                                                 <div
-                                                    className="mt-2"
+                                                    className="mb-2"
                                                     key={index}
                                                 >
                                                     <Checkbox

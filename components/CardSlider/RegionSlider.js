@@ -4,7 +4,7 @@ import Image from "next/image"
 
 const RegionSlider = ({ label, image, desc, slug }) => {
     return (
-        <Link href={`/search/?regions=${label}`}>
+        <Link href={`/search/?regions=${label}`} passHref legacyBehavior>
             <a>
                 <div className="w-full h-full overflow-x-hidden overflow-y-hidden my-10 rounded-lg select-none">
                     <div className="flex flex-shrink-0 relative w-auto h-[350px] sm:w-auto ">

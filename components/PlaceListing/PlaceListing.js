@@ -58,8 +58,8 @@ const PlaceListing = () => {
     }
 
     return (
-        <div className="grid grid-cols-12 container mx-auto p-6">
-            <div className="hidden md:block md:col-span-3 pr-3">
+        <div className="grid grid-cols-12 container mx-auto md:p-6 grid-flow-dense">
+            <div className="col-span-12 md:col-span-3 pr-3 order-last md:order-none my-5 md:my-0">
                 <Sidebar
                     regions={region}
                     purposes={purpose}
@@ -78,43 +78,45 @@ const PlaceListing = () => {
                         {" Địa điểm khớp với tìm kiếm của bạn:"}
                     </span>
                 </div>
-                <div className="mb-3 flex flex-wrap gap-2">
-                    {body.regions.map((item, index) => {
-                        return (
-                            <span
-                                key={index}
-                                className="flex gap-1 items-center text-rose-500 border border-rose-500 rounded-lg w-fit py-1 pl-2 pr-1 bg-white text-sm font-bold"
-                            >
-                                {item}
+                {body.regions.length > 0 && (
+                    <div className="mb-3 flex flex-wrap gap-2">
+                        {body.regions.map((item, index) => {
+                            return (
                                 <span
-                                    className="cursor-pointer mt-[2px]"
-                                    onClick={() => onDeleteTag(item)}
+                                    key={index}
+                                    className="flex gap-1 items-center text-rose-500 border border-rose-500 rounded-lg w-fit py-1 pl-2 pr-1 bg-white text-sm font-bold"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        id="Layer_1"
-                                        x="0"
-                                        y="0"
-                                        version="1.1"
-                                        viewBox="0 0 29 29"
+                                    {item}
+                                    <span
+                                        className="cursor-pointer mt-[2px]"
+                                        onClick={() => onDeleteTag(item)}
                                     >
-                                        <path
-                                            fill="#eee"
-                                            stroke="#999"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeMiterlimit="10"
-                                            strokeWidth="2"
-                                            d="M9.197 19.803L19.803 9.197M9.197 9.197l10.606 10.606"
-                                        />
-                                    </svg>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            id="Layer_1"
+                                            x="0"
+                                            y="0"
+                                            version="1.1"
+                                            viewBox="0 0 29 29"
+                                        >
+                                            <path
+                                                fill="#eee"
+                                                stroke="#999"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeMiterlimit="10"
+                                                strokeWidth="2"
+                                                d="M9.197 19.803L19.803 9.197M9.197 9.197l10.606 10.606"
+                                            />
+                                        </svg>
+                                    </span>
                                 </span>
-                            </span>
-                        )
-                    })}
-                </div>
+                            )
+                        })}
+                    </div>
+                )}
                 {loading ? (
                     [...Array(body?.pageSize).keys()].map((item) => (
                         <Skeleton

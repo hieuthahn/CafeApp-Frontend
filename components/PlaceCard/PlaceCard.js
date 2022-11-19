@@ -10,7 +10,7 @@ const PlaceCard = ({ place }) => {
                 <span className="absolute left-4 top-4 bg-rose-500 text-white z-10 rounded-md px-2 py-1 text-xs font-semibold select-none pointer-events-none">
                     {"Hot"}
                 </span>
-                <Link href={`/place/${place?.slug}`}>
+                <Link href={`/place/${place?.slug}`} passHref legacyBehavior>
                     <a>
                         <Image
                             alt="cafe-app"
@@ -40,7 +40,7 @@ const PlaceCard = ({ place }) => {
                 </div>
             </div>
             <div className="p-4 pt-2 bg-white">
-                <Link href={`/place/${place?.slug}`}>
+                <Link href={`/place/${place?.slug}`} passHref legacyBehavior>
                     <a>
                         <h2 className="truncate text-lg font-bold hover:text-rose-500">
                             {place?.name || "Ban Công Cafe"}

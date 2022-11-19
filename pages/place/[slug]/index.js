@@ -3,10 +3,43 @@ import Link from "next/link"
 import SinglePlace from "../../../components/SinglePlace"
 import Script from "next/script"
 import { searchPlaces, getPlaceBySlug } from "lib/services/place"
+import { NextSeo } from "next-seo"
+import Head from "next/head"
 
 const Place = ({ place, slug }) => {
     return (
         <>
+            <Head>
+                <title>
+                    {place?.name ||
+                        "Cafe Mine - Tổng hợp và đánh giá quán cafe đẹp ở Hà Nội"}
+                </title>
+            </Head>
+            <NextSeo
+                title={`${place?.name} ở ${place?.address?.specific}`}
+                description={place?.intro}
+                canonical="https://www.canonical.ie/"
+                openGraph={{
+                    url: "https://www.url.ie/a",
+                    title: place?.name,
+                    description: place?.intro,
+                    images: [
+                        {
+                            url: place?.photos[0]?.url || place?.photos[0],
+                            width: 800,
+                            height: 600,
+                            alt: place?.name,
+                            type: "image/jpeg",
+                        },
+                    ],
+                    siteName: "CoffeeMine",
+                }}
+                twitter={{
+                    handle: "@handle",
+                    site: "@site",
+                    cardType: "summary_large_image",
+                }}
+            />
             <Script
                 src="https://kit.fontawesome.com/dbb792b651.js"
                 crossOrigin="anonymous"

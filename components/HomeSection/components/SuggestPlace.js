@@ -19,7 +19,7 @@ const SuggestPlace = () => {
                     {"Chúng tôi có đang bỏ lỡ địa điểm nào bạn biết?"}
                 </h3>
                 <div className="text-center mt-4">
-                    <Link href="/add-place">
+                    <Link href="/add-place" passHref legacyBehavior>
                         <a>
                             <Button
                                 className="font-bold cursor-pointer p-5"

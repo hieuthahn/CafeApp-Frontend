@@ -212,7 +212,7 @@ const App = () => {
             key: "action",
             render: (_, record) => (
                 <Space size="middle" key={record}>
-                    <Link href={`${router.pathname}/${record?._id}`}>
+                    <Link href={`${router.pathname}/${record?._id}`} passHref legacyBehavior>
                         <Tooltip title="Sửa">
                             <Button icon={<EditOutlined />} />
                         </Tooltip>
