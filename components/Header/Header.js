@@ -16,78 +16,80 @@ import { Dialog, Transition, Tab } from "@headlessui/react"
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded"
 import { useForm } from "react-hook-form"
 import { useSession, signIn, signOut } from "next-auth/react"
-import { Avatar, Alert, Tabs, Modal } from "antd"
+import { Avatar, Alert, Tabs, Modal, Drawer, Menu } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import Logo from "components/Logo"
 import { signUp } from "lib/services/user"
 import Cookies from "js-cookie"
 import useBearStore from "lib/data/zustand"
 import axios from "config/axios"
+import SearchBar from "components/HomeSection/components/SearchBar"
 
 const navLinkItems = [
     {
-        path: "/",
-        title: "Trang chủ",
+        key: "/",
+        label: "Trang chủ",
         icon: null,
     },
+    // {
+    //     key: "/explore",
+    //     label: "Khám phá",
+    //     icon: null,
+    // },
+    // {
+    //     key: "/promo",
+    //     label: "Khuyến mại",
+    //     icon: null,
+    // },
+    // {
+    //     key: "/about",
+    //     label: "Giới thiệu",
+    //     icon: null,
+    // },
+    // {
+    //     key: "/contact",
+    //     label: "Liên hệ - Góp ý",
+    //     icon: null,
+    // },
     {
-        path: "/explore",
-        title: "Khám phá",
-        icon: null,
-    },
-    {
-        path: "/promo",
-        title: "Khuyến mại",
-        icon: null,
-    },
-    {
-        path: "/about",
-        title: "Giới thiệu",
-        icon: null,
-    },
-    {
-        path: "/contact",
-        title: "Liên hệ - Góp ý",
-        icon: null,
-    },
-    {
-        path: "/add-place",
-        title: "Đóng góp địa điểm",
+        key: "/add-place",
+        label: "Đóng góp địa điểm",
         icon: null,
     },
 ]
 
 const navLinkUserItems = [
+    // {
+    //     key: "/profile/setting",
+    //     label: "Trang cá nhân",
+    //     icon: null,
+    // },
     {
-        path: "/profile/setting",
-        title: "Trang cá nhân",
+        key: "/profile/setting",
+        label: "Chỉnh sửa hồ sơ",
         icon: null,
     },
     {
-        path: "/profile/setting",
-        title: "Chỉnh sửa hồ sơ",
+        key: "/contact",
+        label: "Liên hệ - Góp ý",
         icon: null,
     },
     {
-        path: "/promo",
-        title: "Liên hệ - Góp ý",
-        icon: null,
-    },
-    {
-        path: "/about",
-        title: "Giới thiệu",
+        key: "/about",
+        label: "Giới thiệu",
         icon: null,
     },
 ]
 
 const Header = () => {
-    const { pathname } = useRouter()
+    const { push, pathname } = useRouter()
     const { data: session } = useSession()
     const [profile, setProfile] = useState(false)
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState({
         password: false,
         confirmPassword: false,
+        drawer: false,
     })
     const modalLogin = useBearStore((state) => state.modalLogin)
     const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
@@ -192,6 +194,12 @@ const Header = () => {
         }
     }
 
+    const handleClickMenu = ({ item, key, keyPath, event }) => {
+        console.log(key, keyPath)
+        push(key)
+        handleToggleShow("drawer")
+    }
+
     return (
         <>
             <div className="bg-gray-200 h-full w-full">
@@ -200,7 +208,7 @@ const Header = () => {
                     <div className="container px-6 h-16 flex justify-between items-center lg:items-stretch mx-auto">
                         <div className="flex items-center">
                             {/* Logo */}
-                            <div className="mr-10 flex items-center">
+                            <div className="flex items-center">
                                 <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight hidden lg:block">
                                     <Link href="/">
                                         <a>
@@ -209,14 +217,20 @@ const Header = () => {
                                     </Link>
                                 </h3>
                             </div>
+                            {pathname !== "/" && (
+                                <SearchBar
+                                    iconSearch={true}
+                                    inputClass="flex items-center px-2 rounded-lg border"
+                                />
+                            )}
                             <ul className="hidden xl:flex items-center h-full gap-6">
                                 {navLinkItems.map((item, index) => {
                                     return (
-                                        <Link key={index} href={item.path}>
+                                        <Link key={index} href={item.key}>
                                             <a className="flex items-center font-bold">
                                                 <li
-                                                    className={`cursor-pointer h-full flex items-center text-sm tracking-normal transition duration-150 ease-in-out ${
-                                                        pathname === item.path
+                                                    className={`cursor-pointer h-full flex items-center text-sm tracking-normal transition duration-150 ease-in ${
+                                                        pathname === item.key
                                                             ? "text-rose-500"
                                                             : "hover:text-rose-500 text-gray-800"
                                                     }`}
@@ -224,7 +238,7 @@ const Header = () => {
                                                     <span className="mr-2">
                                                         {item.icon}
                                                     </span>
-                                                    {item.title}
+                                                    {item.label}
                                                 </li>
                                             </a>
                                         </Link>
@@ -251,20 +265,31 @@ const Header = () => {
                                         onClick={() => setProfile(!profile)}
                                     >
                                         {profile && (
-                                            <ul className="p-2 w-40 drop-shadow-md border-r bg-white absolute rounded right-0 shadow mt-16 top-0 z-10">
+                                            <ul className="p-2 w-40 drop-shadow-md bg-white absolute rounded right-0 shadow top-[56px] z-10">
                                                 {navLinkUserItems.map(
                                                     (item, index) => {
                                                         return (
                                                             <Link
                                                                 key={index}
-                                                                href={item.path}
+                                                                href={item.key}
                                                             >
                                                                 <a>
-                                                                    <li className="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-rose-500 focus:text-rose-500 focus:outline-none font-bold">
+                                                                    {console.log(
+                                                                        pathname ===
+                                                                            item.key
+                                                                    )}
+                                                                    <li
+                                                                        className={`cursor-pointer text-gray-600 text-sm leading-3 py-2 font-bold ${
+                                                                            pathname ===
+                                                                            item.key
+                                                                                ? "!text-rose-500"
+                                                                                : "hover:text-rose-500 text-gray-600"
+                                                                        }`}
+                                                                    >
                                                                         <div className="flex items-center">
                                                                             <span className="ml-2">
                                                                                 {
-                                                                                    item.title
+                                                                                    item.label
                                                                                 }
                                                                             </span>
                                                                         </div>
@@ -346,182 +371,136 @@ const Header = () => {
                             <div
                                 id="menu"
                                 className="text-gray-800"
-                                onClick={() => setShow(!show)}
+                                onClick={() => handleToggleShow("drawer")}
                             >
-                                {show ? (
-                                    " "
-                                ) : (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="icon icon-tabler icon-tabler-menu-2"
-                                        width={24}
-                                        height={24}
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="icon icon-tabler icon-tabler-menu-2"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
                                         fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                        />
-                                        <line x1={4} y1={6} x2={20} y2={6} />
-                                        <line x1={4} y1={12} x2={20} y2={12} />
-                                        <line x1={4} y1={18} x2={20} y2={18} />
-                                    </svg>
-                                )}
+                                    />
+                                    <line x1={4} y1={6} x2={20} y2={6} />
+                                    <line x1={4} y1={12} x2={20} y2={12} />
+                                    <line x1={4} y1={18} x2={20} y2={18} />
+                                </svg>
                             </div>
                         </div>
                     </div>
                     {/*Mobile responsive sidebar*/}
-                    {show && (
-                        <div
-                            className={
-                                show
-                                    ? "absolute xl:hidden w-full h-full transform -translate-x-0 z-40"
-                                    : "absolute xl:hidden w-full h-full transform -translate-x-full z-40"
-                            }
-                            id="mobile-nav"
-                        >
+                    <Drawer
+                        title={
+                            session ? (
+                                <div
+                                    className="flex gap-4 items-center"
+                                    onClick={() => {
+                                        push("/profile/setting") &&
+                                            handleToggleShow("drawer")
+                                    }}
+                                >
+                                    <Avatar
+                                        size={"large"}
+                                        icon={<UserOutlined />}
+                                    />
+                                    <div className>
+                                        <h3 className="font-bold text-base">
+                                            {session?.name ||
+                                                session?.username ||
+                                                session?.email}
+                                        </h3>
+                                        {session?.roles.map((role, index) => (
+                                            <span
+                                                key={index}
+                                                className="text-sm"
+                                            >
+                                                {role}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className="flex items-center"
+                                    onClick={() => handleToggleShow("drawer")}
+                                >
+                                    <Link href="/new-review">
+                                        <a>
+                                            <Button
+                                                className="font-semibold cursor-pointer"
+                                                variant="solid"
+                                                color="rose"
+                                            >
+                                                Viết review
+                                            </Button>
+                                        </a>
+                                    </Link>
+                                    <div className="ml-2">
+                                        <Button
+                                            className="font-semibold cursor-pointer"
+                                            color="rose"
+                                            onClick={toggleModalLogin}
+                                        >
+                                            Đăng nhập/Đăng ký
+                                        </Button>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        footer={
+                            session ? (
+                                <Button
+                                    className="font-semibold cursor-pointer w-full"
+                                    color="rose"
+                                    onClick={toggleModalLogin}
+                                >
+                                    Đăng xuất
+                                </Button>
+                            ) : null
+                        }
+                        placement="right"
+                        onClose={() => handleToggleShow("drawer")}
+                        open={show?.drawer}
+                    >
+                        <div id="mobile-nav">
                             <div
                                 className="bg-gray-800 opacity-50 w-full h-full"
-                                onClick={() => setShow(!show)}
+                                onClick={() => handleToggleShow("drawer")}
                             />
-                            <div className="w-64 z-40 fixed overflow-y-auto top-0 bg-white shadow h-full flex-col justify-between xl:hidden pb-4 transition duration-150 ease-in-out">
+                            <div className="">
                                 <div className="px-6 h-full">
                                     <div className="flex flex-col justify-between h-full w-full">
                                         <div>
-                                            <div className="mt-6 flex w-full items-center justify-between">
-                                                <div className="flex items-center justify-center w-full">
-                                                    <Logo />
-                                                </div>
-                                            </div>
-                                            <ul className="f-m-m">
-                                                {navLinkItems.map(
-                                                    (item, index) => {
-                                                        return (
-                                                            <Link
-                                                                key={index}
-                                                                href={item.path}
-                                                            >
-                                                                <a className="flex items-center font-semibold">
-                                                                    <li
-                                                                        className={`pt-8 ${
-                                                                            pathname ===
-                                                                            item.path
-                                                                                ? "text-rose-500"
-                                                                                : "hover:text-rose-500 text-gray-800"
-                                                                        }`}
-                                                                    >
-                                                                        <div className="flex items-center">
-                                                                            <div className="w-6 h-6 md:w-8 md:h-8">
-                                                                                {
-                                                                                    item.icon
-                                                                                }
-                                                                            </div>
-                                                                            <p className="xl:text-base text-base ml-3">
-                                                                                {
-                                                                                    item.title
-                                                                                }
-                                                                            </p>
-                                                                        </div>
-                                                                    </li>
-                                                                </a>
-                                                            </Link>
-                                                        )
-                                                    }
-                                                )}
-                                            </ul>
-                                        </div>
-                                        <div className="w-full pt-4">
-                                            {session ? (
-                                                <div className="border-t border-gray-300">
-                                                    <div className="w-full flex items-center justify-between pt-1">
-                                                        <ul className="flex">
-                                                            <li className="cursor-pointer text-gray-800 pt-5 pb-3">
-                                                                <div className="w-6 h-6 md:w-8 md:h-8">
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        className="icon icon-tabler icon-tabler-messages"
-                                                                        viewBox="0 0 24 24"
-                                                                        strokeWidth={
-                                                                            1
-                                                                        }
-                                                                        stroke="currentColor"
-                                                                        fill="none"
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                    >
-                                                                        <path
-                                                                            stroke="none"
-                                                                            d="M0 0h24v24H0z"
-                                                                        />
-                                                                        <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                                                                        <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                                                                    </svg>
-                                                                </div>
-                                                            </li>
-                                                            <li className="cursor-pointer text-gray-800 pt-5 pb-3 pl-3">
-                                                                <div className="w-6 h-6 md:w-8 md:h-8">
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        className="icon icon-tabler icon-tabler-bell"
-                                                                        viewBox="0 0 24 24"
-                                                                        strokeWidth={
-                                                                            1
-                                                                        }
-                                                                        stroke="currentColor"
-                                                                        fill="none"
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                    >
-                                                                        <path
-                                                                            stroke="none"
-                                                                            d="M0 0h24v24H0z"
-                                                                        />
-                                                                        <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                                                                        <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                                                                    </svg>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center w-full h-full gap-2">
-                                                    <Button
-                                                        className="font-semibold cursor-pointer"
-                                                        color="rose"
-                                                        size="sm"
-                                                        onClick={
-                                                            toggleModalLogin
-                                                        }
-                                                    >
-                                                        Đăng nhập
-                                                    </Button>
-                                                    <Link href="/new-review">
-                                                        <a>
-                                                            <Button
-                                                                className="font-semibold cursor-pointer"
-                                                                variant="solid"
-                                                                color="rose"
-                                                                size="sm"
-                                                            >
-                                                                Viết review
-                                                            </Button>
-                                                        </a>
-                                                    </Link>
-                                                </div>
+                                            {session && (
+                                                <Menu
+                                                    onClick={handleClickMenu}
+                                                    defaultSelectedKeys={[
+                                                        pathname,
+                                                    ]}
+                                                    className="border-b"
+                                                    items={navLinkUserItems}
+                                                />
                                             )}
+                                            <Menu
+                                                onClick={handleClickMenu}
+                                                defaultSelectedKeys={[pathname]}
+                                                items={navLinkItems}
+                                            />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    )}
+                    </Drawer>
                 </nav>
             </div>
 

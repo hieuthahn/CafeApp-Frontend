@@ -10,7 +10,7 @@ import { debounce } from "lib/utils/utils"
 import { searchPlaces } from "lib/services/place"
 import Image from "next/image"
 
-const SearchBar = () => {
+const SearchBar = (props) => {
     const [openChild, setOpenChild] = useState(false)
     const [searchResult, setSearchResult] = useState([])
     const [textSearch, setTextSearch] = useState("")
@@ -64,27 +64,29 @@ const SearchBar = () => {
             debounceSearch(e.target.value)
         }
     }
-
+    // lg:min-w-[1096px] md:min-w-[696px] min-w-[375px]
     return (
         <>
-            <div className="py-8 px-4">
+            <div className="px-4">
                 <div
                     ref={wrapperRef}
-                    className={`lg:max-w-[1096px] md:max-w-[696px] max-w-[375px] mx-auto bg-white overflow-hidden shadow-lg ${
+                    className={`relative w-full mx-auto bg-white ${
                         openChild ? "rounded-t-lg" : "rounded-lg"
                     }`}
                 >
                     <div
-                        className={`flex justify-between items-center p-3 border-b-2 border-transparent ${
-                            openChild ? "border-b border-slate-300" : ""
-                        }`}
+                        className={`${
+                            props.inputClass
+                                ? props.inputClass
+                                : "flex justify-between items-center p-3 border-b-2 border-transparent"
+                        } ${openChild ? "border-b border-slate-300 " : ""}`}
                     >
                         <div className="flex items-center justify-center gap-2 w-full flex-wrap">
                             <input
                                 onClick={() => setOpenChild(true)}
                                 type="text"
                                 placeholder="Nhập tên quán..."
-                                className="focus:outline-none border-none grow"
+                                className="focus:outline-none border-none grow focus:min-w-[350px] transition ease-in duration-500"
                                 value={textSearch}
                                 onChange={handleTextChange}
                             />
@@ -171,11 +173,7 @@ const SearchBar = () => {
                                 </svg>
                             )}
                             <Link href={`/search?q=${textSearch}`}>
-                                <Button
-                                    className="font-semibold cursor-pointer p-5"
-                                    variant="solid"
-                                    color="rose"
-                                >
+                                {props.iconSearch ? (
                                     <svg
                                         // className="fill-white"
                                         width={20}
@@ -186,104 +184,155 @@ const SearchBar = () => {
                                     >
                                         <path
                                             d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
-                                            stroke="#fff"
+                                            stroke="#d3d3d3"
                                             strokeWidth="1.25"
                                             strokeMiterlimit={10}
                                         />
                                         <path
                                             d="M13.2144 13.2148L17.4999 17.5004"
-                                            stroke="#fff"
+                                            stroke="#d3d3d3"
                                             strokeWidth="1.25"
                                             strokeMiterlimit={10}
                                             strokeLinecap="round"
                                         />
                                     </svg>
-                                    {"Tìm kiếm"}
-                                </Button>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div
-                        className={`overflow-y-scroll absolute bg-slate-50 z-10 lg:min-w-[1096px] md:min-w-[696px] min-w-[375px] py-3 ${
-                            openChild ? "block shadow-sm" : "hidden"
-                        }`}
-                    >
-                        {textSearch !== "" ? (
-                            !loading && searchResult.length ? (
-                                searchResult.map((item, index) => {
-                                    if (index < 5) {
-                                        return (
-                                            <Link
-                                                href={`/place/${item?.slug}`}
-                                                key={index}
-                                            >
-                                                <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
-                                                    <div>
-                                                        <Image
-                                                            alt="cafe-app"
-                                                            className="rounded"
-                                                            src={
-                                                                item
-                                                                    ?.photos[0] ||
-                                                                item?.photos[0]
-                                                                    ?.url
-                                                            }
-                                                            width={50}
-                                                            height={50}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-base font-bold text-gray-800">
-                                                            {item?.name}
-                                                        </p>
-                                                        <p className="text-sm font-medium text-gray-600 pt-0.5">
-                                                            {
-                                                                item?.address
-                                                                    ?.specific
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        )
-                                    }
-                                })
-                            ) : (
-                                <Link href={`/search?q=${textSearch}`}>
-                                    <div className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                ) : (
+                                    <Button
+                                        className="font-semibold cursor-pointer p-5"
+                                        variant="solid"
+                                        color="rose"
+                                    >
                                         <svg
-                                            width={24}
-                                            height={24}
+                                            // className="fill-white"
+                                            width={20}
+                                            height={20}
                                             viewBox="0 0 20 20"
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path
                                                 d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
-                                                stroke="#000"
+                                                stroke="#fff"
                                                 strokeWidth="1.25"
                                                 strokeMiterlimit={10}
                                             />
                                             <path
                                                 d="M13.2144 13.2148L17.4999 17.5004"
-                                                stroke="#000"
+                                                stroke="#fff"
                                                 strokeWidth="1.25"
                                                 strokeMiterlimit={10}
                                                 strokeLinecap="round"
                                             />
                                         </svg>
-                                        <div className>
-                                            Xem tất cả tìm kiếm cho
-                                            {`"${textSearch}"`}
+                                        {"Tìm kiếm"}
+                                    </Button>
+                                )}
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div
+                        className={`absolute w-full overflow-y-auto transition ease-in duration-1000 shadow-md border rounded-b-lg bg-slate-50 z-10 py-3 ${
+                            openChild ? "block shadow-sm" : "hidden"
+                        }`}
+                    >
+                        {textSearch !== "" ? (
+                            !loading ? (
+                                searchResult.length ? (
+                                    searchResult.map((item, index) => {
+                                        if (index < 5) {
+                                            return (
+                                                <Link
+                                                    href={`/place/${item?.slug}`}
+                                                    key={index}
+                                                >
+                                                    <div
+                                                        onClick={() =>
+                                                            setOpenChild(false)
+                                                        }
+                                                        className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
+                                                    >
+                                                        <div>
+                                                            <Image
+                                                                alt="cafe-app"
+                                                                className="rounded"
+                                                                src={
+                                                                    item
+                                                                        ?.photos[0] ||
+                                                                    item
+                                                                        ?.photos[0]
+                                                                        ?.url
+                                                                }
+                                                                width={50}
+                                                                height={50}
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-base font-bold text-gray-800">
+                                                                {item?.name}
+                                                            </p>
+                                                            <p className="text-sm font-medium text-gray-600 pt-0.5">
+                                                                {
+                                                                    item
+                                                                        ?.address
+                                                                        ?.specific
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            )
+                                        }
+                                    })
+                                ) : (
+                                    <Link href={`/search?q=${textSearch}`}>
+                                        <div
+                                            className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer"
+                                            onClick={() => setOpenChild(false)}
+                                        >
+                                            <svg
+                                                width={24}
+                                                height={24}
+                                                viewBox="0 0 20 20"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M8.63633 2.5C7.42268 2.5 6.23628 2.85989 5.22717 3.53416C4.21806 4.20843 3.43155 5.16679 2.9671 6.28806C2.50266 7.40932 2.38114 8.64314 2.61791 9.83347C2.85468 11.0238 3.43911 12.1172 4.29729 12.9754C5.15547 13.8335 6.24886 14.418 7.43919 14.6547C8.62952 14.8915 9.86334 14.77 10.9846 14.3056C12.1059 13.8411 13.0642 13.0546 13.7385 12.0455C14.4128 11.0364 14.7727 9.84998 14.7727 8.63633C14.7726 7.0089 14.126 5.44817 12.9753 4.2974C11.8245 3.14664 10.2638 2.5001 8.63633 2.5V2.5Z"
+                                                    stroke="#000"
+                                                    strokeWidth="1.25"
+                                                    strokeMiterlimit={10}
+                                                />
+                                                <path
+                                                    d="M13.2144 13.2148L17.4999 17.5004"
+                                                    stroke="#000"
+                                                    strokeWidth="1.25"
+                                                    strokeMiterlimit={10}
+                                                    strokeLinecap="round"
+                                                />
+                                            </svg>
+                                            <div className>
+                                                Xem tất cả tìm kiếm
+                                                {` "${textSearch}"...`}
+                                            </div>
                                         </div>
+                                    </Link>
+                                )
+                            ) : (
+                                <div className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                    <div className>
+                                        Đang tìm kiếm
+                                        {` "${textSearch}"...`}
                                     </div>
-                                </Link>
+                                </div>
                             )
                         ) : (
                             <>
                                 <Link href="/search?q=">
-                                    <div className="flex items-center gap-2 text-base font-semibold leading-none text-gray-800 py-3 px-5 hover:bg-slate-100 cursor-pointer">
+                                    <div
+                                        onClick={() => setOpenChild(false)}
+                                        className="flex items-center gap-2 text-base font-semibold leading-none text-gray-800 py-3 px-5 hover:bg-slate-100 cursor-pointer"
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fillRule="evenodd"
@@ -316,7 +365,12 @@ const SearchBar = () => {
                                                 key={index}
                                                 href={`/place/${place?.slug}`}
                                             >
-                                                <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                                <div
+                                                    className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
+                                                    onClick={() =>
+                                                        setOpenChild(false)
+                                                    }
+                                                >
                                                     <div className>
                                                         <Image
                                                             alt="cafe-app"
