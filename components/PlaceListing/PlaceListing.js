@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Sidebar from "./components/Sidebar"
 import PlaceItem from "./components/PlaceItem"
 import { regions, purposes, benefits, tags } from "../../lib/data/sample"
-import { Pagination } from "antd"
+import { Pagination, Skeleton, Space } from "antd"
 import listPlace from "../../pages/management/places/listPlace.json"
 import { searchPlaces, updatePlaceById } from "lib/services/place"
 import { getQueryVar } from "lib/utils/utils"
@@ -10,6 +10,7 @@ import { useRouter } from "next/router"
 
 const PlaceListing = () => {
     const [places, setPlaces] = useState([])
+    const [loading, setLoading] = useState(true)
     const [region, setRegion] = useState(regions)
     const [purpose, setPurpose] = useState(purposes)
     const [benefit, setBenefit] = useState(benefits)
@@ -28,12 +29,15 @@ const PlaceListing = () => {
 
     const searchPlace = async () => {
         try {
+            setLoading(true)
             const res = await searchPlaces(body)
             setPlaces(res.data)
             setPagination(res.meta)
+            window.scrollTo({ top: 0, behavior: "smooth" })
         } catch (error) {
             console.log(error)
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -111,22 +115,41 @@ const PlaceListing = () => {
                         )
                     })}
                 </div>
-                {places &&
-                    places.map((place, index) => {
-                        return <PlaceItem place={place} key={index} />
-                    })}
-                <div className="flex justify-center">
-                    {pagination?.totalItems > body?.pageSize && (
-                        <Pagination
-                            defaultCurrent={1}
-                            pageSizeOptions={[10, 20, 30]}
-                            total={pagination?.totalItems}
-                            pageSize={body?.pageSize}
-                            current={body?.page}
-                            onChange={onPageChange}
-                        />
-                    )}
-                </div>
+                {loading ? (
+                    [...Array(body?.pageSize).keys()].map((item) => (
+                        <Skeleton
+                            loading
+                            active
+                            avatar={{
+                                active: true,
+                                size: 150,
+                                shape: "square",
+                            }}
+                            paragraph={{
+                                rows: 3,
+                            }}
+                        ></Skeleton>
+                    ))
+                ) : (
+                    <>
+                        {places &&
+                            places.map((place, index) => {
+                                return <PlaceItem place={place} key={index} />
+                            })}
+                        <div className="flex justify-center">
+                            {pagination?.totalItems > body?.pageSize && (
+                                <Pagination
+                                    defaultCurrent={1}
+                                    pageSizeOptions={[10, 20, 30]}
+                                    total={pagination?.totalItems}
+                                    pageSize={body?.pageSize}
+                                    current={body?.page}
+                                    onChange={onPageChange}
+                                />
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )

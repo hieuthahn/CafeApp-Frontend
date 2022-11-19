@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react"
 import PlaceCard from "../../PlaceCard"
 import listPlace from "../../../pages/management/places/listPlace.json"
 import { searchPlaces } from "lib/services/place"
+import { Skeleton } from "antd"
 
 const PlaceLanding = () => {
     const [places, setPlaces] = useState([])
@@ -37,9 +38,20 @@ const PlaceLanding = () => {
                 </h2>
                 <div className="mx-auto w-[90px] h-[2px] bg-rose-500 mt-2 rounded-lg"></div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8 justify-between items-center">
-                    {places?.map((place, index) => {
-                        return <PlaceCard place={place} key={index} />
-                    })}
+                    {places?.length > 0
+                        ? places?.map((place, index) => {
+                              return <PlaceCard place={place} key={index} />
+                          })
+                        : [...Array(8).keys()].map((item) => (
+                              <div className="flex flex-col gap-2">
+                                  <Skeleton.Avatar
+                                      active
+                                      size={220}
+                                      shape={"square"}
+                                  />
+                                  <Skeleton.Input active size={"small"} />
+                              </div>
+                          ))}
                 </div>
             </section>
         </Fragment>

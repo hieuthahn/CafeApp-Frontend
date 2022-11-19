@@ -42,7 +42,8 @@ const PlaceBenefit = ({ place }) => {
                         <SwiperSlide key={index}>
                             <div className="py-1 flex flex-col items-center justify-centerselect-none cursor-pointer">
                                 <span className="text-xl">
-                                    <i className="fas fa-cloud-sun text-rose-500 "></i>
+                                    {/* <i className="fas fa-cloud-sun text-rose-500 "></i> */}
+                                    <i class="fas fa-info-circle text-rose-500"></i>
                                 </span>
                                 <span className="text-sm text-center">
                                     {benefit}

@@ -99,7 +99,7 @@ const PlaceContent = (props) => {
         }
         try {
             const res = await likePlace(place?._id)
-            if (res?.data?.modifiedCount > 0) {
+            if (res?.data?.author?.length > 0 || res?.data?.modifiedCount > 0) {
                 if (res?.type === "LIKE") {
                     setLike((prev) => ({
                         ...prev,
