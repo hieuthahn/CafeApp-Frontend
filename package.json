@@ -39,6 +39,7 @@
         "sass": "^1.54.0",
         "scss": "^0.2.4",
         "swiper": "^8.3.2",
+        "typewriter-effect": "^2.19.0",
         "zustand": "^4.1.4"
     },
     "devDependencies": {
