@@ -393,11 +393,11 @@ const Header = () => {
                                                                             >
                                                                                 <stop
                                                                                     offset="0"
-                                                                                    stop-color="#ffa68d"
+                                                                                    stopColor="#ffa68d"
                                                                                 />
                                                                                 <stop
                                                                                     offset="1"
-                                                                                    stop-color="#fd3a84"
+                                                                                    stopColor="#fd3a84"
                                                                                 />
                                                                             </linearGradient>
                                                                         </defs>
@@ -541,10 +541,6 @@ const Header = () => {
                                     onClick={() => handleToggleShow("drawer")}
                                 >
                                     <Link
-                                       
-                                       
-                                       
-                                    
                                         href="/new-review"
                                         passHref
                                         legacyBehavior
