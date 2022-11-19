@@ -10,6 +10,9 @@ import { useState, useEffect } from "react"
 import { VechaiProvider, Button } from "@vechaiui/react"
 import { SessionProvider } from "next-auth/react"
 import AdminLayout from "../components/Layouts/AdminLayout"
+import nProgress from "nprogress"
+import "nprogress/nprogress.css"
+import Router from "next/router"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     const getLayout = Component.getLayout || ((page) => page)
@@ -17,6 +20,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     useEffect(() => {
         setShowChild(true)
     }, [])
+
+    Router.events.on("routeChangeStart", nProgress.start)
+    Router.events.on("routeChangeError", nProgress.done)
+    Router.events.on("routeChangeComplete", nProgress.done)
+
+    nProgress.configure({
+        template:
+            '<div class="bar !bg-rose-500 !border-b-[2.2px] !border-rose-500" role="bar"><div class="peg !bg-rose-500"></div></div>',
+        easing: "ease",
+        speed: 300,
+        minimum: 0.1,
+    })
 
     if (!showChild) {
         return null
