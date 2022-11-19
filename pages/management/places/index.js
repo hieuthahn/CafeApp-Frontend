@@ -61,7 +61,7 @@ const App = () => {
 
     useEffect(() => {
         getPlaces()
-    }, [body, places])
+    }, [body])
 
     const handleChange = (pagination, filters, sorter) => {
         if (pagination?.current !== body.page || filters?.status?.length)
@@ -178,7 +178,7 @@ const App = () => {
             title: "Ngày gửi",
             dataIndex: "createdAt",
             key: "createdAt",
-            render: (_, createdAt) => (
+            render: (createdAt, place) => (
                 <>{moment(createdAt).format("DD/MM/YYYY")}</>
             ),
             sorter: {

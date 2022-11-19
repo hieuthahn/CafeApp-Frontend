@@ -30,10 +30,10 @@ const PlaceListing = () => {
     const searchPlace = async () => {
         try {
             setLoading(true)
+            window.scrollTo({ top: 0, behavior: "smooth" })
             const res = await searchPlaces(body)
             setPlaces(res.data)
             setPagination(res.meta)
-            window.scrollTo({ top: 0, behavior: "smooth" })
         } catch (error) {
             console.log(error)
         }
