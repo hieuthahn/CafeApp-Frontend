@@ -129,6 +129,7 @@ const PlaceListing = () => {
                             paragraph={{
                                 rows: 3,
                             }}
+                            className="mb-5"
                         ></Skeleton>
                     ))
                 ) : (
