@@ -361,7 +361,7 @@ const PlaceAddress = ({ place }) => {
     return (
         <div className="flex flex-col bg-white rounded-lg shadow-sm p-4">
             <h2 className="text-xl font-bold !mb-2">{"Địa điểm cụ thể"}</h2>
-            <div className="rounded-lg w-full h-full overflow-hidden">
+            <div className="rounded-lg w-full h-full min-h-[200px] overflow-hidden">
                 <ReactMapGL
                     mapboxAccessToken={
                         process.env.ACCESS_TOKEN_MAPBOX ||

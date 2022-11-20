@@ -38,7 +38,7 @@ const HomeSection = () => {
                     <SearchBar />
                 </div>
             </section>
-            <div className="container mx-auto p-3 lg:p-0 mb-10">
+            <div className="container mx-auto p-2 md:p-3 lg:p-0 mb-10">
                 <SliderSection />
                 <PlaceLanding />
                 <SuggestPlace />

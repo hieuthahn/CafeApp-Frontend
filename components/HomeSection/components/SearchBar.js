@@ -9,8 +9,10 @@ import { toSlug } from "lib/utils/"
 import { debounce } from "lib/utils/utils"
 import { searchPlaces } from "lib/services/place"
 import Image from "next/image"
+import { useRouter } from "next/router"
 
 const SearchBar = (props) => {
+    const router = useRouter()
     const [openChild, setOpenChild] = useState(false)
     const [searchResult, setSearchResult] = useState([])
     const [textSearch, setTextSearch] = useState("")
@@ -64,10 +66,16 @@ const SearchBar = (props) => {
             debounceSearch(e.target.value)
         }
     }
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            router.push(`/search?q=${textSearch}`)
+        }
+    }
     // lg:min-w-[1096px] md:min-w-[696px] min-w-[375px]
     return (
         <>
-            <div className="px-4">
+            <div className="px-2 md:px-4">
                 <div
                     ref={wrapperRef}
                     className={`relative w-full mx-auto bg-white ${
@@ -78,7 +86,7 @@ const SearchBar = (props) => {
                         className={`${
                             props.inputClass
                                 ? props.inputClass
-                                : "flex justify-between items-center p-3 border-b-2 border-transparent"
+                                : "flex justify-between items-center p-1 md:p-3 border-b-2 border-transparent"
                         } ${openChild ? "border-b border-slate-300 " : ""}`}
                     >
                         <div className="flex items-center justify-center gap-2 w-full flex-wrap">
@@ -86,9 +94,10 @@ const SearchBar = (props) => {
                                 onClick={() => setOpenChild(true)}
                                 type="text"
                                 placeholder="Nhập tên quán..."
-                                className="focus:outline-none border-none grow focus:min-w-[350px] transition ease-in duration-500"
+                                className="focus:outline-none border-none grow focus:min-w-[300px] transition ease-in duration-500"
                                 value={textSearch}
                                 onChange={handleTextChange}
+                                onKeyDown={handleKeyDown}
                             />
                             {loading && (
                                 <svg
@@ -202,12 +211,12 @@ const SearchBar = (props) => {
                                     </svg>
                                 ) : (
                                     <Button
-                                        className="font-semibold cursor-pointer p-5"
+                                        className="font-semibold cursor-pointer p-5 hidden md:flex"
                                         variant="solid"
                                         color="rose"
                                     >
                                         <svg
-                                            // className="fill-white"
+                                            className="mr-1"
                                             width={20}
                                             height={20}
                                             viewBox="0 0 20 20"
@@ -228,7 +237,7 @@ const SearchBar = (props) => {
                                                 strokeLinecap="round"
                                             />
                                         </svg>
-                                        {"Tìm kiếm"}
+                                        {" Tìm kiếm"}
                                     </Button>
                                 )}
                             </Link>

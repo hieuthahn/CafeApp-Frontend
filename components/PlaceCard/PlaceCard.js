@@ -39,7 +39,7 @@ const PlaceCard = ({ place }) => {
                     </span>
                 </div>
             </div>
-            <div className="p-4 pt-2 bg-white">
+            <div className="p-4 pt-2 bg-white overflow-hidden">
                 <Link href={`/place/${place?.slug}`} passHref legacyBehavior>
                     <a>
                         <h2 className="truncate text-lg font-bold hover:text-rose-500">

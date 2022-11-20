@@ -35,7 +35,7 @@ const PlaceItem = ({ place, className }) => {
                 </a>
             </Link>
 
-            <div className="pl-4 py-2 pr-2 flex flex-col md:gap-2 grow">
+            <div className="pl-4 py-2 pr-2 flex flex-col md:gap-2 grow overflow-hidden">
                 <Link
                     href={`${BASE_URL}/${place?.slug}`}
                     passHref
@@ -92,7 +92,7 @@ const PlaceItem = ({ place, className }) => {
                             <path d="M21,13a5,5,0,1,0-5,5A5,5,0,0,0,21,13Zm-8,0a3,3,0,1,1,3,3A3,3,0,0,1,13,13Z" />
                         </g>
                     </svg>
-                    <span>
+                    <span className="overflow-hidden truncate">
                         {place?.address?.specific || "2 Đinh Liệt, Hoàn Kiếm"}
                     </span>
                 </address>

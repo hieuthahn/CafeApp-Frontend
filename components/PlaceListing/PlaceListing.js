@@ -58,8 +58,8 @@ const PlaceListing = () => {
     }
 
     return (
-        <div className="grid grid-cols-12 container mx-auto md:p-6 grid-flow-dense">
-            <div className="col-span-12 md:col-span-3 pr-3 order-last md:order-none my-5 md:my-0">
+        <div className="grid grid-cols-12 container mx-auto md:p-6 grid-flow-dense gap-3 px-1">
+            <div className="col-span-12 md:col-span-3 order-last md:order-none my-5 md:my-0">
                 <Sidebar
                     regions={region}
                     purposes={purpose}
@@ -72,7 +72,7 @@ const PlaceListing = () => {
                 />
             </div>
             <div className="col-span-12 md:col-span-9">
-                <div className="mb-3">
+                <div className="mb-3 mt-3 md:mt-0">
                     <span className="text-lg">
                         <strong>{pagination?.totalItems || "0"}</strong>
                         {" Địa điểm khớp với tìm kiếm của bạn:"}

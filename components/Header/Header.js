@@ -336,7 +336,7 @@ const Header = () => {
                                         onClick={() => setProfile(!profile)}
                                     >
                                         {profile && (
-                                            <ul className="p-2 w-[200px] drop-shadow-md bg-white absolute rounded right-0 shadow top-[56px] z-10 ease-out duration-300">
+                                            <ul className="px-4 py-2 w-[220px] drop-shadow-md bg-white absolute rounded right-0 shadow top-[56px] z-10 ease-out duration-300">
                                                 {navLinkUserItems.map(
                                                     (item, index) => {
                                                         return (
@@ -631,6 +631,11 @@ const Header = () => {
                                                         legacyBehavior
                                                     >
                                                         <li
+                                                            onClick={() =>
+                                                                handleToggleShow(
+                                                                    "drawer"
+                                                                )
+                                                            }
                                                             className={`flex gap-2 items-center py-2 px-4 rounded cursor-pointer mb-2 ${
                                                                 pathname ===
                                                                 item.key
@@ -694,6 +699,11 @@ const Header = () => {
                                                                     legacyBehavior
                                                                 >
                                                                     <li
+                                                                        onClick={() =>
+                                                                            handleToggleShow(
+                                                                                "drawer"
+                                                                            )
+                                                                        }
                                                                         className={`flex gap-2 items-center py-2 px-4 rounded cursor-pointer mb-2 ${
                                                                             pathname ===
                                                                             item.key

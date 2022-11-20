@@ -5,7 +5,7 @@ import Image from "next/image"
 
 const SuggestPlace = () => {
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex flex-wrap justify-center items-center">
             <div className="relative w-[220px] h-[220px]">
                 <Image
                     alt="cafe-app"
