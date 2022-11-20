@@ -5,7 +5,7 @@ import Image from "next/image"
 
 const PlaceCard = ({ place }) => {
     return (
-        <div className="w-full h-auto rounded-lg overflow-hidden flex flex-col border drop-shadow-sm">
+        <div className="w-full h-auto rounded-lg overflow-hidden flex flex-col border shadow-md">
             <div className="relative">
                 <span className="absolute left-4 top-4 bg-rose-500 text-white z-10 rounded-md px-2 py-1 text-xs font-semibold select-none pointer-events-none">
                     {"Hot"}
@@ -60,7 +60,7 @@ const PlaceCard = ({ place }) => {
                 <div className="truncate pointer-events-none">
                     <span>
                         <Rate
-                            className="!text-rose-500 !text-sm"
+                            className="!text-rose-500 !text-base"
                             disabled
                             allowHalf
                             value={place?.rate?.avg}
@@ -68,7 +68,9 @@ const PlaceCard = ({ place }) => {
                         />
                     </span>
                     {" - "}
-                    <span>{Math.floor(place?.rate?.avg) + " đánh giá"}</span>
+                    <span>
+                        {(place?.rate?.rateCount || "Chưa có") + " đánh giá"}
+                    </span>
                 </div>
             </div>
         </div>

@@ -154,7 +154,7 @@ const NewReview = () => {
                                             <span className="basis-1/5 mt-2 text-sm">
                                                 {rates[index]}
                                             </span>
-                                            <span className="flex gap-4 items-center">
+                                            <span className="flex gap-4 items-center star-icon">
                                                 <Rate
                                                     className="!text-rose-500 !text-3xl"
                                                     onChange={(value) =>
@@ -223,23 +223,24 @@ const NewReview = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-span-12 md:col-span-6 order-1 md:order-2">
+                    <div className="col-span-12 md:col-span-6 order-1 md:order-2 mb-3">
                         <h4 className="!mb-2 text-base font-semibold text-gray-500">
                             {"Địa điểm"}
                         </h4>
                         {placeChosen ? (
                             <div className="border rounded-lg">
                                 <div className="flex rounded-lg w-full overflow-hidden">
-                                    <Image
-                                        alt="cafe-app"
-                                        width="210px"
-                                        height="160px"
-                                        src={
-                                            placeChosen?.photos[0]?.url ||
-                                            placeChosen?.photos[0]
-                                        }
-                                        className="rounded-l-lg min-h-[160px] max-h-[160px] mr-3"
-                                    />
+                                    <div className="relative w-[35%] rounded-l-lg">
+                                        <Image
+                                            alt="cafe-app"
+                                            layout="fill"
+                                            objectFit="cover"
+                                            src={
+                                                placeChosen?.photos[0]?.url ||
+                                                placeChosen?.photos[0]
+                                            }
+                                        />
+                                    </div>
                                     <div className="overflow-hidden p-4 flex flex-col gap-1 grow">
                                         <Link
                                             href={`/place/${placeChosen?.slug}`}
@@ -258,7 +259,7 @@ const NewReview = () => {
                                         <div className="truncate pointer-events-none">
                                             <span>
                                                 <Rate
-                                                    className="!text-rose-500 !text-sm"
+                                                    className="!text-rose-500 !text-base"
                                                     disabled
                                                     allowHalf
                                                     defaultValue={
@@ -268,9 +269,9 @@ const NewReview = () => {
                                             </span>
                                             {" - "}
                                             <span>
-                                                {Math.floor(
-                                                    placeChosen?.rate?.avg
-                                                ) || "Chưa có đánh giá"}
+                                                {(placeChosen?.rate
+                                                    ?.rateCount || "Chưa có") +
+                                                    " đánh giá"}
                                             </span>
                                         </div>
                                         <Button

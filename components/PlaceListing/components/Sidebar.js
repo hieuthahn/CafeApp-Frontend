@@ -4,19 +4,13 @@ const { Panel } = Collapse
 import { toSlug } from "../../../lib/utils"
 import Image from "next/image"
 import Link from "next/link"
-import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
+import ReactMapGL from "react-map-gl"
 import {
     getRegions,
     getTags,
     getPurposes,
     getBenefits,
 } from "lib/services/category"
-
-const Map = ReactMapboxGl({
-    accessToken:
-        process.env.ACCESS_TOKEN_MAPBOX ||
-        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ",
-})
 
 const Sidebar = (props) => {
     const { body, setBody, places, pagination } = props
@@ -186,17 +180,20 @@ const Sidebar = (props) => {
                                 )
                             })}
                         </div>
-                        <Map
-                            className="col-span-12 md:col-span-8"
-                            style="mapbox://styles/mapbox/streets-v11"
-                            containerStyle={{
-                                minHeight: "200px",
-                                height: "100%",
-                                width: "auto",
-                                position: "relative",
-                            }}
-                            center={[105.804817, 21.028511]}
-                        ></Map>
+                        <div className="col-span-12 md:col-span-8">
+                            <ReactMapGL
+                                mapboxAccessToken={
+                                    process.env.ACCESS_TOKEN_MAPBOX ||
+                                    "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ"
+                                }
+                                initialViewState={{
+                                    longitude: 105.804817,
+                                    latitude: 21.028511,
+                                    zoom: 12,
+                                }}
+                                mapStyle="mapbox://styles/mapbox/streets-v11"
+                            />
+                        </div>
                     </div>
                 </Modal>
             </div>

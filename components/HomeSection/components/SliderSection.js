@@ -48,7 +48,7 @@ const SliderSection = () => {
                     navigation
                     modules={[Pagination, Navigation, Autoplay]}
                     autoplay={{
-                        delay: 3500,
+                        delay: 5000,
                         disableOnInteraction: false,
                     }}
                     spaceBetween={20}
@@ -90,7 +90,7 @@ const SliderSection = () => {
                     navigation
                     modules={[Pagination, Navigation, Autoplay]}
                     autoplay={{
-                        delay: 3500,
+                        delay: 4000,
                         disableOnInteraction: false,
                     }}
                     spaceBetween={20}

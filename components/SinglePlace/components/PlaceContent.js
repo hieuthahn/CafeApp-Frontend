@@ -18,13 +18,7 @@ import { getLikeByPlaceId, likePlace } from "lib/services/like"
 import { useSession } from "next-auth/react"
 import useBearStore from "lib/data/zustand"
 import Cookies from "js-cookie"
-import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
-
-const Map = ReactMapboxGl({
-    accessToken:
-        process.env.ACCESS_TOKEN_MAPBOX ||
-        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ",
-})
+import ReactMapGL from "react-map-gl"
 
 const PlaceContent = (props) => {
     const { place } = props
@@ -90,7 +84,7 @@ const PlaceContent = (props) => {
             console.log(error)
         }
     }
-    console.log(like)
+
     const handleLikePlace = async () => {
         const token = Cookies.get("auth")
         if (!token) {
@@ -154,17 +148,20 @@ const PlaceContent = (props) => {
                             onCancel={() => setModalMapOpen(false)}
                             footer={null}
                         >
-                            <Map
-                                className="col-span-12 md:col-span-8"
-                                style="mapbox://styles/mapbox/streets-v11"
-                                containerStyle={{
-                                    minHeight: "200px",
-                                    height: "100%",
-                                    width: "auto",
-                                    position: "relative",
-                                }}
-                                center={[105.804817, 21.028511]}
-                            ></Map>
+                            <div className="col-span-12 md:col-span-8">
+                                <ReactMapGL
+                                    mapboxAccessToken={
+                                        process.env.ACCESS_TOKEN_MAPBOX ||
+                                        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ"
+                                    }
+                                    initialViewState={{
+                                        longitude: 105.804817,
+                                        latitude: 21.028511,
+                                        zoom: 12,
+                                    }}
+                                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                                />
+                            </div>
                         </Modal>
                         {/* <span>{" — "}</span>
                         <a className="text-base font-semibold hover:underline">

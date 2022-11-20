@@ -29,7 +29,20 @@ const navLinkItems = [
     {
         key: "/",
         label: "Trang chủ",
-        icon: null,
+        icon: (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                width="22"
+                height="22"
+            >
+                <path
+                    fill="#231f20"
+                    d="M13.85 7.6 13 6.77 8.35 2.15a.48.48 0 0 0-.7 0L3 6.72l-.83.82a.5.5 0 1 0 .7.71v5.2a.5.5 0 0 0 .5.5h9.29a.5.5 0 0 0 .5-.5V8.3a.52.52 0 0 0 .35.14.51.51 0 0 0 .36-.15.49.49 0 0 0-.02-.69ZM6.38 13V8.92h3V13Zm5.76 0H10.4V8.42a.51.51 0 0 0-.5-.5h-4a.51.51 0 0 0-.5.5V13H3.85V7.31L8 3.2l4.14 4.11Z"
+                    data-name="Layer 2"
+                />
+            </svg>
+        ),
     },
     // {
     //     key: "/explore",
@@ -54,7 +67,18 @@ const navLinkItems = [
     {
         key: "/add-place",
         label: "Đóng góp địa điểm",
-        icon: null,
+        icon: (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="22"
+                height="22"
+            >
+                <path d="M296.354,207.344a28.33,28.33,0,1,0-28.022-24.1l-33.485,16.068a28.343,28.343,0,1,0-1.871,43.221l35.163,16.126c-.078.856-.124,1.721-.124,2.6a28.389,28.389,0,1,0,8.888-20.582L243.5,225.35a28.359,28.359,0,0,0,.49-5.222,28.7,28.7,0,0,0-.153-2.948l34.326-16.472A28.2,28.2,0,0,0,296.354,207.344Zm0-36.68a8.34,8.34,0,1,1-8.339,8.34A8.35,8.35,0,0,1,296.354,170.664Zm-80.708,57.805a8.341,8.341,0,1,1,8.339-8.341A8.35,8.35,0,0,1,215.646,228.469Zm80.708,24.444a8.34,8.34,0,1,1-8.339,8.34A8.35,8.35,0,0,1,296.354,252.913Z" />
+                <path d="M256,26.872c-108.907,0-197.51,84.9-197.51,189.261,0,33.493,10.3,68.523,30.613,104.116,15.986,28.011,38.2,56.469,66.035,84.587,47.119,47.6,93.523,77.47,95.476,78.718a10,10,0,0,0,10.772,0c1.953-1.248,48.357-31.116,95.476-78.718,27.832-28.118,50.049-56.576,66.035-84.587,20.313-35.593,30.613-70.623,30.613-104.116C453.51,111.774,364.907,26.872,256,26.872ZM405.627,310.159c-15.074,26.457-36.171,53.485-62.706,80.33A622.086,622.086,0,0,1,256,463.1a621.015,621.015,0,0,1-86.646-72.336c-26.6-26.876-47.758-53.937-62.878-80.43C87.905,277.8,78.49,246.105,78.49,216.133,78.49,122.8,158.121,46.872,256,46.872S433.51,122.8,433.51,216.133C433.51,246.051,424.129,277.686,405.627,310.159Z" />
+                <path d="M256,74.172c-81,0-146.9,65.9-146.9,146.9s65.9,146.9,146.9,146.9,146.9-65.9,146.9-146.9S337,74.172,256,74.172Zm0,273.8a126.9,126.9,0,1,1,126.9-126.9A127.046,127.046,0,0,1,256,347.975Z" />
+            </svg>
+        ),
     },
 ]
 
@@ -265,14 +289,21 @@ const Header = () => {
                                         >
                                             <a className="flex items-center font-bold">
                                                 <li
-                                                    className={`cursor-pointer h-full flex items-center text-sm tracking-normal transition duration-150 ease-in ${
+                                                    className={`cursor-pointer h-full flex items-center text-base tracking-normal transition duration-150 ease-in ${
                                                         pathname === item.key
                                                             ? "text-rose-500"
                                                             : "hover:text-rose-500 text-gray-800"
                                                     }`}
                                                 >
-                                                    <span className="mr-2">
-                                                        {item.icon}
+                                                    <span
+                                                        className={`${
+                                                            pathname ===
+                                                            item.key
+                                                                ? "active"
+                                                                : ""
+                                                        } mr-1`}
+                                                    >
+                                                        {item?.icon}
                                                     </span>
                                                     {item.label}
                                                 </li>
@@ -591,21 +622,130 @@ const Header = () => {
                                 <div className="h-full">
                                     <div className="flex flex-col justify-between h-full w-full">
                                         <div>
+                                            {navLinkItems.map((item) => {
+                                                return (
+                                                    <Link
+                                                        href={item.key}
+                                                        key={item.key}
+                                                        passHref
+                                                        legacyBehavior
+                                                    >
+                                                        <li
+                                                            className={`flex gap-2 items-center py-2 px-4 rounded cursor-pointer mb-2 ${
+                                                                pathname ===
+                                                                item.key
+                                                                    ? "bg-gray-100"
+                                                                    : "hover:bg-gray-100"
+                                                            }`}
+                                                        >
+                                                            <span
+                                                                className={
+                                                                    pathname ===
+                                                                    item.key
+                                                                        ? "active"
+                                                                        : ""
+                                                                }
+                                                            >
+                                                                {item?.icon || (
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        width="22"
+                                                                        height="22"
+                                                                        viewBox="0 0 32 32"
+                                                                    >
+                                                                        <path
+                                                                            // fill="#F43F5E"
+                                                                            d="M25 28H7c-.6 0-1-.4-1-1v-2c0-5.5 4.5-10 10-10 1.2 0 2.5.2 3.6.7.5.2.8.8.6 1.3-.2.5-.8.8-1.3.6-.9-.4-1.9-.6-2.9-.6-4.4 0-8 3.6-8 8v1h17c.6 0 1 .4 1 1s-.4 1-1 1zm-9-14c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"
+                                                                        />
+                                                                        <path
+                                                                            // fill="#F43F5E"
+                                                                            d="M21 25.2c-.5 0-1-.4-1-.9l-.2-3.6c0-.2 0-.4.1-.6l4.6-7.8c.3-.5.9-.6 1.4-.4l3.4 2c.5.3.6.9.4 1.4l-4.6 7.8c-.1.2-.2.3-.4.4l-3.2 1.6c-.2 0-.4.1-.5.1zm.8-4.4.1 1.8 1.6-.8 3.9-6.6-1.7-1-3.9 6.6zm2.4 1.8z"
+                                                                        />
+                                                                    </svg>
+                                                                )}
+                                                            </span>
+                                                            <span
+                                                                className={`font-bold text-base ${
+                                                                    pathname ===
+                                                                    item.key
+                                                                        ? "text-rose-500"
+                                                                        : ""
+                                                                }  `}
+                                                            >
+                                                                {item.label}
+                                                            </span>
+                                                        </li>
+                                                    </Link>
+                                                )
+                                            })}
                                             {session && (
-                                                <Menu
-                                                    onClick={handleClickMenu}
-                                                    defaultSelectedKeys={[
-                                                        pathname,
-                                                    ]}
-                                                    className="border-b"
-                                                    items={navLinkUserItems}
-                                                />
+                                                <>
+                                                    {navLinkUserItems.map(
+                                                        (item) => {
+                                                            return (
+                                                                <Link
+                                                                    href={
+                                                                        item.key
+                                                                    }
+                                                                    key={
+                                                                        item.key
+                                                                    }
+                                                                    passHref
+                                                                    legacyBehavior
+                                                                >
+                                                                    <li
+                                                                        className={`flex gap-2 items-center py-2 px-4 rounded cursor-pointer mb-2 ${
+                                                                            pathname ===
+                                                                            item.key
+                                                                                ? "bg-gray-100"
+                                                                                : "hover:bg-gray-100"
+                                                                        }`}
+                                                                    >
+                                                                        <span
+                                                                            className={
+                                                                                pathname ===
+                                                                                item.key
+                                                                                    ? "active"
+                                                                                    : ""
+                                                                            }
+                                                                        >
+                                                                            {item?.icon || (
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="22"
+                                                                                    height="22"
+                                                                                    viewBox="0 0 32 32"
+                                                                                >
+                                                                                    <path
+                                                                                        // fill="#F43F5E"
+                                                                                        d="M25 28H7c-.6 0-1-.4-1-1v-2c0-5.5 4.5-10 10-10 1.2 0 2.5.2 3.6.7.5.2.8.8.6 1.3-.2.5-.8.8-1.3.6-.9-.4-1.9-.6-2.9-.6-4.4 0-8 3.6-8 8v1h17c.6 0 1 .4 1 1s-.4 1-1 1zm-9-14c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"
+                                                                                    />
+                                                                                    <path
+                                                                                        // fill="#F43F5E"
+                                                                                        d="M21 25.2c-.5 0-1-.4-1-.9l-.2-3.6c0-.2 0-.4.1-.6l4.6-7.8c.3-.5.9-.6 1.4-.4l3.4 2c.5.3.6.9.4 1.4l-4.6 7.8c-.1.2-.2.3-.4.4l-3.2 1.6c-.2 0-.4.1-.5.1zm.8-4.4.1 1.8 1.6-.8 3.9-6.6-1.7-1-3.9 6.6zm2.4 1.8z"
+                                                                                    />
+                                                                                </svg>
+                                                                            )}
+                                                                        </span>
+                                                                        <span
+                                                                            className={`font-bold text-base ${
+                                                                                pathname ===
+                                                                                item.key
+                                                                                    ? "text-rose-500"
+                                                                                    : ""
+                                                                            }  `}
+                                                                        >
+                                                                            {
+                                                                                item.label
+                                                                            }
+                                                                        </span>
+                                                                    </li>
+                                                                </Link>
+                                                            )
+                                                        }
+                                                    )}
+                                                </>
                                             )}
-                                            <Menu
-                                                onClick={handleClickMenu}
-                                                defaultSelectedKeys={[pathname]}
-                                                items={navLinkItems}
-                                            />
                                         </div>
                                     </div>
                                 </div>

@@ -146,7 +146,7 @@ const PlaceReview = (props) => {
                         <h3 className="font-bold text-center text-xl">{`Đánh giá ${place?.name}`}</h3>
                     }
                     centered
-                    visible={state.modalReview}
+                    open={state.modalReview}
                     onCancel={state.toggleModalReview}
                     destroyOnClose={true}
                     footer={

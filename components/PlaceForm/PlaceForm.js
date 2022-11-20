@@ -673,7 +673,7 @@ const PlaceForm = (props) => {
                         </Upload>
 
                         <Modal
-                            visible={previewVisible}
+                            open={previewVisible}
                             title={previewTitle}
                             footer={null}
                             onCancel={handleCancel}
@@ -705,7 +705,7 @@ const PlaceForm = (props) => {
                             {fileListMenu.length > 20 ? null : uploadButton}
                         </Upload>
                         <Modal
-                            visible={previewVisible}
+                            open={previewVisible}
                             title={previewTitle}
                             footer={null}
                             onCancel={handleCancel}

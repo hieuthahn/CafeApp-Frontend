@@ -80,3 +80,18 @@
 .active > svg > path {
     fill: #f43f5e;
 }
+
+.ant-rate-star:not(:last-child) {
+    margin-right: 1px !important;
+}
+
+.star-icon .ant-rate-star:not(:last-child) {
+    margin-right: 8px !important;
+}
+
+.ant-back-top-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

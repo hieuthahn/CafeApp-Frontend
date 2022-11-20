@@ -5,14 +5,8 @@ import { Rate, Tooltip } from "antd"
 import useBearStore from "lib/data/zustand"
 import moment from "moment"
 const format = "HH:mm"
-import ReactMapboxGl, { Layer, Feature, Marker, Popup } from "react-mapbox-gl"
+import ReactMapGL, { Layer, Feature, Marker, Popup } from "react-map-gl"
 import Image from "next/image"
-
-const Map = ReactMapboxGl({
-    accessToken:
-        process.env.ACCESS_TOKEN_MAPBOX ||
-        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ",
-})
 
 const PlaceDetail = ({ place }) => {
     return (
@@ -363,114 +357,124 @@ const PlaceInfo = ({ place }) => {
 
 const PlaceAddress = ({ place }) => {
     const [showPopup, setShowPopup] = useState(false)
-
+    console.log(showPopup)
     return (
-        <div className="flex-1 bg-white rounded-lg overflow-hidden shadow-sm p-4">
+        <div className="flex flex-col bg-white rounded-lg shadow-sm p-4">
             <h2 className="text-xl font-bold !mb-2">{"Địa điểm cụ thể"}</h2>
-            <Map
-                className="rounded-lg"
-                style="mapbox://styles/mapbox/streets-v11"
-                containerStyle={{
-                    minHeight: "200px",
-                    height: "85%",
-                    width: "auto",
-                    position: "relative",
-                }}
-                center={[105.804817, 21.028511]}
-            >
-                <Tooltip placement="bottom" title="Xem đường đi    ">
-                    <div className="absolute top-2 left-[50%] translate-x-[-50%] bg-white shadow-md rounded-md px-3 py-2 flex gap-2 justify-center items-center text-sm w-[80%]">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                        >
-                            <path fill="none" d="M0 0h24v24H0V0z" />
-                            <path d="M22.43 10.59l-9.01-9.01c-.75-.75-2.07-.76-2.83 0l-9 9c-.78.78-.78 2.04 0 2.82l9 9c.39.39.9.58 1.41.58.51 0 1.02-.19 1.41-.58l8.99-8.99c.79-.76.8-2.02.03-2.82zm-10.42 10.4l-9-9 9-9 9 9-9 9zM8 11v4h2v-3h4v2.5l3.5-3.5L14 7.5V10H9c-.55 0-1 .45-1 1z" />
-                        </svg>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href={`https://www.google.com/maps/dir/?api=1&destination=${"21.028511"},${"105.804817"}`}
-                            className="text-black"
-                        >
-                            {place?.address?.specific}
-                        </a>
-                    </div>
-                </Tooltip>
-
-                <Marker
-                    className="cursor-pointer"
-                    coordinates={[105.804817, 21.028511]}
-                    anchor="bottom"
-                    onClick={() => setShowPopup(true)}
+            <div className="rounded-lg w-full h-full overflow-hidden">
+                <ReactMapGL
+                    mapboxAccessToken={
+                        process.env.ACCESS_TOKEN_MAPBOX ||
+                        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ"
+                    }
+                    initialViewState={{
+                        longitude: 105.804817,
+                        latitude: 21.028511,
+                        zoom: 12,
+                    }}
+                    mapStyle="mapbox://styles/mapbox/streets-v11"
                 >
-                    <svg
-                        className="property-marker"
-                        height="34"
-                        width="34"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 18 29"
-                    >
-                        <ellipse
-                            className="shadow"
-                            fillOpacity=".24"
-                            cx="9"
-                            cy="27"
-                            rx="6"
-                            ry="2"
-                        />
-                        <path
-                            className="pin"
-                            fill="#ee0033"
-                            d="M9 27C7 27 0 16.97 0 9a9 9 0 1 1 18 0c0 7.97-7 18-9 18zm0-14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
-                        />
-                    </svg>
-                </Marker>
-                {showPopup && (
-                    <Popup
-                        coordinates={[105.804817, 21.028511]}
-                        className="shadow-md"
-                        offset={{
-                            "bottom-left": [12, -38],
-                            bottom: [0, -38],
-                            "bottom-right": [-12, -38],
-                        }}
-                    >
-                        <div className="relative flex justify-between items-center gap-3 font-['Quicksand']">
-                            <Image
-                                alt="cafe-app"
-                                layout="fill"
-                                objectFit="cover"
-                                src={place?.photos[0]}
-                                className="rounded-md object-cover w-[40px] h-[40px]"
-                            />
-                            <div className="">
-                                <h3 className="text-base font-semibold">
-                                    {place?.name}
-                                </h3>
-                                <div className="text-sm">
-                                    {place?.address?.specific}
-                                </div>
-                            </div>
-                        </div>
-                        <button
-                            className="absolute right-0 top-0 z-10 p-2 text-base"
-                            onClick={() => setShowPopup(false)}
-                        >
+                    <Tooltip placement="bottom" title="Xem đường đi    ">
+                        <div className="absolute top-2 left-[50%] translate-x-[-50%] bg-white shadow-md rounded-md px-3 py-2 flex gap-2 justify-center items-center text-sm w-[80%]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="11"
-                                height="11"
-                                viewBox="0 0 512 512"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
                             >
-                                <path d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z" />
+                                <path fill="none" d="M0 0h24v24H0V0z" />
+                                <path d="M22.43 10.59l-9.01-9.01c-.75-.75-2.07-.76-2.83 0l-9 9c-.78.78-.78 2.04 0 2.82l9 9c.39.39.9.58 1.41.58.51 0 1.02-.19 1.41-.58l8.99-8.99c.79-.76.8-2.02.03-2.82zm-10.42 10.4l-9-9 9-9 9 9-9 9zM8 11v4h2v-3h4v2.5l3.5-3.5L14 7.5V10H9c-.55 0-1 .45-1 1z" />
                             </svg>
-                        </button>
-                    </Popup>
-                )}
-            </Map>
+                            <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={`https://www.google.com/maps/dir/?api=1&destination=${"21.028511"},${"105.804817"}`}
+                                className="text-black"
+                            >
+                                {place?.address?.specific}
+                            </a>
+                        </div>
+                    </Tooltip>
+                    <Marker
+                        className="cursor-pointer"
+                        longitude={105.804817}
+                        latitude={21.028511}
+                        anchor="bottom"
+                        onClick={() => setShowPopup(true)}
+                    >
+                        <svg
+                            className="property-marker"
+                            height="34"
+                            width="34"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 18 29"
+                        >
+                            <ellipse
+                                className="shadow"
+                                fillOpacity=".24"
+                                cx="9"
+                                cy="27"
+                                rx="6"
+                                ry="2"
+                            />
+                            <path
+                                className="pin"
+                                fill="#ee0033"
+                                d="M9 27C7 27 0 16.97 0 9a9 9 0 1 1 18 0c0 7.97-7 18-9 18zm0-14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+                            />
+                        </svg>
+                    </Marker>
+
+                    {/* {!showPopup && (
+                        <Popup
+                            longitude={105.804817}
+                            latitude={21.028511}
+                            anchor="bottom"
+                            closeButton={false}
+                            closeOnClick
+                            offset={{
+                                "bottom-left": [12, -38],
+                                bottom: [0, -38],
+                                "bottom-right": [-12, -38],
+                            }}
+                        >
+                            <>
+                                <div className="relative flex justify-between items-center gap-3 font-['Quicksand']">
+                                    <Image
+                                        alt="cafe-app"
+                                        width="40"
+                                        height="40"
+                                        objectFit="cover"
+                                        src={place?.photos[0]}
+                                        className="rounded-md object-cover w-[40px] h-[40px]"
+                                    />
+                                    <div className="">
+                                        <h3 className="text-base font-semibold">
+                                            {place?.name}
+                                        </h3>
+                                        <div className="text-sm">
+                                            {place?.address?.specific}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    className="absolute right-0 top-0 z-10 p-2 text-base"
+                                    onClick={() => setShowPopup(false)}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="11"
+                                        height="11"
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <path d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z" />
+                                    </svg>
+                                </button>
+                            </>
+                        </Popup>
+                    )} */}
+                </ReactMapGL>
+            </div>
         </div>
     )
 }

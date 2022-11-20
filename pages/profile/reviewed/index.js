@@ -31,7 +31,6 @@ const PlaceReviewed = () => {
         try {
             const res = await getReviewsByUserId(body.page, body.pageSize)
             if (res.success) {
-                console.log(res)
                 setReviews(res)
             }
         } catch (error) {}

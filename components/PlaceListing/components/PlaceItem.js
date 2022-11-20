@@ -9,14 +9,14 @@ const BASE_URL = "/place"
 const PlaceItem = ({ place, className }) => {
     return (
         <div
-            className={`rounded-lg shadow-sm bg-white flex ${
+            className={`rounded-lg shadow-md bg-white flex ${
                 className ? className : "mb-5"
             } `}
         >
             <Link href={`${BASE_URL}/${place?.slug}`} passHref legacyBehavior>
                 <a className="py-2 pl-2">
-                    <div className="w-[120px] md:w-[270px] h-full rounded-lg">
-                        <figure className="relative w-full h-full overflow-hidden">
+                    <div className="w-[120px] md:w-[270px] h-full rounded-lg overflow-hidden">
+                        <figure className="relative w-full h-full">
                             <Image
                                 alt="cafe-app"
                                 layout="fill"
@@ -50,14 +50,17 @@ const PlaceItem = ({ place, className }) => {
                 <div className="truncate pointer-events-none">
                     <span className="mr-2">
                         <Rate
-                            className="!text-rose-500 !text-sm "
+                            className="!text-rose-500 !text-base"
                             disabled
                             allowHalf
                             defaultValue={place?.rate?.avg || 0}
                         />
                     </span>
+                    {" - "}
                     {/* {`${place?.rateAvg || ""} `} */}
-                    <span>{place?.rate?.avg || "Chưa có đánh giá"}</span>
+                    <span>
+                        {(place?.rate?.rateCount || "Chưa có") + " đánh giá"}
+                    </span>
                 </div>
                 <div className="flex gap-3 items-center">
                     <svg
