@@ -148,7 +148,7 @@ const PlaceContent = (props) => {
                             onCancel={() => setModalMapOpen(false)}
                             footer={null}
                         >
-                            <div className="col-span-12 md:col-span-8">
+                            <div className="h-full">
                                 <ReactMapGL
                                     mapboxAccessToken={
                                         process.env.ACCESS_TOKEN_MAPBOX ||

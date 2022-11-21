@@ -289,7 +289,7 @@ const Header = () => {
                                         >
                                             <a className="flex items-center font-bold">
                                                 <li
-                                                    className={`cursor-pointer h-full flex items-center text-base tracking-normal transition duration-150 ease-in ${
+                                                    className={`cursor-pointer h-full flex items-center text-base tracking-normal ${
                                                         pathname === item.key
                                                             ? "text-rose-500"
                                                             : "hover:text-rose-500 text-gray-800"
@@ -336,7 +336,7 @@ const Header = () => {
                                         onClick={() => setProfile(!profile)}
                                     >
                                         {profile && (
-                                            <ul className="px-4 py-2 w-[220px] drop-shadow-md bg-white absolute rounded right-0 shadow top-[56px] z-10 ease-out duration-300">
+                                            <ul className="px-4 py-2 w-[220px] drop-shadow-md bg-white absolute rounded right-0 shadow top-[56px] z-10 transition duration-300 ease-in ">
                                                 {navLinkUserItems.map(
                                                     (item, index) => {
                                                         return (

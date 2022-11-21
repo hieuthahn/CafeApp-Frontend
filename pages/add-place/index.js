@@ -29,7 +29,7 @@ const AddPlace = () => {
                     <h1 className="font-bold text-2xl">Thêm địa điểm</h1>
                     <p>
                         Những quán cafe yêu thích của bạn chưa có trên Coffee
-                        Soul? Chia sẻ với cộng đồng ngay!
+                        Mine? Chia sẻ với cộng đồng ngay!
                     </p>
                     <PlaceForm />
                 </div>

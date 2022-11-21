@@ -176,7 +176,7 @@ const PlaceReview = (props) => {
                                         </span>
                                         <span className="flex gap-4 items-center">
                                             <Rate
-                                                className="!text-rose-500 !text-3xl"
+                                                className="!text-rose-500 !text-3xl star-icon"
                                                 onChange={(value) =>
                                                     setRate((prev) => ({
                                                         ...prev,
