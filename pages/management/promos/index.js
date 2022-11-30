@@ -120,6 +120,7 @@ const App = () => {
 
     const onFinish = async (values) => {
         const formData = new FormData()
+        values.place = values.place.value
         formData.append("data", JSON.stringify(values))
         fileListPhotos.map((photo, index) =>
             formData.append("photo", photo?.originFileObj)

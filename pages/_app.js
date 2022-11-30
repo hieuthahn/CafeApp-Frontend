@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
     nProgress.configure({
         template:
-            '<div class="bar !bg-rose-500 !border-b-[2.2px] !border-rose-500" role="bar"><div class="peg !bg-rose-500"></div></div>',
+            '<div class="bar !bg-rose-500 !border-b-[3.5px] !border-rose-500" role="bar"><div class="peg !bg-rose-500"></div></div>',
         easing: "ease",
         speed: 300,
         minimum: 0.1,

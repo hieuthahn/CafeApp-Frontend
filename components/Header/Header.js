@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
-import { useRouter } from "next/router"
-import Link from "next/link"
-import Image from "next/image"
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Image from 'next/image'
 import {
     Button,
     cx,
@@ -11,24 +11,24 @@ import {
     FormHelperText,
     FormErrorMessage,
     Input,
-} from "@vechaiui/react"
-import { Dialog, Transition, Tab } from "@headlessui/react"
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded"
-import { useForm } from "react-hook-form"
-import { useSession, signIn, signOut } from "next-auth/react"
-import { Avatar, Alert, Tabs, Modal, Drawer, Menu } from "antd"
-import { UserOutlined } from "@ant-design/icons"
-import Logo from "components/Logo"
-import { signUp } from "lib/services/user"
-import Cookies from "js-cookie"
-import useBearStore from "lib/data/zustand"
-import axios from "config/axios"
-import SearchBar from "components/HomeSection/components/SearchBar"
+} from '@vechaiui/react'
+import { Dialog, Transition, Tab } from '@headlessui/react'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import { useForm } from 'react-hook-form'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import { Avatar, Alert, Tabs, Modal, Drawer, Menu } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import Logo from 'components/Logo'
+import { signUp } from 'lib/services/user'
+import Cookies from 'js-cookie'
+import useBearStore from 'lib/data/zustand'
+import axios from 'config/axios'
+import SearchBar from 'components/HomeSection/components/SearchBar'
 
 const navLinkItems = [
     {
-        key: "/",
-        label: "Trang chủ",
+        key: '/',
+        label: 'Trang chủ',
         icon: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -50,11 +50,6 @@ const navLinkItems = [
     //     icon: null,
     // },
     // {
-    //     key: "/promo",
-    //     label: "Khuyến mại",
-    //     icon: null,
-    // },
-    // {
     //     key: "/about",
     //     label: "Giới thiệu",
     //     icon: null,
@@ -65,8 +60,8 @@ const navLinkItems = [
     //     icon: null,
     // },
     {
-        key: "/add-place",
-        label: "Đóng góp địa điểm",
+        key: '/add-place',
+        label: 'Đóng góp địa điểm',
         icon: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,12 +75,27 @@ const navLinkItems = [
             </svg>
         ),
     },
+    {
+        key: '/promo',
+        label: 'Khuyến mại',
+        icon: (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 15.118 15.107"
+                width="22"
+                height="22"
+            >
+                <path d="M14.059 5.436V3.245l-2.204-1.102L9.712 0 7.559.538 5.406 0 3.263 2.143 1.059 3.245v2.191L0 7.554l1.059 2.118v2.191l2.204 1.102 2.143 2.143 2.153-.538 2.153.538 2.143-2.143 2.204-1.102V9.672l1.059-2.118-1.059-2.118zm-1 4v1.809l-1.724.862L9.406 14l-1.847-.462L5.712 14l-1.8-1.8-1.854-.956V9.436l-.94-1.882.941-1.882V3.863l1.724-.862 1.93-1.894 1.847.462 1.847-.462 1.8 1.8 1.854.956v1.809L14 7.554l-.941 1.882z" />
+                <path d="m4.205 10.2 6-6 .707.708-6 6zM5.559 7.054c.827 0 1.5-.673 1.5-1.5s-.673-1.5-1.5-1.5-1.5.673-1.5 1.5.673 1.5 1.5 1.5zm0-2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm4 3c-.827 0-1.5.673-1.5 1.5s.673 1.5 1.5 1.5 1.5-.673 1.5-1.5-.673-1.5-1.5-1.5zm0 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
+            </svg>
+        ),
+    },
 ]
 
 const navLinkUserItems = [
     {
-        label: "Hồ sơ",
-        key: "/profile/setting",
+        label: 'Hồ sơ',
+        key: '/profile/setting',
         icon: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -105,8 +115,8 @@ const navLinkUserItems = [
         ),
     },
     {
-        label: "Địa đểm đã thích",
-        key: "/profile/liked",
+        label: 'Địa đểm đã thích',
+        key: '/profile/liked',
         icon: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +129,8 @@ const navLinkUserItems = [
         ),
     },
     {
-        label: "Địa điểm đã đánh giá",
-        key: "/profile/reviewed",
+        label: 'Địa điểm đã đánh giá',
+        key: '/profile/reviewed',
         icon: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,12 +161,12 @@ const Header = () => {
     const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
     const [alert, setAlert] = useState({
         register: {
-            type: "",
-            message: "",
+            type: '',
+            message: '',
         },
         login: {
-            type: "",
-            message: "",
+            type: '',
+            message: '',
         },
     })
 
@@ -167,11 +177,11 @@ const Header = () => {
                 refreshToken: session.refreshToken,
                 roles: session.roles,
             })
-            Cookies.set("auth", data)
-            axios.defaults.headers.common["Authorization"] =
-                "Token " + session.accessToken
+            Cookies.set('auth', data)
+            axios.defaults.headers.common['Authorization'] =
+                'Token ' + session.accessToken
         } else {
-            Cookies.remove("auth")
+            Cookies.remove('auth')
         }
     }, [session])
 
@@ -198,7 +208,7 @@ const Header = () => {
     const onSubmit = async (data) => {
         setLoading(true)
         setAlert()
-        const res = await signIn("credentials", {
+        const res = await signIn('credentials', {
             ...data,
             redirect: false,
         })
@@ -207,7 +217,7 @@ const Header = () => {
             setAlert((prev) => ({
                 ...prev,
                 login: {
-                    type: "error",
+                    type: 'error',
                     message: res.error,
                 },
             }))
@@ -226,7 +236,7 @@ const Header = () => {
                 setAlert((prev) => ({
                     ...prev,
                     register: {
-                        type: "success",
+                        type: 'success',
                         message: res.message,
                     },
                 }))
@@ -235,7 +245,7 @@ const Header = () => {
             setAlert((prev) => ({
                 ...prev,
                 register: {
-                    type: "error",
+                    type: 'error',
                     message: res.message,
                 },
             }))
@@ -243,7 +253,7 @@ const Header = () => {
             setAlert((prev) => ({
                 ...prev,
                 register: {
-                    type: "error",
+                    type: 'error',
                     message: res.message,
                 },
             }))
@@ -252,7 +262,7 @@ const Header = () => {
 
     const handleClickMenu = ({ item, key, keyPath, event }) => {
         push(key)
-        handleToggleShow("drawer")
+        handleToggleShow('drawer')
     }
 
     return (
@@ -272,7 +282,7 @@ const Header = () => {
                                     </Link>
                                 </h3>
                             </div>
-                            {pathname !== "/" && (
+                            {pathname !== '/' && (
                                 <SearchBar
                                     iconSearch={true}
                                     inputClass="flex items-center px-2 rounded-lg border"
@@ -291,16 +301,16 @@ const Header = () => {
                                                 <li
                                                     className={`cursor-pointer h-full flex items-center text-base tracking-normal ${
                                                         pathname === item.key
-                                                            ? "text-rose-500"
-                                                            : "hover:text-rose-500 text-gray-800"
+                                                            ? 'text-rose-500'
+                                                            : 'hover:text-rose-500 text-gray-800'
                                                     }`}
                                                 >
                                                     <span
                                                         className={`${
                                                             pathname ===
                                                             item.key
-                                                                ? "active"
-                                                                : ""
+                                                                ? 'active'
+                                                                : ''
                                                         } mr-1`}
                                                     >
                                                         {item?.icon}
@@ -350,8 +360,8 @@ const Header = () => {
                                                                     className={`cursor-pointer text-gray-600 text-sm leading-3 py-2 font-bold ${
                                                                         pathname ===
                                                                         item.key
-                                                                            ? "!text-rose-500"
-                                                                            : "hover:text-rose-500 text-gray-600"
+                                                                            ? '!text-rose-500'
+                                                                            : 'hover:text-rose-500 text-gray-600'
                                                                     }`}
                                                                 >
                                                                     <div className="flex items-center">
@@ -359,8 +369,8 @@ const Header = () => {
                                                                             className={
                                                                                 pathname ===
                                                                                 item.key
-                                                                                    ? "active"
-                                                                                    : ""
+                                                                                    ? 'active'
+                                                                                    : ''
                                                                             }
                                                                         >
                                                                             {
@@ -377,14 +387,14 @@ const Header = () => {
                                                                 </li>
                                                             </Link>
                                                         )
-                                                    }
+                                                    },
                                                 )}
                                                 {session.roles.includes(
-                                                    "ADMIN"
+                                                    'ADMIN',
                                                 ) && (
                                                     <Link
                                                         href={
-                                                            "/management/places"
+                                                            '/management/places'
                                                         }
                                                         passHref
                                                         legacyBehavior
@@ -392,18 +402,18 @@ const Header = () => {
                                                         <li
                                                             className={`cursor-pointer text-gray-600 text-sm leading-3 py-2 font-bold ${
                                                                 pathname ===
-                                                                "/management/places"
-                                                                    ? "!text-rose-500"
-                                                                    : "hover:text-rose-500 text-gray-600"
+                                                                '/management/places'
+                                                                    ? '!text-rose-500'
+                                                                    : 'hover:text-rose-500 text-gray-600'
                                                             }`}
                                                         >
                                                             <div className="flex items-center">
                                                                 <span
                                                                     className={
                                                                         pathname ===
-                                                                        "/management/places"
-                                                                            ? "active"
-                                                                            : ""
+                                                                        '/management/places'
+                                                                            ? 'active'
+                                                                            : ''
                                                                     }
                                                                 >
                                                                     <svg
@@ -509,7 +519,7 @@ const Header = () => {
                             <div
                                 id="menu"
                                 className="text-gray-800"
-                                onClick={() => handleToggleShow("drawer")}
+                                onClick={() => handleToggleShow('drawer')}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -542,12 +552,12 @@ const Header = () => {
                                 <div
                                     className="flex gap-4 items-center"
                                     onClick={() => {
-                                        push("/profile/setting") &&
-                                            handleToggleShow("drawer")
+                                        push('/profile/setting') &&
+                                            handleToggleShow('drawer')
                                     }}
                                 >
                                     <Avatar
-                                        size={"large"}
+                                        size={'large'}
                                         icon={<UserOutlined />}
                                     />
                                     <div className>
@@ -569,7 +579,7 @@ const Header = () => {
                             ) : (
                                 <div
                                     className="flex items-center"
-                                    onClick={() => handleToggleShow("drawer")}
+                                    onClick={() => handleToggleShow('drawer')}
                                 >
                                     <Link
                                         href="/new-review"
@@ -610,13 +620,13 @@ const Header = () => {
                             ) : null
                         }
                         placement="right"
-                        onClose={() => handleToggleShow("drawer")}
+                        onClose={() => handleToggleShow('drawer')}
                         open={show?.drawer}
                     >
                         <div id="mobile-nav">
                             <div
                                 className="bg-gray-800 opacity-50 w-full h-full"
-                                onClick={() => handleToggleShow("drawer")}
+                                onClick={() => handleToggleShow('drawer')}
                             />
                             <div className="">
                                 <div className="h-full">
@@ -633,22 +643,22 @@ const Header = () => {
                                                         <li
                                                             onClick={() =>
                                                                 handleToggleShow(
-                                                                    "drawer"
+                                                                    'drawer',
                                                                 )
                                                             }
                                                             className={`flex gap-2 items-center py-2 px-4 rounded cursor-pointer mb-2 ${
                                                                 pathname ===
                                                                 item.key
-                                                                    ? "bg-gray-100"
-                                                                    : "hover:bg-gray-100"
+                                                                    ? 'bg-gray-100'
+                                                                    : 'hover:bg-gray-100'
                                                             }`}
                                                         >
                                                             <span
                                                                 className={
                                                                     pathname ===
                                                                     item.key
-                                                                        ? "active"
-                                                                        : ""
+                                                                        ? 'active'
+                                                                        : ''
                                                                 }
                                                             >
                                                                 {item?.icon || (
@@ -673,8 +683,8 @@ const Header = () => {
                                                                 className={`font-bold text-base ${
                                                                     pathname ===
                                                                     item.key
-                                                                        ? "text-rose-500"
-                                                                        : ""
+                                                                        ? 'text-rose-500'
+                                                                        : ''
                                                                 }  `}
                                                             >
                                                                 {item.label}
@@ -701,22 +711,22 @@ const Header = () => {
                                                                     <li
                                                                         onClick={() =>
                                                                             handleToggleShow(
-                                                                                "drawer"
+                                                                                'drawer',
                                                                             )
                                                                         }
                                                                         className={`flex gap-2 items-center py-2 px-4 rounded cursor-pointer mb-2 ${
                                                                             pathname ===
                                                                             item.key
-                                                                                ? "bg-gray-100"
-                                                                                : "hover:bg-gray-100"
+                                                                                ? 'bg-gray-100'
+                                                                                : 'hover:bg-gray-100'
                                                                         }`}
                                                                     >
                                                                         <span
                                                                             className={
                                                                                 pathname ===
                                                                                 item.key
-                                                                                    ? "active"
-                                                                                    : ""
+                                                                                    ? 'active'
+                                                                                    : ''
                                                                             }
                                                                         >
                                                                             {item?.icon || (
@@ -741,8 +751,8 @@ const Header = () => {
                                                                             className={`font-bold text-base ${
                                                                                 pathname ===
                                                                                 item.key
-                                                                                    ? "text-rose-500"
-                                                                                    : ""
+                                                                                    ? 'text-rose-500'
+                                                                                    : ''
                                                                             }  `}
                                                                         >
                                                                             {
@@ -752,7 +762,7 @@ const Header = () => {
                                                                     </li>
                                                                 </Link>
                                                             )
-                                                        }
+                                                        },
                                                     )}
                                                 </>
                                             )}
@@ -777,13 +787,13 @@ const Header = () => {
                             <FormControl invalid={Boolean(errors.username)}>
                                 <FormLabel>Tên đăng nhập</FormLabel>
                                 <Input
-                                    {...register("username", {
+                                    {...register('username', {
                                         required: true,
                                     })}
                                     placeholder="Nhập tên đăng nhập"
                                 />
                                 {errors.username &&
-                                    errors.username.type === "required" && (
+                                    errors.username.type === 'required' && (
                                         <FormErrorMessage>
                                             Bạn cần nhập tên đăng nhập
                                         </FormErrorMessage>
@@ -796,10 +806,10 @@ const Header = () => {
                                     <Input
                                         className="pr-16"
                                         type={
-                                            show.password ? "text" : "password"
+                                            show.password ? 'text' : 'password'
                                         }
                                         placeholder="Nhập mật khẩu của bạn"
-                                        {...register("password", {
+                                        {...register('password', {
                                             required: true,
                                         })}
                                     />
@@ -809,15 +819,15 @@ const Header = () => {
                                             size="xs"
                                             variant="solid"
                                             onClick={() =>
-                                                handleToggleShow("password")
+                                                handleToggleShow('password')
                                             }
                                         >
-                                            {show.password ? "Ẩn" : "Hiện"}
+                                            {show.password ? 'Ẩn' : 'Hiện'}
                                         </Button>
                                     </Input.RightElement>
                                 </Input.Group>
                                 {errors.password &&
-                                    errors.password.type === "required" && (
+                                    errors.password.type === 'required' && (
                                         <FormErrorMessage>
                                             Bạn cần nhập mật khẩu
                                         </FormErrorMessage>
@@ -826,7 +836,7 @@ const Header = () => {
                             {alert?.login?.message && (
                                 <Alert
                                     message={alert.login.message}
-                                    type={alert.login.type || "success"}
+                                    type={alert.login.type || 'success'}
                                     showIcon
                                 />
                             )}
@@ -850,13 +860,13 @@ const Header = () => {
                             <FormControl invalid={Boolean(errors2.name)}>
                                 <FormLabel>Tên hiển thị</FormLabel>
                                 <Input
-                                    {...register2("name", {
+                                    {...register2('name', {
                                         required: true,
                                     })}
                                     placeholder="Nhập tên hiển thị"
                                 />
                                 {errors2.name &&
-                                    errors2.name.type === "required" && (
+                                    errors2.name.type === 'required' && (
                                         <FormErrorMessage>
                                             Bạn cần nhập tên hiển thị
                                         </FormErrorMessage>
@@ -865,13 +875,13 @@ const Header = () => {
                             <FormControl invalid={Boolean(errors2.username)}>
                                 <FormLabel>Tên đăng nhập</FormLabel>
                                 <Input
-                                    {...register2("username", {
+                                    {...register2('username', {
                                         required: true,
                                     })}
                                     placeholder="Nhập tên đăng nhập"
                                 />
                                 {errors2.username &&
-                                    errors2.username.type === "required" && (
+                                    errors2.username.type === 'required' && (
                                         <FormErrorMessage>
                                             Bạn cần nhập tên đăng nhập
                                         </FormErrorMessage>
@@ -881,19 +891,19 @@ const Header = () => {
                             <FormControl invalid={Boolean(errors2.email)}>
                                 <FormLabel>Email</FormLabel>
                                 <Input
-                                    {...register2("email", {
+                                    {...register2('email', {
                                         required: true,
                                         pattern:
                                             /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                                     })}
                                     placeholder="Nhập địa chỉ email"
                                 />
-                                {errors2?.email?.type === "required" && (
+                                {errors2?.email?.type === 'required' && (
                                     <FormErrorMessage>
                                         Bạn cần nhập Email
                                     </FormErrorMessage>
                                 )}
-                                {errors2?.email?.type === "pattern" && (
+                                {errors2?.email?.type === 'pattern' && (
                                     <FormErrorMessage>
                                         Địa chỉ email không hợp lệ
                                     </FormErrorMessage>
@@ -905,10 +915,10 @@ const Header = () => {
                                     <Input
                                         className="pr-16"
                                         type={
-                                            show.password ? "text" : "password"
+                                            show.password ? 'text' : 'password'
                                         }
                                         placeholder="Nhập mật khẩu của bạn"
-                                        {...register2("password", {
+                                        {...register2('password', {
                                             required: true,
                                             minLength: 6,
                                         })}
@@ -919,20 +929,20 @@ const Header = () => {
                                             size="xs"
                                             variant="solid"
                                             onClick={() =>
-                                                handleToggleShow("password")
+                                                handleToggleShow('password')
                                             }
                                         >
-                                            {show.password ? "Ẩn" : "Hiện"}
+                                            {show.password ? 'Ẩn' : 'Hiện'}
                                         </Button>
                                     </Input.RightElement>
                                 </Input.Group>
                             </FormControl>
-                            {errors2?.password?.type === "required" && (
+                            {errors2?.password?.type === 'required' && (
                                 <FormErrorMessage>
                                     Bạn cần nhập mật khẩu
                                 </FormErrorMessage>
                             )}
-                            {errors2?.password?.type === "minLength" && (
+                            {errors2?.password?.type === 'minLength' && (
                                 <FormErrorMessage>
                                     Mật khẩu phải có ít nhất 6 ký tự
                                 </FormErrorMessage>
@@ -946,15 +956,15 @@ const Header = () => {
                                         className="pr-16"
                                         type={
                                             show.confirmPassword
-                                                ? "text"
-                                                : "password"
+                                                ? 'text'
+                                                : 'password'
                                         }
                                         placeholder="Nhập lại mật khẩu"
-                                        {...register2("confirm_password", {
+                                        {...register2('confirm_password', {
                                             required: true,
                                             validate: (value) => {
-                                                if (watch("password") != value)
-                                                    return "Nhập lại mật khẩu không đúng"
+                                                if (watch('password') != value)
+                                                    return 'Nhập lại mật khẩu không đúng'
                                             },
                                         })}
                                     />
@@ -965,13 +975,13 @@ const Header = () => {
                                             variant="solid"
                                             onClick={() =>
                                                 handleToggleShow(
-                                                    "confirmPassword"
+                                                    'confirmPassword',
                                                 )
                                             }
                                         >
                                             {show.confirmPassword
-                                                ? "Ẩn"
-                                                : "Hiện"}
+                                                ? 'Ẩn'
+                                                : 'Hiện'}
                                         </Button>
                                     </Input.RightElement>
                                 </Input.Group>
@@ -979,13 +989,13 @@ const Header = () => {
                             {errors2.confirm_password && (
                                 <FormErrorMessage>
                                     {errors2.confirm_password.message ||
-                                        "Bạn cần nhập lại mật khẩu"}
+                                        'Bạn cần nhập lại mật khẩu'}
                                 </FormErrorMessage>
                             )}
                             {alert?.register?.message && (
                                 <Alert
                                     message={alert.register.message}
-                                    type={alert.register.type || "success"}
+                                    type={alert.register.type || 'success'}
                                     showIcon
                                 />
                             )}
