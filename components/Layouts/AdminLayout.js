@@ -73,6 +73,11 @@ export default function AdminLayout({ children }) {
                                 label: `Tài khoản`,
                             },
                             {
+                                key: "/management/promos",
+                                icon: <UserOutlined />,
+                                label: `Khuyến mãi`,
+                            },
+                            {
                                 key: "logout",
                                 icon: <LogoutOutlined />,
                                 label: `Đăng xuất`,
