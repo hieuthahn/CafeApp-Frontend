@@ -77,7 +77,7 @@ const navLinkItems = [
     },
     {
         key: '/promo',
-        label: 'Khuyến mại',
+        label: 'Khuyến mãi',
         icon: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"

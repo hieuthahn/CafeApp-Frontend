@@ -62,26 +62,28 @@ const Promo = () => {
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto px-2 mt-8">
+            <div className="container mx-auto px-2">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {promos.map((item, index) => {
-                        return (
-                            <div
-                                key={index}
-                                onClick={() => {
-                                    handleOpenModal(item)
-                                }}
-                            >
-                                <PromoCard
-                                    imageUrl={
-                                        item.images && item.images[0]?.url
-                                    }
-                                    title={item.title}
-                                    name={item.place.name}
-                                    address={item.place.address.specific}
-                                />
-                            </div>
-                        )
+                        if (item?.showing) {
+                            return (
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        handleOpenModal(item)
+                                    }}
+                                >
+                                    <PromoCard
+                                        imageUrl={
+                                            item?.images && item?.images[0]?.url
+                                        }
+                                        title={item?.title}
+                                        name={item?.place?.name}
+                                        address={item?.place?.address?.specific}
+                                    />
+                                </div>
+                            )
+                        }
                     })}
 
                     <Modal
@@ -96,22 +98,22 @@ const Promo = () => {
                         footer={false}
                     >
                         <div>
-                            <h2 className="font-bold text-xl">{promo.name}</h2>
-                            <p className="text-rose-500 font-bold text-xl mt-8">
-                                {promo.title}
+                            <h2 className="font-bold text-xl">{promo?.name}</h2>
+                            <p className="text-rose-500 font-bold text-xl">
+                                {promo?.title}
                             </p>
-                            <p className="mt-4">{promo.description}</p>
-                            <p className="mt-4 font-bold">{`Địa chỉ: ${promo.place.address.specific}`}</p>
+                            <p className="mt-4">{promo?.description}</p>
+                            <p className="mt-4 font-bold">{`Địa chỉ: ${promo?.place?.address?.specific}`}</p>
                             <div className="flex">
-                                <div className="relative h-[120px] w-[120px] mt-4">
+                                <div className="relative h-[300px] w-full mt-4">
                                     <Image
                                         alt="cafe-app"
                                         layout="fill"
-                                        objectFit="cover"
+                                        objectFit="contain"
                                         src={
-                                            promo.images && promo.images[0].url
+                                            promo?.images &&
+                                            promo?.images[0]?.url
                                         }
-                                        className="object-cover object-center hover:scale-105 transition ease-in duration-500"
                                     />
                                 </div>
                             </div>

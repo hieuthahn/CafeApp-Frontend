@@ -1,17 +1,17 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback } from 'react'
 import {
     getPromos,
     createPromos,
     deletePromosById,
     updatePromote,
-} from "lib/services/promos"
-import { searchPlaces } from "lib/services/place"
+} from 'lib/services/promos'
+import { searchPlaces } from 'lib/services/place'
 import {
     PlusOutlined,
     EditOutlined,
     DeleteOutlined,
     ExclamationCircleOutlined,
-} from "@ant-design/icons"
+} from '@ant-design/icons'
 import {
     Form,
     Input,
@@ -31,16 +31,16 @@ import {
     Space,
     Popconfirm,
     message,
-} from "antd"
+} from 'antd'
 const { RangePicker } = DatePicker
 const { TextArea } = Input
-import Link from "next/link"
-import Image from "next/image"
-import { debounce } from "lib/utils/utils"
-import moment from "moment"
-const dateFormat = "DD/MM/YYYY"
-const weekFormat = "DD/MM"
-const monthFormat = "MM/YYYY"
+import Link from 'next/link'
+import Image from 'next/image'
+import { debounce } from 'lib/utils/utils'
+import moment from 'moment'
+const dateFormat = 'DD/MM/YYYY'
+const weekFormat = 'DD/MM'
+const monthFormat = 'MM/YYYY'
 
 const App = () => {
     const [promos, setPromos] = useState([])
@@ -48,12 +48,12 @@ const App = () => {
         page: 1,
         pageSize: 10,
     })
-    const [textSearch, setTextSearch] = useState("")
+    const [textSearch, setTextSearch] = useState('')
     const [form] = Form.useForm()
     const [promoteEdit, setPromoteEdit] = useState()
     const [filesRemove, setFilesRemove] = useState([])
     const [searchResult, setSearchResult] = useState()
-    const [place, setPlace] = useState("")
+    const [place, setPlace] = useState('')
     const [fileListPhotos, setFileListPhotos] = useState(() => {
         if (place?.photos?.length) {
             if (!place?.photos[0]?.url) {
@@ -81,13 +81,13 @@ const App = () => {
 
     useEffect(() => {
         getListPromos()
-        handleSearchOptions("")
+        handleSearchOptions('')
     }, [])
 
     const handleSearchOptions = async (nextValue) => {
         const body = {
             name: nextValue,
-            status: "published",
+            status: 'published',
         }
         try {
             const res = await searchPlaces(body)
@@ -107,23 +107,25 @@ const App = () => {
 
     const debounceSearch = useCallback(
         debounce((nextValue) => handleSearchOptions(nextValue), 300),
-        []
+        [],
     )
 
     const onSearchPlace = (value) => {
         debounceSearch(value)
         setTextSearch(value)
-        if (promoteEdit) {
-            setPromoteEdit(value)
-        }
     }
 
     const onFinish = async (values) => {
         const formData = new FormData()
-        values.place = values.place.value
-        formData.append("data", JSON.stringify(values))
+        if (promoteEdit?._id) {
+            delete values.place
+            formData.append('data', JSON.stringify(values))
+        } else {
+            values.place = values.place.value
+            formData.append('data', JSON.stringify(values))
+        }
         fileListPhotos.map((photo, index) =>
-            formData.append("photo", photo?.originFileObj)
+            formData.append('photo', photo?.originFileObj),
         )
         try {
             let res
@@ -131,17 +133,19 @@ const App = () => {
                 res = await updatePromote(
                     promoteEdit?._id,
                     formData,
-                    filesRemove
+                    filesRemove,
                 )
             } else {
                 res = await createPromos(formData)
             }
             if (res.success) {
                 getListPromos()
-                message.success("Cập nhật thành công")
+                setPromoteEdit()
+                form.resetFields()
+                message.success('Cập nhật thành công')
                 return
             }
-            message.error("Cập nhật thất bại")
+            message.error('Cập nhật thất bại')
         } catch (error) {
             message.error(error?.message || error)
         }
@@ -157,7 +161,7 @@ const App = () => {
 
     const dummyRequest = ({ file, onSuccess }) => {
         setTimeout(() => {
-            onSuccess("ok")
+            onSuccess('ok')
         }, 0)
     }
 
@@ -181,7 +185,7 @@ const App = () => {
             }
             message.error(res?.message)
         } else {
-            message.error("Dữ liệu đang xử lý")
+            message.error('Dữ liệu đang xử lý')
         }
     }
 
@@ -191,7 +195,11 @@ const App = () => {
             value: promote.place._id,
         })
         setFileListPhotos(promote?.images)
-        setPromoteEdit(promote)
+        setPromoteEdit({
+            ...promote,
+            label: promote.place.name,
+            value: promote.place._id,
+        })
         form.setFieldsValue(promote)
     }
 
@@ -204,9 +212,9 @@ const App = () => {
 
     const columns = [
         {
-            title: "Ảnh",
-            dataIndex: "images",
-            key: "images",
+            title: 'Ảnh',
+            dataIndex: 'images',
+            key: 'images',
             render: (images) => (
                 <Image
                     alt="cafe-app"
@@ -219,44 +227,44 @@ const App = () => {
             ),
         },
         {
-            title: "Tiêu đề",
-            dataIndex: "title",
-            key: "title",
+            title: 'Tiêu đề',
+            dataIndex: 'title',
+            key: 'title',
             render: (title, record) => (
                 <div className="text-slate-800">{title}</div>
             ),
         },
         {
-            title: "Mô tả",
-            dataIndex: "description",
-            key: "description",
+            title: 'Mô tả',
+            dataIndex: 'description',
+            key: 'description',
             render: (description) => (
                 <div className="text-slate-800 truncate">{description}</div>
             ),
         },
         {
-            title: "Địa điểm",
-            dataIndex: "place",
-            key: "place",
+            title: 'Địa điểm',
+            dataIndex: 'place',
+            key: 'place',
             render: (place) => (
                 <div className="text-slate-800 truncate">{place?.name}</div>
             ),
         },
         {
-            title: "Thời gian",
-            dataIndex: "time",
-            key: "time",
+            title: 'Thời gian',
+            dataIndex: 'time',
+            key: 'time',
             render: (time) => (
                 <div className="text-slate-800 truncate">
                     {time?.[0]}
-                    {" - "}
+                    {' - '}
                     {time?.[1]}
                 </div>
             ),
         },
         {
-            title: "Hành động",
-            key: "action",
+            title: 'Hành động',
+            key: 'action',
             render: (_, record) => (
                 <Space size="middle" key={record}>
                     {/* <Link
@@ -285,7 +293,7 @@ const App = () => {
     return (
         <div>
             <Table
-                scroll={("x", "y")}
+                scroll={('x', 'y')}
                 columns={columns}
                 dataSource={promos}
                 onChange={handleChange}
@@ -313,7 +321,7 @@ const App = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng chọn địa điểm!",
+                                message: 'Vui lòng chọn địa điểm!',
                             },
                         ]}
                         name="place"
@@ -352,7 +360,7 @@ const App = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập tiêu đề!",
+                                message: 'Vui lòng nhập tiêu đề!',
                             },
                         ]}
                     >
@@ -379,7 +387,7 @@ const App = () => {
                             onChange={handleChangeImage}
                             onRemove={handleRemoveImage}
                             multiple
-                            maxCount={3}
+                            maxCount={1}
                         >
                             {fileListPhotos.length > 2 ? null : (
                                 <div>
@@ -394,19 +402,20 @@ const App = () => {
                                 </div>
                             )}
                         </Upload>
-                        <small>Chọn tối đa 3 ảnh</small>
                     </Form.Item>
                     <div className="text-right">
-                        {promoteEdit && (
+                        {promoteEdit?._id && (
                             <Button
-                                className={"mr-3"}
+                                className={'mr-3'}
                                 onClick={handleResetForm}
                             >
                                 Reset
                             </Button>
                         )}
                         <Button htmlType="submit">
-                            {promoteEdit ? "Sửa khuyến mãi" : "Thêm khuyến mãi"}
+                            {promoteEdit?._id
+                                ? 'Sửa khuyến mãi'
+                                : 'Thêm khuyến mãi'}
                         </Button>
                     </div>
                 </Form>
@@ -415,5 +424,5 @@ const App = () => {
     )
 }
 
-App.layout = "admin"
+App.layout = 'admin'
 export default App
