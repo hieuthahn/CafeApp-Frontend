@@ -2,20 +2,20 @@ import {
     LogoutOutlined,
     UserOutlined,
     ProfileOutlined,
-} from "@ant-design/icons"
-import { Layout, Menu } from "antd"
-import React from "react"
+} from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
+import React from 'react'
 const { Header, Content, Footer, Sider } = Layout
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { useState } from "react"
-import _Header from "../Header"
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import _Header from '../Header'
 
 export default function AdminLayout({ children }) {
     const router = useRouter()
     const [active, setActive] = useState([router.pathname])
     const handleClick = ({ item, key, keyPath, domEvent }) => {
-        if (key === "logout" || key === "/management/account") {
+        if (key === 'logout') {
             return
         } else {
             router.push(key)
@@ -58,27 +58,27 @@ export default function AdminLayout({ children }) {
                         selectedKeys={active}
                         items={[
                             {
-                                key: "/management/places",
+                                key: '/management/places',
                                 icon: <ProfileOutlined />,
                                 label: `Địa điểm`,
                             },
                             {
-                                key: "/management/categories",
+                                key: '/management/categories',
                                 icon: <ProfileOutlined />,
                                 label: `Danh mục`,
                             },
                             {
-                                key: "/management/account",
+                                key: '/management/promos',
+                                icon: <ProfileOutlined />,
+                                label: `Khuyến mãi`,
+                            },
+                            {
+                                key: '/management/account',
                                 icon: <UserOutlined />,
                                 label: `Tài khoản`,
                             },
                             {
-                                key: "/management/promos",
-                                icon: <UserOutlined />,
-                                label: `Khuyến mãi`,
-                            },
-                            {
-                                key: "logout",
+                                key: 'logout',
                                 icon: <LogoutOutlined />,
                                 label: `Đăng xuất`,
                             },
@@ -88,8 +88,8 @@ export default function AdminLayout({ children }) {
                 <Content
                     className="bg-white"
                     style={{
-                        margin: "24px 16px 0",
-                        overflow: "initial",
+                        margin: '24px 16px 0',
+                        overflow: 'initial',
                     }}
                 >
                     <div

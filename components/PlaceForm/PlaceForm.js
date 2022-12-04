@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from 'react'
 import {
     Button,
     Form,
@@ -15,36 +15,36 @@ import {
     BackTop,
     message,
     Tag,
-} from "antd"
-import { PlusOutlined } from "@ant-design/icons"
-import moment from "moment"
-import { toSlug, getBase64 } from "../../lib/utils"
+} from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import moment from 'moment'
+import { toSlug, getBase64 } from '../../lib/utils'
 import {
     getBenefits,
     getTags,
     getRegions,
     getPurposes,
-} from "lib/services/category"
-import { submitPlace, updatePlace } from "lib/services/place"
-import { useRouter } from "next/router"
-import useBearStore from "lib/data/zustand"
-import { useSession } from "next-auth/react"
-import Image from "next/image"
+} from 'lib/services/category'
+import { submitPlace, updatePlace } from 'lib/services/place'
+import { useRouter } from 'next/router'
+import useBearStore from 'lib/data/zustand'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 
 const { Option } = Select
-const format = "HH:mm"
+const format = 'HH:mm'
 const listStatus = {
     rejected: {
-        text: "Không duyệt",
-        color: "error",
+        text: 'Không duyệt',
+        color: 'error',
     },
     published: {
-        text: "Đã duyệt",
-        color: "success",
+        text: 'Đã duyệt',
+        color: 'success',
     },
     pending: {
-        text: "Chờ duyệt",
-        color: "warning",
+        text: 'Chờ duyệt',
+        color: 'warning',
     },
     // draft: {
     //     text: "Tin nháp",
@@ -58,8 +58,8 @@ const PlaceForm = (props) => {
     const router = useRouter()
     const toggleModalLogin = useBearStore((state) => state.toggleModalLogin)
     const [previewVisible, setPreviewVisible] = useState(false)
-    const [previewImage, setPreviewImage] = useState("")
-    const [previewTitle, setPreviewTitle] = useState("")
+    const [previewImage, setPreviewImage] = useState('')
+    const [previewTitle, setPreviewTitle] = useState('')
     const [fileListPhotos, setFileListPhotos] = useState(() => {
         if (place?.photos?.length) {
             if (!place?.photos[0]?.url) {
@@ -101,18 +101,18 @@ const PlaceForm = (props) => {
     const onFinish = async (values) => {
         const data = JSON.stringify(values)
         const formData = new FormData()
-        formData.append("data", data)
+        formData.append('data', data)
         fileListPhotos.forEach((photo, index) => {
-            formData.append("photo", photo.originFileObj)
+            formData.append('photo', photo.originFileObj)
         })
         fileListMenu.forEach((menu, index) => {
-            formData.append("menu", menu.originFileObj)
+            formData.append('menu', menu.originFileObj)
         })
-        const key = "onFinish"
+        const key = 'onFinish'
         try {
             setLoading(true)
             message.loading({
-                content: "Loading...",
+                content: 'Loading...',
                 key,
             })
 
@@ -120,7 +120,7 @@ const PlaceForm = (props) => {
                 const res = await updatePlace(place?._id, formData)
                 if (res.success) {
                     message.success({
-                        content: res?.message || "Cập nhật thành công",
+                        content: res?.message || 'Cập nhật thành công',
                         key,
                         duration: 4,
                     })
@@ -135,11 +135,11 @@ const PlaceForm = (props) => {
                 const res = await submitPlace(formData)
                 if (res.success) {
                     message.success({
-                        content: "Thàng công!",
+                        content: 'Thàng công!',
                         key,
                         duration: 4,
                     })
-                    router.push("/add-place/success")
+                    router.push('/add-place/success')
                 } else {
                     message.error({
                         content: res?.message,
@@ -155,7 +155,7 @@ const PlaceForm = (props) => {
                 key,
                 duration: 4,
                 style: {
-                    marginTop: "20vh",
+                    marginTop: '20vh',
                 },
             })
         }
@@ -164,7 +164,7 @@ const PlaceForm = (props) => {
     }
 
     const onFinishFailed = (errorInfo) => {
-        message.error("Không thành công!")
+        message.error('Không thành công!')
     }
 
     const getCategories = async () => {
@@ -210,7 +210,7 @@ const PlaceForm = (props) => {
         setPreviewImage(file.url || file.preview || file)
         setPreviewVisible(true)
         setPreviewTitle(
-            file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+            file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
         )
     }
 
@@ -242,7 +242,7 @@ const PlaceForm = (props) => {
 
     const dummyRequest = ({ file, onSuccess }) => {
         setTimeout(() => {
-            onSuccess("ok")
+            onSuccess('ok')
         }, 0)
     }
 
@@ -276,10 +276,10 @@ const PlaceForm = (props) => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Vui lòng chọn trạng thái!",
+                                    message: 'Vui lòng chọn trạng thái!',
                                 },
                             ]}
-                            initialValue={place?.status || "pending"}
+                            initialValue={place?.status || 'pending'}
                         >
                             <Select
                                 placeholder="Chọn trạng thái"
@@ -310,14 +310,14 @@ const PlaceForm = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập tên quán!",
+                                message: 'Vui lòng nhập tên quán!',
                             },
                         ]}
                         initialValue={place?.name}
                     >
                         <Input
                             placeholder="Nhập tên quán"
-                            onChange={handlePlaceFormChange("name")}
+                            onChange={handlePlaceFormChange('name')}
                         />
                     </Form.Item>
                     <Form.Item
@@ -326,7 +326,7 @@ const PlaceForm = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng chọn khu vực!",
+                                message: 'Vui lòng chọn khu vực!',
                             },
                         ]}
                         initialValue={place?.region}
@@ -361,11 +361,11 @@ const PlaceForm = (props) => {
                                 span: 4,
                             }}
                             label="Địa chỉ"
-                            name={["address", "specific"]}
+                            name={['address', 'specific']}
                             rules={[
                                 {
                                     required: true,
-                                    message: "Vui lòng nhập địa chỉ!",
+                                    message: 'Vui lòng nhập địa chỉ!',
                                 },
                             ]}
                             initialValue={place?.address?.specific}
@@ -379,7 +379,7 @@ const PlaceForm = (props) => {
                                 span: 4,
                             }}
                             label="Chỉ đường"
-                            name={["address", "desc"]}
+                            name={['address', 'desc']}
                         >
                             <Input placeholder="Nhập chỉ đường chi tiết nếu có thể" />
                         </Form.Item>
@@ -402,7 +402,7 @@ const PlaceForm = (props) => {
                     >
                         <Switch
                             checked={false}
-                            onChange={handlePlaceFormChange("isBoss")}
+                            onChange={handlePlaceFormChange('isBoss')}
                         />
                     </Form.Item>
                 </div>
@@ -416,18 +416,18 @@ const PlaceForm = (props) => {
                 <div className="py-4 lg:px-4">
                     <Form.Item label="Thời gian mở cửa">
                         <Form.Item
-                            name={["time", "open"]}
+                            name={['time', 'open']}
                             style={{
                                 marginBottom: 0,
-                                display: "inline-block",
-                                width: "calc(50% - 25px)",
+                                display: 'inline-block',
+                                width: 'calc(50% - 25px)',
                             }}
                             initialValue={
-                                place ? moment(place?.time?.open, format) : ""
+                                place ? moment(place?.time?.open, format) : ''
                             }
                         >
                             <TimePicker
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                                 // defaultValue={moment(
                                 //     place?.openingType.slice(0, 5),
                                 //     format
@@ -437,29 +437,29 @@ const PlaceForm = (props) => {
                         </Form.Item>
                         <span
                             style={{
-                                border: "none",
-                                display: "inline-block",
-                                width: "30px",
-                                lineHeight: "32px",
-                                textAlign: "center",
-                                margin: "0 10px",
+                                border: 'none',
+                                display: 'inline-block',
+                                width: '30px',
+                                lineHeight: '32px',
+                                textAlign: 'center',
+                                margin: '0 10px',
                             }}
                         >
                             đến
                         </span>
                         <Form.Item
-                            name={["time", "close"]}
+                            name={['time', 'close']}
                             style={{
                                 marginBottom: 0,
-                                display: "inline-block",
-                                width: "calc(50% - 25px)",
+                                display: 'inline-block',
+                                width: 'calc(50% - 25px)',
                             }}
                             initialValue={
-                                place ? moment(place?.time?.close, format) : ""
+                                place ? moment(place?.time?.close, format) : ''
                             }
                         >
                             <TimePicker
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                                 // defaultValue={moment("23:00", format)}
                                 format={format}
                             />
@@ -467,16 +467,16 @@ const PlaceForm = (props) => {
                     </Form.Item>
                     <Form.Item label="Khoảng giá">
                         <Form.Item
-                            name={["price", "min"]}
+                            name={['price', 'min']}
                             style={{
                                 marginBottom: 0,
-                                display: "inline-block",
-                                width: "calc(50% - 25px)",
+                                display: 'inline-block',
+                                width: 'calc(50% - 25px)',
                             }}
                             initialValue={place?.price?.min}
                         >
                             <InputNumber
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                                 min={1}
                                 // defaultValue={10000}
                                 placeholder="Nhập giá thấp nhất"
@@ -484,27 +484,27 @@ const PlaceForm = (props) => {
                         </Form.Item>
                         <span
                             style={{
-                                border: "none",
-                                display: "inline-block",
-                                width: "30px",
-                                lineHeight: "32px",
-                                textAlign: "center",
-                                margin: "0 10px",
+                                border: 'none',
+                                display: 'inline-block',
+                                width: '30px',
+                                lineHeight: '32px',
+                                textAlign: 'center',
+                                margin: '0 10px',
                             }}
                         >
                             đến
                         </span>
                         <Form.Item
-                            name={["price", "max"]}
+                            name={['price', 'max']}
                             style={{
                                 marginBottom: 0,
-                                display: "inline-block",
-                                width: "calc(50% - 25px)",
+                                display: 'inline-block',
+                                width: 'calc(50% - 25px)',
                             }}
                             initialValue={place?.price?.max}
                         >
                             <InputNumber
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                                 min={1}
                                 // defaultValue={500000}
                                 placeholder="Nhập giá cao nhất"
@@ -513,11 +513,11 @@ const PlaceForm = (props) => {
                     </Form.Item>
                     <Form.Item label="Wifi (nếu có)">
                         <Form.Item
-                            name={["wifi", "name"]}
+                            name={['wifi', 'name']}
                             style={{
                                 marginBottom: 0,
-                                display: "inline-block",
-                                width: "calc(50% - 25px)",
+                                display: 'inline-block',
+                                width: 'calc(50% - 25px)',
                             }}
                             initialValue={place?.wifi?.name}
                         >
@@ -525,22 +525,22 @@ const PlaceForm = (props) => {
                         </Form.Item>
                         <span
                             style={{
-                                border: "none",
-                                display: "inline-block",
-                                width: "30px",
-                                lineHeight: "32px",
-                                textAlign: "center",
-                                margin: "0 10px",
+                                border: 'none',
+                                display: 'inline-block',
+                                width: '30px',
+                                lineHeight: '32px',
+                                textAlign: 'center',
+                                margin: '0 10px',
                             }}
                         >
                             -
                         </span>
                         <Form.Item
-                            name={["wifi", "password"]}
+                            name={['wifi', 'password']}
                             style={{
                                 marginBottom: 0,
-                                display: "inline-block",
-                                width: "calc(50% - 25px)",
+                                display: 'inline-block',
+                                width: 'calc(50% - 25px)',
                             }}
                             initialValue={place?.wifi?.password}
                         >
@@ -681,7 +681,7 @@ const PlaceForm = (props) => {
                             <img
                                 alt="example"
                                 style={{
-                                    width: "100%",
+                                    width: '100%',
                                 }}
                                 src={previewImage}
                             />
@@ -713,7 +713,7 @@ const PlaceForm = (props) => {
                             <img
                                 alt="example"
                                 style={{
-                                    width: "100%",
+                                    width: '100%',
                                 }}
                                 src={previewImage}
                             />
@@ -729,20 +729,20 @@ const PlaceForm = (props) => {
                         htmlType="submit"
                         type="primary"
                         shape="round"
-                        size={"large"}
+                        size={'large'}
                         disabled={loading}
                     >
-                        {place ? "Cập nhật" : "Thêm địa điểm"}
+                        {place ? 'Cập nhật' : 'Thêm địa điểm'}
                     </Button>
                 ) : (
                     <Button
                         block
                         type="primary"
                         shape="round"
-                        size={"large"}
+                        size={'large'}
                         onClick={toggleModalLogin}
                     >
-                        {place ? "Cập nhật" : "Thêm địa điểm"}
+                        {place ? 'Cập nhật' : 'Thêm địa điểm'}
                     </Button>
                 )}
             </Form.Item>

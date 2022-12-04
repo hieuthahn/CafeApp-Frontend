@@ -302,6 +302,7 @@ const App = () => {
                     total: +params?.meta?.totalItems,
                     pageSizeOptions: [10, 20, 30],
                 }}
+                rowKey={(record) => record._id}
             />
             <>
                 <Form
@@ -327,7 +328,6 @@ const App = () => {
                         name="place"
                     >
                         <Select
-                            defaultValue={place}
                             showSearch
                             labelInValue
                             optionFilterProp="children"

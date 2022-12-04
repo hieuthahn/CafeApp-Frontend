@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react"
-import { UserOutlined } from "@ant-design/icons"
+import { useState, useEffect, useCallback } from 'react'
+import { UserOutlined } from '@ant-design/icons'
 import {
     Avatar,
     Button,
@@ -9,17 +9,18 @@ import {
     Switch,
     Select,
     message,
-} from "antd"
-import Link from "next/link"
-import Image from "next/image"
+    Spin,
+} from 'antd'
+import Link from 'next/link'
+import Image from 'next/image'
 const { TextArea } = Input
 const { Option } = Select
-import { searchPlaces } from "lib/services/place"
-import { debounce } from "lib/utils/utils"
-import { useSession } from "next-auth/react"
-import { createReview } from "lib/services/review"
-import { useRouter } from "next/router"
-import { NextSeo } from "next-seo"
+import { searchPlaces } from 'lib/services/place'
+import { debounce } from 'lib/utils/utils'
+import { useSession } from 'next-auth/react'
+import { createReview } from 'lib/services/review'
+import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
 
 const NewReview = () => {
     const router = useRouter()
@@ -31,8 +32,8 @@ const NewReview = () => {
         price: 5,
     })
     const [review, setReview] = useState({
-        title: "",
-        content: "",
+        title: '',
+        content: '',
         anonymous: false,
     })
     const { data: session } = useSession()
@@ -42,17 +43,17 @@ const NewReview = () => {
     const [textSearch, setTextSearch] = useState()
     const [loading, setLoading] = useState(false)
 
-    const desc = ["Quá tệ", "Trung bình", "Bình thường", "Tốt", "Tuyệt vời"]
-    const rates = ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"]
+    const desc = ['Quá tệ', 'Trung bình', 'Bình thường', 'Tốt', 'Tuyệt vời']
+    const rates = ['Vị trí', 'Không gian', 'Đồ uống', 'Phục vụ', 'Giá cả']
 
     const onSubmitReview = async () => {
         if (!placeChosen || !rate) {
-            message.error("Bạn cần chọn địa điểm")
+            message.error('Bạn cần chọn địa điểm')
             return
         }
 
         if (!review.title || !review.content) {
-            message.error("Bạn cần nhập tiêu đề và nội dung đánh giá")
+            message.error('Bạn cần nhập tiêu đề và nội dung đánh giá')
             return
         }
 
@@ -62,7 +63,7 @@ const NewReview = () => {
             place: placeChosen?._id,
         }
         const formData = new FormData()
-        formData.append("data", JSON.stringify(body))
+        formData.append('data', JSON.stringify(body))
         try {
             const res = await createReview(formData)
             if (res?.success) {
@@ -81,7 +82,7 @@ const NewReview = () => {
     const handleSearchOptions = async (nextValue) => {
         const body = {
             name: nextValue,
-            status: "published",
+            status: 'published',
         }
         try {
             const res = await searchPlaces(body)
@@ -93,20 +94,20 @@ const NewReview = () => {
     }
 
     const debounceSearch = useCallback(
-        debounce((nextValue) => handleSearchOptions(nextValue), 1000),
-        []
+        debounce((nextValue) => handleSearchOptions(nextValue), 500),
+        [],
     )
 
     const handleReviewChange = (e, name) => {
         setReview((prev) => ({
             ...prev,
-            [name]: name === "anonymous" ? !prev[name] : e.target.value,
+            [name]: name === 'anonymous' ? !prev[name] : e.target.value,
         }))
     }
 
     const handleTextChange = (e) => {
         setTextSearch(e.target.value)
-        if (e.target.value !== "") {
+        if (e.target.value !== '') {
             setLoading(true)
             debounceSearch(e.target.value)
         }
@@ -115,33 +116,33 @@ const NewReview = () => {
     return (
         <>
             <NextSeo
-                title={"Viết Review | Coffee Mine"}
+                title={'Viết Review | Coffee Mine'}
                 description={
-                    "Chia sẻ trải nghiệm của bản thân cho mọi người cùng biết về các quán cafe đã đến trên CoffeeMine"
+                    'Chia sẻ trải nghiệm của bản thân cho mọi người cùng biết về các quán cafe đã đến trên CoffeeMine'
                 }
                 canonical="https://www.canonical.ie/"
                 openGraph={{
-                    url: "https://www.url.ie/a",
-                    title: "Viết Review | Coffee Mine",
+                    url: 'https://www.url.ie/a',
+                    title: 'Viết Review | Coffee Mine',
                     description:
-                        "Chia sẻ trải nghiệm của bản thân cho mọi người cùng biết về các quán cafe đã đến trên CoffeeMine",
-                    siteName: "CoffeeMine",
+                        'Chia sẻ trải nghiệm của bản thân cho mọi người cùng biết về các quán cafe đã đến trên CoffeeMine',
+                    siteName: 'CoffeeMine',
                 }}
                 twitter={{
-                    handle: "@handle",
-                    site: "@site",
-                    cardType: "summary_large_image",
+                    handle: '@handle',
+                    site: '@site',
+                    cardType: 'summary_large_image',
                 }}
             />
             <div className="container mx-auto bg-white rounded-lg my-3 p-4">
                 <h1 className="font-bold text-2xl text-center border-b py-3 !mb-3">
-                    {"Viết Review"}
+                    {'Viết Review'}
                 </h1>
                 <div className="grid grid-cols-12">
                     <div className="col-span-12 md:col-span-6 order-2 md:order-1">
                         <div>
                             <h4 className="!mb-2 text-base font-semibold text-gray-500">
-                                {"Xếp hạng của bạn"}
+                                {'Xếp hạng của bạn'}
                             </h4>
                             <div className="flex flex-col gap-2 pl-3 mb-3">
                                 {/* ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"] */}
@@ -171,7 +172,7 @@ const NewReview = () => {
                                                         {desc[rate[key] - 1]}
                                                     </span>
                                                 ) : (
-                                                    ""
+                                                    ''
                                                 )}
                                             </span>
                                         </div>
@@ -181,21 +182,21 @@ const NewReview = () => {
                         </div>
                         <div>
                             <h4 className="!mb-3 text-base font-semibold text-gray-500">
-                                {"Đánh giá của bạn"}
+                                {'Đánh giá của bạn'}
                             </h4>
                             <div className="flex flex-col gap-2">
                                 <Input
                                     placeholder="Nhập tiêu đề đánh giá"
                                     value={review?.title}
                                     onChange={(e) =>
-                                        handleReviewChange(e, "title")
+                                        handleReviewChange(e, 'title')
                                     }
                                     allowClear
                                 />
                                 <TextArea
                                     value={review?.content}
                                     onChange={(e) =>
-                                        handleReviewChange(e, "content")
+                                        handleReviewChange(e, 'content')
                                     }
                                     placeholder="Nhập nội dung đánh giá"
                                     showCount
@@ -207,25 +208,25 @@ const NewReview = () => {
                         <div className="flex justify-between mt-3">
                             <div className="basis-5/6">
                                 <h4 className="text-base font-semibold text-gray-500">
-                                    {"Đánh giá ẩn danh"}
+                                    {'Đánh giá ẩn danh'}
                                 </h4>
                                 <span className="text-xs text-gray-500">
                                     {
-                                        "Tên của bạn sẽ hiển thị như h*****g và không hiển thị trên dòng thời gian của bạn"
+                                        'Tên của bạn sẽ hiển thị như h*****g và không hiển thị trên dòng thời gian của bạn'
                                     }
                                 </span>
                             </div>
                             <Switch
-                                value={review?.anonymous}
+                                checked={review?.anonymous}
                                 onChange={(e) =>
-                                    handleReviewChange(e, "anonymous")
+                                    handleReviewChange(e, 'anonymous')
                                 }
                             />
                         </div>
                     </div>
                     <div className="col-span-12 md:col-span-6 order-1 md:order-2 mb-3">
                         <h4 className="!mb-2 text-base font-semibold text-gray-500">
-                            {"Địa điểm"}
+                            {'Địa điểm'}
                         </h4>
                         {placeChosen ? (
                             <div className="border rounded-lg">
@@ -267,11 +268,11 @@ const NewReview = () => {
                                                     }
                                                 />
                                             </span>
-                                            {" - "}
+                                            {' - '}
                                             <span>
                                                 {(placeChosen?.rate
-                                                    ?.rateCount || "Chưa có") +
-                                                    " đánh giá"}
+                                                    ?.rateCount || 'Chưa có') +
+                                                    ' đánh giá'}
                                             </span>
                                         </div>
                                         <Button
@@ -280,7 +281,7 @@ const NewReview = () => {
                                                 setPlaceChosen(false)
                                             }
                                         >
-                                            {"Chọn lại"}
+                                            {'Chọn lại'}
                                         </Button>
                                     </div>
                                 </div>
@@ -302,7 +303,7 @@ const NewReview = () => {
                                             <path d="M21,13a5,5,0,1,0-5,5A5,5,0,0,0,21,13Zm-8,0a3,3,0,1,1,3,3A3,3,0,0,1,13,13Z" />
                                         </g>
                                     </svg>
-                                    {"Nhấn vào đây để chọn địa điểm"}
+                                    {'Nhấn vào đây để chọn địa điểm'}
                                 </span>
                             </div>
                         )}
@@ -310,7 +311,7 @@ const NewReview = () => {
                         <Modal
                             title={
                                 <div className="font-bold text-center text-xl">
-                                    {"Chọn địa điểm đánh giá"}
+                                    {'Chọn địa điểm đánh giá'}
                                 </div>
                             }
                             open={openModalPlace}
@@ -342,86 +343,10 @@ const NewReview = () => {
                                         }
                                         suffix={
                                             loading && (
-                                                <svg
-                                                    className="animate-spin h-5 w-5 mr-3"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    enableBackground="new 0 0 24 24"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <circle
-                                                        cx="12"
-                                                        cy="4"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                    />
-                                                    <circle
-                                                        cx="16"
-                                                        cy="5.1"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-60 16 5.072)"
-                                                    />
-                                                    <circle
-                                                        cx="18.9"
-                                                        cy="8"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-30 18.928 8)"
-                                                    />
-                                                    <circle
-                                                        cx="20"
-                                                        cy="12"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                    />
-                                                    <circle
-                                                        cx="18.9"
-                                                        cy="16"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-60 18.928 16)"
-                                                    />
-                                                    <circle
-                                                        cx="16"
-                                                        cy="18.9"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-30 15.999 18.929)"
-                                                    />
-                                                    <circle
-                                                        cx="12"
-                                                        cy="20"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                    />
-                                                    <circle
-                                                        cx="8"
-                                                        cy="18.9"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-60 8 18.929)"
-                                                    />
-                                                    <circle
-                                                        cx="5.1"
-                                                        cy="16"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-30 5.071 16)"
-                                                    />
-                                                    <circle
-                                                        cx="4"
-                                                        cy="12"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                    />
-                                                    <circle
-                                                        cx="5.1"
-                                                        cy="8"
-                                                        r="1"
-                                                        fill="#fc6d6d"
-                                                        transform="rotate(-60 5.072 8)"
-                                                    />
-                                                </svg>
+                                                <Spin
+                                                    className="!mt-1"
+                                                    size="small"
+                                                />
                                             )
                                         }
                                         allowClear={!loading}
@@ -434,7 +359,7 @@ const NewReview = () => {
                                     >
                                         <a>
                                             <span className="hidden md:block font-bold cursor-pointer text-gray-500">
-                                                {"Thêm địa điểm"}
+                                                {'Thêm địa điểm'}
                                             </span>
                                             <span className="md:hidden">
                                                 <svg
@@ -459,7 +384,7 @@ const NewReview = () => {
                                         </a>
                                     </Link>
                                 </div>
-                                {textSearch !== "" &&
+                                {textSearch !== '' &&
                                     !loading &&
                                     (searchResult.length > 0 ? (
                                         searchResult?.map((place, index) => {
@@ -470,7 +395,7 @@ const NewReview = () => {
                                                         className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
                                                         onClick={() =>
                                                             handleClickPlace(
-                                                                place
+                                                                place,
                                                             )
                                                         }
                                                     >
@@ -542,7 +467,7 @@ const NewReview = () => {
                         className="text-white hover:opacity-75 bg-rose-500 px-3 py-2 rounded-lg"
                         onClick={onSubmitReview}
                     >
-                        {"Gửi đánh giá của bạn"}
+                        {'Gửi đánh giá của bạn'}
                     </button>
                 </div>
             </div>

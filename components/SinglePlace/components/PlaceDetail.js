@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react"
-import { Progress } from "antd"
-import { Button } from "@vechaiui/react"
-import { Rate, Tooltip } from "antd"
-import useBearStore from "lib/data/zustand"
-import moment from "moment"
-const format = "HH:mm"
-import ReactMapGL, { Layer, Feature, Marker, Popup } from "react-map-gl"
-import Image from "next/image"
+import { useState, useEffect } from 'react'
+import { Progress } from 'antd'
+import { Button } from '@vechaiui/react'
+import { Rate, Tooltip } from 'antd'
+import useBearStore from 'lib/data/zustand'
+import moment from 'moment'
+const format = 'HH:mm'
+import ReactMapGL, { Layer, Feature, Marker, Popup } from 'react-map-gl'
+import Image from 'next/image'
 
 const PlaceDetail = ({ place }) => {
     return (
@@ -23,7 +23,7 @@ const PlaceVote = ({ place }) => {
 
     return (
         <div className="flex-1 bg-white rounded-lg shadow-sm p-4">
-            <h2 className="text-xl font-bold !mb-2">{"Đánh giá"}</h2>
+            <h2 className="text-xl font-bold !mb-2">{'Đánh giá'}</h2>
             {place?.rate?.avg ? (
                 <>
                     <div className="flex gap-1 justify-center items-center">
@@ -31,19 +31,19 @@ const PlaceVote = ({ place }) => {
                             {place?.rate?.avg}
                         </span>
                         <div className="flex flex-col">
-                            <h3 className="text-lg font-bold">{"Tuyệt vời"}</h3>
+                            <h3 className="text-lg font-bold">{'Tuyệt vời'}</h3>
                             <span className="font-semibold">
-                                {"/5 ("}
+                                {'/5 ('}
                                 {place?.rate?.rateCount
                                     ? place?.rate?.rateCount
                                     : Math.floor(place?.rate?.avg)}
-                                {" đánh giá)"}
+                                {' đánh giá)'}
                             </span>
                         </div>
                     </div>
                     <div className="flex flex-col">
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Vị trí"}</span>
+                            <span className="w-[40%]">{'Vị trí'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -57,7 +57,7 @@ const PlaceVote = ({ place }) => {
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Không gian"}</span>
+                            <span className="w-[40%]">{'Không gian'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -69,7 +69,7 @@ const PlaceVote = ({ place }) => {
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Đồ uống"}</span>
+                            <span className="w-[40%]">{'Đồ uống'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -81,7 +81,7 @@ const PlaceVote = ({ place }) => {
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Phục vụ"}</span>
+                            <span className="w-[40%]">{'Phục vụ'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -95,7 +95,7 @@ const PlaceVote = ({ place }) => {
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Giá cả"}</span>
+                            <span className="w-[40%]">{'Giá cả'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -112,22 +112,22 @@ const PlaceVote = ({ place }) => {
                 <>
                     <div className="flex gap-1 justify-center items-center">
                         <span className="text-xl font-bold text-white bg-rose-500 min-w-[50] rounded-lg py-2 px-4">
-                            {"0"}
+                            {'0'}
                         </span>
                         <div className="flex flex-col">
                             <h3 className="text-lg font-bold">
-                                {"Chưa có đánh giá"}
+                                {'Chưa có đánh giá'}
                             </h3>
                             <span className="font-semibold">
-                                {"/5 ("}
-                                {"0"}
-                                {" đánh giá)"}
+                                {'/5 ('}
+                                {'0'}
+                                {' đánh giá)'}
                             </span>
                         </div>
                     </div>
                     <div className="relative flex flex-col text-gray-400/90 select-none">
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Vị trí"}</span>
+                            <span className="w-[40%]">{'Vị trí'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -135,11 +135,11 @@ const PlaceVote = ({ place }) => {
                                 showInfo={false}
                             />
                             <span className="text-center w-[15%] font-semibold">
-                                {"0"}
+                                {'0'}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Không gian"}</span>
+                            <span className="w-[40%]">{'Không gian'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -147,11 +147,11 @@ const PlaceVote = ({ place }) => {
                                 showInfo={false}
                             />
                             <span className="text-center w-[15%] font-semibold">
-                                {"0"}
+                                {'0'}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Đồ uống"}</span>
+                            <span className="w-[40%]">{'Đồ uống'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -159,11 +159,11 @@ const PlaceVote = ({ place }) => {
                                 showInfo={false}
                             />
                             <span className="text-center w-[15%] font-semibold">
-                                {"0"}
+                                {'0'}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Phục vụ"}</span>
+                            <span className="w-[40%]">{'Phục vụ'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -171,11 +171,11 @@ const PlaceVote = ({ place }) => {
                                 showInfo={false}
                             />
                             <span className="text-center w-[15%] font-semibold">
-                                {"0"}
+                                {'0'}
                             </span>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <span className="w-[40%]">{"Giá cả"}</span>
+                            <span className="w-[40%]">{'Giá cả'}</span>
                             <Progress
                                 className="w-[50%]"
                                 strokeColor="#F43F5E"
@@ -183,7 +183,7 @@ const PlaceVote = ({ place }) => {
                                 showInfo={false}
                             />
                             <span className="text-center w-[15%] font-semibold">
-                                {"0"}
+                                {'0'}
                             </span>
                         </div>
                         <div className="absolute z-10 flex justify-center items-center w-full h-full">
@@ -192,7 +192,7 @@ const PlaceVote = ({ place }) => {
                                 color="rose"
                                 onClick={state.toggleModalReview}
                             >
-                                {"Đánh giá ngay"}
+                                {'Đánh giá ngay'}
                             </Button>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ const PlaceVote = ({ place }) => {
 const PlaceInfo = ({ place }) => {
     return (
         <div className="flex-1 bg-white rounded-lg shadow-sm p-4 h-full">
-            <h2 className="text-xl font-bold !mb-2">{"Thông tin chi tiết"}</h2>
+            <h2 className="text-xl font-bold !mb-2">{'Thông tin chi tiết'}</h2>
             <div className="flex flex-col gap-3 flex-1 m-auto grow">
                 <div className="flex gap-4 items-center">
                     <svg
@@ -218,11 +218,11 @@ const PlaceInfo = ({ place }) => {
                         <path d="M29.5,8H2.5A2.5,2.5,0,0,0,0,10.5v14A2.5,2.5,0,0,0,2.5,27h27A2.5,2.5,0,0,0,32,24.5v-14A2.5,2.5,0,0,0,29.5,8ZM1,10.5A1.5,1.5,0,0,1,2.5,9H4.483A2.466,2.466,0,0,1,5,10.5,2.5,2.5,0,0,1,2.5,13,2.466,2.466,0,0,1,1,12.483ZM4.483,26H2.5A1.5,1.5,0,0,1,1,24.5V22.517A2.466,2.466,0,0,1,2.5,22,2.5,2.5,0,0,1,5,24.5,2.466,2.466,0,0,1,4.483,26ZM31,24.5A1.5,1.5,0,0,1,29.5,26H27.517A2.466,2.466,0,0,1,27,24.5,2.5,2.5,0,0,1,29.5,22a2.466,2.466,0,0,1,1.5.517Zm0-3.145A3.464,3.464,0,0,0,29.5,21,3.5,3.5,0,0,0,26,24.5a3.464,3.464,0,0,0,.355,1.5H5.645A3.464,3.464,0,0,0,6,24.5,3.5,3.5,0,0,0,2.5,21a3.464,3.464,0,0,0-1.5.355V13.645A3.464,3.464,0,0,0,2.5,14,3.5,3.5,0,0,0,6,10.5,3.464,3.464,0,0,0,5.645,9H26.355A3.464,3.464,0,0,0,26,10.5,3.5,3.5,0,0,0,29.5,14a3.464,3.464,0,0,0,1.5-.355Zm0-8.872A2.466,2.466,0,0,1,29.5,13,2.5,2.5,0,0,1,27,10.5,2.466,2.466,0,0,1,27.517,9H29.5A1.5,1.5,0,0,1,31,10.5ZM15.5,15h1a1,1,0,0,1,1,1,.5.5,0,0,0,1,0,2,2,0,0,0-2-2v-.5a.5.5,0,0,0-1,0V14a2,2,0,0,0,0,4h1a1,1,0,0,1,0,2h-1a1,1,0,0,1-1-1,.5.5,0,0,0-1,0,2,2,0,0,0,2,2v.5a.5.5,0,0,0,1,0V21a2,2,0,0,0,0-4h-1a1,1,0,0,1,0-2Zm.5-4a6.5,6.5,0,1,0,6.5,6.5A6.508,6.508,0,0,0,16,11Zm0,12a5.5,5.5,0,1,1,5.5-5.5A5.506,5.506,0,0,1,16,23Z" />
                     </svg>
                     <span>
-                        {place?.price?.min?.toLocaleString("vi-VN")}
-                        {"đ"}
-                        {" - "}
-                        {place?.price?.max?.toLocaleString("vi-VN")}
-                        {"đ"}
+                        {place?.price?.min?.toLocaleString('vi-VN')}
+                        {'đ'}
+                        {' - '}
+                        {place?.price?.max?.toLocaleString('vi-VN')}
+                        {'đ'}
                     </span>
                 </div>
                 <div className="flex gap-4 items-center">
@@ -237,10 +237,10 @@ const PlaceInfo = ({ place }) => {
                     </svg>
                     <div className="truncate pointer-events-none flex gap-2">
                         <span className="text-green-600 font-semibold">
-                            {place?.openingType || "Đang mở cửa"}
+                            {place?.openingType || 'Đang mở cửa'}
                         </span>
-                        {" - "}
-                        <span>{place?.openingTime || "07:00 - 23:00"}</span>
+                        {' - '}
+                        <span>{place?.openingTime || '07:00 - 23:00'}</span>
                     </div>
                 </div>
                 {place?.phone && (
@@ -343,7 +343,7 @@ const PlaceInfo = ({ place }) => {
                                 return (
                                     <a key={index}>
                                         {tag}
-                                        {" - "}
+                                        {' - '}
                                     </a>
                                 )
                             }
@@ -357,15 +357,15 @@ const PlaceInfo = ({ place }) => {
 
 const PlaceAddress = ({ place }) => {
     const [showPopup, setShowPopup] = useState(false)
-    console.log(showPopup)
+
     return (
         <div className="flex flex-col bg-white rounded-lg shadow-sm p-4">
-            <h2 className="text-xl font-bold !mb-2">{"Địa điểm cụ thể"}</h2>
+            <h2 className="text-xl font-bold !mb-2">{'Địa điểm cụ thể'}</h2>
             <div className="rounded-lg w-full h-full min-h-[200px] overflow-hidden">
                 <ReactMapGL
                     mapboxAccessToken={
                         process.env.ACCESS_TOKEN_MAPBOX ||
-                        "pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ"
+                        'pk.eyJ1IjoiaGlldXRoYWhuIiwiYSI6ImNsNzBxeTJ6ajBndTkzb284MGM5eXBvZzAifQ.gQbkdaKK9g6_zS7p4T3uGQ'
                     }
                     initialViewState={{
                         longitude: 105.804817,
@@ -388,7 +388,7 @@ const PlaceAddress = ({ place }) => {
                             <a
                                 target="_blank"
                                 rel="noreferrer"
-                                href={`https://www.google.com/maps/dir/?api=1&destination=${"21.028511"},${"105.804817"}`}
+                                href={`https://www.google.com/maps/dir/?api=1&destination=${'21.028511'},${'105.804817'}`}
                                 className="text-black"
                             >
                                 {place?.address?.specific}

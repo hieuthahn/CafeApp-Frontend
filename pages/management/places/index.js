@@ -1,35 +1,35 @@
-import { Space, Table, Tag, Button, Tooltip, Modal, message } from "antd"
-import React, { useState, useEffect } from "react"
+import { Space, Table, Tag, Button, Tooltip, Modal, message } from 'antd'
+import React, { useState, useEffect } from 'react'
 import {
     EditOutlined,
     DeleteOutlined,
     ExclamationCircleOutlined,
-} from "@ant-design/icons"
-import { searchPlaces, deletePlaceById } from "lib/services/place"
-import Image from "next/image"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import moment from "moment"
+} from '@ant-design/icons'
+import { searchPlaces, deletePlaceById } from 'lib/services/place'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import moment from 'moment'
 
 const { confirm } = Modal
-const status = ["published", "pending", "rejected", "draft"]
+const status = ['published', 'pending', 'rejected', 'draft']
 const getStatusLabel = (postStatus) => {
     const map = {
         rejected: {
-            text: "Không duyệt",
-            color: "error",
+            text: 'Không duyệt',
+            color: 'error',
         },
         published: {
-            text: "Đã duyệt",
-            color: "success",
+            text: 'Đã duyệt',
+            color: 'success',
         },
         pending: {
-            text: "Chờ duyệt",
-            color: "warning",
+            text: 'Chờ duyệt',
+            color: 'warning',
         },
         draft: {
-            text: "Tin nháp",
-            color: "volcano",
+            text: 'Tin nháp',
+            color: 'volcano',
         },
     }
 
@@ -96,7 +96,7 @@ const App = () => {
                     }
                     message.error(res.message)
                 } catch (error) {
-                    message.error(error.message || "Xóa không thành công")
+                    message.error(error.message || 'Xóa không thành công')
                 }
             },
             onCancel() {},
@@ -105,9 +105,9 @@ const App = () => {
 
     const columns = [
         {
-            title: "Ảnh",
-            dataIndex: "photos",
-            key: "photos",
+            title: 'Ảnh',
+            dataIndex: 'photos',
+            key: 'photos',
             render: (photos) => (
                 <Image
                     alt="cafe-app"
@@ -120,38 +120,35 @@ const App = () => {
             ),
         },
         {
-            title: "Tên quán",
-            dataIndex: "name",
-            key: "name",
+            title: 'Tên quán',
+            dataIndex: 'name',
+            key: 'name',
             render: (name, record) => (
-                <a
-                    href={`/place/${record?.slug}`}
-                    className="font-bold text-slate-800"
-                >
-                    {name}
-                </a>
+                <Link href={`/place/${record?.slug}`} passHref>
+                    <a className="font-bold text-slate-800">{name}</a>
+                </Link>
             ),
         },
         {
-            title: "Địa chỉ",
-            dataIndex: "address",
-            key: "address",
+            title: 'Địa chỉ',
+            dataIndex: 'address',
+            key: 'address',
             render: (address) => (
                 <div className="text-slate-800">{address.specific}</div>
             ),
         },
         {
-            title: "Giá tiền",
-            dataIndex: "price",
-            key: "price",
+            title: 'Giá tiền',
+            dataIndex: 'price',
+            key: 'price',
             render: (price) => (
                 <div className="text-slate-800">
                     <span>
-                        {price?.min?.toLocaleString("vi-VN")}
-                        {"đ"}
-                        {" - "}
-                        {price?.max?.toLocaleString("vi-VN")}
-                        {"đ"}
+                        {price?.min?.toLocaleString('vi-VN')}
+                        {'đ'}
+                        {' - '}
+                        {price?.max?.toLocaleString('vi-VN')}
+                        {'đ'}
                     </span>
                 </div>
             ),
@@ -161,9 +158,9 @@ const App = () => {
             },
         },
         {
-            title: "Đánh giá",
-            dataIndex: "rate",
-            key: "rate",
+            title: 'Đánh giá',
+            dataIndex: 'rate',
+            key: 'rate',
             render: (rate) => (
                 <div className="text-slate-800">
                     <div>{rate?.avg}</div>
@@ -175,11 +172,11 @@ const App = () => {
             },
         },
         {
-            title: "Ngày gửi",
-            dataIndex: "createdAt",
-            key: "createdAt",
+            title: 'Ngày gửi',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
             render: (createdAt, place) => (
-                <>{moment(createdAt).format("DD/MM/YYYY")}</>
+                <>{moment(createdAt).format('DD/MM/YYYY')}</>
             ),
             sorter: {
                 compare: (a, b) => a.createdAt - b.createdAt,
@@ -187,32 +184,36 @@ const App = () => {
             },
         },
         {
-            title: "Trạng thái",
-            key: "status",
-            dataIndex: "status",
+            title: 'Trạng thái',
+            key: 'status',
+            dataIndex: 'status',
             render: (status) => <>{getStatusLabel(status)}</>,
             filters: [
                 {
-                    text: "Đã duyệt",
-                    value: "published",
+                    text: 'Đã duyệt',
+                    value: 'published',
                 },
                 {
-                    text: "Chờ duyệt",
-                    value: "pending",
+                    text: 'Chờ duyệt',
+                    value: 'pending',
                 },
                 {
-                    text: "Không duyệt",
-                    value: "rejected",
+                    text: 'Không duyệt',
+                    value: 'rejected',
                 },
             ],
             onFilter: (value, place) => place.status.startsWith(value),
         },
         {
-            title: "Hành động",
-            key: "action",
+            title: 'Hành động',
+            key: 'action',
             render: (_, record) => (
                 <Space size="middle" key={record}>
-                    <Link href={`${router.pathname}/${record?._id}`} passHref legacyBehavior>
+                    <Link
+                        href={`${router.pathname}/${record?._id}`}
+                        passHref
+                        legacyBehavior
+                    >
                         <Tooltip title="Sửa">
                             <Button icon={<EditOutlined />} />
                         </Tooltip>
@@ -231,7 +232,7 @@ const App = () => {
 
     return (
         <Table
-            scroll={("x", "y")}
+            scroll={('x', 'y')}
             columns={columns}
             dataSource={places.data}
             onChange={handleChange}
@@ -240,10 +241,11 @@ const App = () => {
                 total: +places?.meta?.totalItems,
                 pageSizeOptions: [10, 20, 30],
             }}
+            rowKey={(record) => record._id}
         />
     )
 }
 
-App.layout = "admin"
+App.layout = 'admin'
 
 export default App
