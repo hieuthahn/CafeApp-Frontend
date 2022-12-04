@@ -274,25 +274,27 @@ const Header = () => {
             <div className="bg-gray-200 h-full w-full">
                 {/* Navbar desktop */}
                 <nav className="w-full bg-white block shadow">
-                    <div className="px-6 h-16 flex justify-between items-center lg:items-stretch mx-auto">
+                    <div className="container mx-auto px-3 h-16 flex justify-between items-center lg:items-stretch">
                         <div className="w-full flex justify-between md:justify-start items-center">
                             {/* Logo */}
-                            <div className="flex items-center">
-                                <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight">
-                                    <Link href="/" passHref legacyBehavior>
-                                        <a>
-                                            <Logo />
-                                        </a>
-                                    </Link>
-                                </h3>
-                            </div>
+                            <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight">
+                                <Link href="/" passHref legacyBehavior>
+                                    <a>
+                                        <Logo />
+                                    </a>
+                                </Link>
+                            </h3>
                             {pathname !== '/' && (
                                 <SearchBar
                                     iconSearch={true}
-                                    inputClass="flex items-center px-2 rounded-lg border"
+                                    inputClass="hidden md:flex items-center px-2 rounded-lg border"
                                 />
                             )}
-                            <ul className="hidden lg:flex items-center h-full gap-6">
+                            <ul
+                                className={`hidden lg:flex items-center h-full gap-6 ${
+                                    pathname !== '/' ? '' : 'ml-6'
+                                }`}
+                            >
                                 {navLinkItems.map((item, index) => {
                                     return (
                                         <Link

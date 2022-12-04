@@ -11,4 +11,13 @@ const instance = axios.create({
     },
 })
 
+instance.defaults.headers.common['Authorization'] = auth
+    ? 'Token ' + auth.accessToken
+    : ''
+
+instance.interceptors.request.use((config) => {
+    config.headers['Authorization'] = auth ? 'Token ' + auth.accessToken : ''
+    return config
+})
+
 export default instance

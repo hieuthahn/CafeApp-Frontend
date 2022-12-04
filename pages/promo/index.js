@@ -33,7 +33,7 @@ const Promo = () => {
             <div className="h-[220px] bg-[linear-gradient(180deg,#ffb8b8,#f3f4f6)] hidden lg:block">
                 <div className="h-full container mx-auto">
                     <div className="h-full flex items-center justify-between">
-                        <div>
+                        <div className="select-none">
                             <h1 className="text-[32px] font-bold">
                                 Cập nhật khuyến mãi hiện hành
                             </h1>
@@ -47,23 +47,18 @@ const Promo = () => {
                         </div>
 
                         <div className="relative h-[160px] w-[270px]">
-                            <a>
-                                <Image
-                                    alt="cafe-app"
-                                    layout="fill"
-                                    objectFit="cover"
-                                    src={
-                                        'https://toidicafe.vn/images/discount.svg'
-                                    }
-                                    className="object-cover object-center hover:scale-105 transition ease-in duration-500"
-                                />
-                            </a>
+                            <Image
+                                alt="cafe-app"
+                                layout="fill"
+                                objectFit="cover"
+                                src={'https://toidicafe.vn/images/discount.svg'}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto px-2">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="container mx-auto p-3 md:p-0">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-8">
                     {promos.map((item, index) => {
                         if (item?.showing) {
                             return (

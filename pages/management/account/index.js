@@ -24,6 +24,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import moment from 'moment'
+import { useSession } from 'next-auth/react'
 
 const { confirm } = Modal
 const listRole = {
@@ -31,42 +32,19 @@ const listRole = {
         text: 'Quản trị viên',
         color: '#ff4d4f',
     },
-    moderator: {
-        text: 'Biên tập viên',
-        color: '#ffa940',
-    },
+    // moderator: {
+    //     text: 'Biên tập viên',
+    //     color: '#ffa940',
+    // },
     user: {
         text: 'Người dùng',
         color: '#bfbfbf',
     },
 }
-const getStatusLabel = (postStatus) => {
-    const map = {
-        admin: {
-            text: 'Quản trị viên',
-            color: '#ff4d4f',
-        },
-        moderator: {
-            text: 'Biên tập viên',
-            color: '#597ef7',
-        },
-        user: {
-            text: 'Người dùng',
-            color: '#ffa940',
-        },
-    }
-
-    // const { text, color } = map[postStatus]
-
-    return (
-        <Tag color={map[postStatus]?.color}>
-            <b>{map[postStatus]?.text?.toUpperCase()}</b>
-        </Tag>
-    )
-}
 
 const App = () => {
     const router = useRouter()
+    const { data: session } = useSession()
     const [accounts, setAccounts] = useState([])
     const [roleChosen, setRoleChosen] = useState()
     const [body, setBody] = useState({
@@ -164,12 +142,7 @@ const App = () => {
             dataIndex: 'username',
             key: 'username',
             render: (username, record) => (
-                <a
-                    href={`/account/${record?._id}`}
-                    className="font-bold text-slate-800"
-                >
-                    {username}
-                </a>
+                <div className="font-bold text-slate-800">{username}</div>
             ),
         },
         {
@@ -213,6 +186,7 @@ const App = () => {
             render: (roles, record) => (
                 <div>
                     <Select
+                        disabled={record.username === session.username}
                         placeholder="Chọn vai trò"
                         optionFilterProp="children"
                         onChange={(value) =>
@@ -260,6 +234,7 @@ const App = () => {
                 <Space size="middle" key={record}>
                     <Tooltip title="Xóa">
                         <Button
+                            disabled={record.username === session.username}
                             type="primary"
                             icon={<DeleteOutlined />}
                             onClick={() => handleDeleteAccount(record)}

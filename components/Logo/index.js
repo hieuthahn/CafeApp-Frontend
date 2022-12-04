@@ -4,7 +4,7 @@ const Logo = () => {
             viewBox="0 0 396 247"
             data-background-color="#ffffff"
             preserveAspectRatio="xMidYMid meet"
-            width="120"
+            width="80"
             height="50"
         >
             <defs></defs>
