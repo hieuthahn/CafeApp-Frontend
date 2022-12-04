@@ -16,7 +16,8 @@ import { Dialog, Transition, Tab } from '@headlessui/react'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { useForm } from 'react-hook-form'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { Avatar, Alert, Tabs, Modal, Drawer, Menu } from 'antd'
+import { signUp } from 'lib/services/user'
+import { Avatar, Alert, Tabs, Modal, Drawer, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import Logo from 'components/Logo'
 import Cookies from 'js-cookie'
@@ -239,6 +240,15 @@ const Header = () => {
                         message: res.message,
                     },
                 }))
+
+                await signIn('credentials', {
+                    ...data,
+                    redirect: false,
+                })
+
+                toggleModalLogin()
+                message.success(res.message)
+
                 return
             }
             setAlert((prev) => ({
@@ -253,27 +263,22 @@ const Header = () => {
                 ...prev,
                 register: {
                     type: 'error',
-                    message: res.message,
+                    message: error.message || error,
                 },
             }))
         }
-    }
-
-    const handleClickMenu = ({ item, key, keyPath, event }) => {
-        push(key)
-        handleToggleShow('drawer')
     }
 
     return (
         <>
             <div className="bg-gray-200 h-full w-full">
                 {/* Navbar desktop */}
-                <nav className="w-full bg-white hidden xl:block shadow">
-                    <div className="container px-6 h-16 flex justify-between items-center lg:items-stretch mx-auto">
-                        <div className="flex items-center">
+                <nav className="w-full bg-white block shadow">
+                    <div className="px-6 h-16 flex justify-between items-center lg:items-stretch mx-auto">
+                        <div className="w-full flex justify-between md:justify-start items-center">
                             {/* Logo */}
                             <div className="flex items-center">
-                                <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight hidden lg:block">
+                                <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight">
                                     <Link href="/" passHref legacyBehavior>
                                         <a>
                                             <Logo />
@@ -287,7 +292,7 @@ const Header = () => {
                                     inputClass="flex items-center px-2 rounded-lg border"
                                 />
                             )}
-                            <ul className="hidden xl:flex items-center h-full gap-6">
+                            <ul className="hidden lg:flex items-center h-full gap-6">
                                 {navLinkItems.map((item, index) => {
                                     return (
                                         <Link
@@ -321,8 +326,37 @@ const Header = () => {
                                     )
                                 })}
                             </ul>
+                            <div className="ml-auto lg:hidden">
+                                <div
+                                    id="menu"
+                                    className="text-gray-800"
+                                    onClick={() => handleToggleShow('drawer')}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="icon icon-tabler icon-tabler-menu-2"
+                                        width={24}
+                                        height={24}
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"
+                                        />
+                                        <line x1={4} y1={6} x2={20} y2={6} />
+                                        <line x1={4} y1={12} x2={20} y2={12} />
+                                        <line x1={4} y1={18} x2={20} y2={18} />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
-                        <div className="h-full hidden xl:flex items-center justify-end">
+                        <div className="h-full hidden lg:flex items-center justify-end">
                             <div className="h-full flex items-center">
                                 <Link
                                     href="/new-review"
@@ -482,11 +516,6 @@ const Header = () => {
                                             size="large"
                                             icon={<UserOutlined />}
                                         />
-                                        {/* <p className="text-gray-800 text-sm mb-0 font-semibold">
-                                            {session?.name ||
-                                                session?.username ||
-                                                session?.email}
-                                        </p> */}
                                     </div>
                                 ) : (
                                     <div className="ml-2">
@@ -499,48 +528,6 @@ const Header = () => {
                                         </Button>
                                     </div>
                                 )}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-
-                {/* Navbar mobile */}
-                <nav>
-                    <div className="py-4 px-6 w-full flex xl:hidden justify-between items-center bg-white top-0 z-40">
-                        <div className="w-24">
-                            <Link href="/" passHref legacyBehavior>
-                                <a>
-                                    <Logo />
-                                </a>
-                            </Link>
-                        </div>
-                        <div>
-                            <div
-                                id="menu"
-                                className="text-gray-800"
-                                onClick={() => handleToggleShow('drawer')}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="icon icon-tabler icon-tabler-menu-2"
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <path
-                                        stroke="none"
-                                        d="M0 0h24v24H0z"
-                                        fill="none"
-                                    />
-                                    <line x1={4} y1={6} x2={20} y2={6} />
-                                    <line x1={4} y1={12} x2={20} y2={12} />
-                                    <line x1={4} y1={18} x2={20} y2={18} />
-                                </svg>
                             </div>
                         </div>
                     </div>
