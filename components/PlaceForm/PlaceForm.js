@@ -31,6 +31,10 @@ import useBearStore from 'lib/data/zustand'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 
+message.config({
+    top: 90
+  });
+
 const { Option } = Select
 const format = 'HH:mm'
 const listStatus = {
@@ -114,6 +118,7 @@ const PlaceForm = (props) => {
             message.loading({
                 content: 'Loading...',
                 key,
+                duration: null,
             })
 
             if (place) {
@@ -150,14 +155,16 @@ const PlaceForm = (props) => {
             }
         } catch (error) {
             console.log(error)
-            message.error({
-                content: error || error.message,
-                key,
-                duration: 4,
-                style: {
-                    marginTop: '20vh',
-                },
-            })
+            if (error) {
+                message.error({
+                    content: error?.message,
+                    key,
+                    duration: 4,
+                    style: {
+                        marginTop: '20vh',
+                    },
+                })
+            }
         }
 
         setLoading(false)

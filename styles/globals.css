@@ -99,3 +99,8 @@
 li:has(svg):hover path {
     fill: #f43f5e;
 }
+
+.ant-message-custom-content {
+    display: flex;
+    align-items: center;
+}
