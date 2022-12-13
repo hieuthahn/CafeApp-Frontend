@@ -94,7 +94,7 @@ const SearchBar = (props) => {
                                 onClick={() => setOpenChild(true)}
                                 type="text"
                                 placeholder="Nhập tên quán..."
-                                className="focus:outline-none border-none grow focus:min-w-[300px] transition ease-in duration-500"
+                                className="w-[200px] outline-none border-none grow focus:w-[300px] ease-in duration-200"
                                 value={textSearch}
                                 onChange={handleTextChange}
                                 onKeyDown={handleKeyDown}
