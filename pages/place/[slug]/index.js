@@ -11,7 +11,7 @@ const Place = ({ place, slug }) => {
     return (
         <>
             <Head>
-                <title>{`${place?.name} ở ${place?.address?.specific}`}</title>
+                {/* <title>{`${place?.name} ở ${place?.address?.specific}`}</title>
                 <meta
                     name="facebook-domain-verification"
                     content="1ycdc02m6c40t0gwngzoi14dyzlskd"
@@ -39,7 +39,49 @@ const Place = ({ place, slug }) => {
                 <meta
                     property="og:image:alt"
                     content={`${place?.name} ở ${place?.address?.specific}`}
+                /> */}
+                {/* <!-- Primary Meta Tags --> */}
+                <title>IONAH Coffee ở 9 Thanh Niên, Ba Đình</title>
+                <meta
+                    name="title"
+                    content="IONAH Coffee ở 9 Thanh Niên, Ba Đình"
                 />
+                <meta
+                    name="description"
+                    content="🌱 Nằm trên mặt đường Thanh Niên, tân binh “làng cà phê” IONAH COFFEE có gì thú vị nhỉ? - Tên gọi: IONAH là viết ngược của HANOI - Vibe: mặt tiền và không gian hiện đại, nhưng phía sau lại “xưa ơi là xưa” - Nhân viên: là những “happiness creators” thân thiện và chiều khách ☺️"
+                />
+
+                {/* <!-- Open Graph / Facebook --> */}
+                <meta property="og:type" content="website" />
+                <meta
+                    property="og:url"
+                    content="https://coffee-mine.vercel.app/place/ionah-coffee"
+                />
+                <meta
+                    property="og:title"
+                    content="IONAH Coffee ở 9 Thanh Niên, Ba Đình"
+                />
+                <meta
+                    property="og:description"
+                    content="🌱 Nằm trên mặt đường Thanh Niên, tân binh “làng cà phê” IONAH COFFEE có gì thú vị nhỉ? - Tên gọi: IONAH là viết ngược của HANOI - Vibe: mặt tiền và không gian hiện đại, nhưng phía sau lại “xưa ơi là xưa” - Nhân viên: là những “happiness creators” thân thiện và chiều khách ☺️"
+                />
+                <meta property="og:image" content="" />
+
+                {/* <!-- Twitter --> */}
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta
+                    property="twitter:url"
+                    content="https://coffee-mine.vercel.app/place/ionah-coffee"
+                />
+                <meta
+                    property="twitter:title"
+                    content="IONAH Coffee ở 9 Thanh Niên, Ba Đình"
+                />
+                <meta
+                    property="twitter:description"
+                    content="🌱 Nằm trên mặt đường Thanh Niên, tân binh “làng cà phê” IONAH COFFEE có gì thú vị nhỉ? - Tên gọi: IONAH là viết ngược của HANOI - Vibe: mặt tiền và không gian hiện đại, nhưng phía sau lại “xưa ơi là xưa” - Nhân viên: là những “happiness creators” thân thiện và chiều khách ☺️"
+                />
+                <meta property="twitter:image" content="" />
             </Head>
             {/* <NextSeo
                 title={`${place?.name} ở ${place?.address?.specific}`}
