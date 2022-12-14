@@ -16,8 +16,32 @@ const Place = ({ place, slug }) => {
                     name="facebook-domain-verification"
                     content="1ycdc02m6c40t0gwngzoi14dyzlskd"
                 />
+                <meta
+                    property="og:title"
+                    content={`${place?.name} ở ${place?.address?.specific}`}
+                />
+                <meta property="og:type" content="website" />
+                <meta
+                    property="og:url"
+                    content={`${window.location.origin}/place/${place?.slug}`}
+                />
+                <meta
+                    property="og:image"
+                    content={place?.photos[0]?.url || place?.photos[0] || Logo}
+                />
+                <meta
+                    property="og:image:secure_url"
+                    content={place?.photos[0]?.url || place?.photos[0] || Logo}
+                />
+                <meta property="og:image:type" content="image/jpeg" />
+                <meta property="og:image:width" content="400" />
+                <meta property="og:image:height" content="300" />
+                <meta
+                    property="og:image:alt"
+                    content={`${place?.name} ở ${place?.address?.specific}`}
+                />
             </Head>
-            <NextSeo
+            {/* <NextSeo
                 title={`${place?.name} ở ${place?.address?.specific}`}
                 description={place?.intro}
                 canonical={window.location.origin}
@@ -40,7 +64,7 @@ const Place = ({ place, slug }) => {
                     ],
                     siteName: 'CoffeeMine',
                 }}
-            />
+            /> */}
             <Script
                 src="https://kit.fontawesome.com/dbb792b651.js"
                 crossOrigin="anonymous"
