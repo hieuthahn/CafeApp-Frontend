@@ -12,6 +12,10 @@ const Place = ({ place, slug }) => {
         <>
             <Head>
                 <title>{`${place?.name} ở ${place?.address?.specific}`}</title>
+                <meta
+                    name="facebook-domain-verification"
+                    content="1ycdc02m6c40t0gwngzoi14dyzlskd"
+                />
             </Head>
             <NextSeo
                 title={`${place?.name} ở ${place?.address?.specific}`}
