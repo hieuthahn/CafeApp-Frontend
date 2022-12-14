@@ -1,43 +1,40 @@
-import { useRouter } from "next/router"
-import Link from "next/link"
-import SinglePlace from "../../../components/SinglePlace"
-import Script from "next/script"
-import { searchPlaces, getPlaceBySlug } from "lib/services/place"
-import { NextSeo } from "next-seo"
-import Head from "next/head"
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import SinglePlace from '../../../components/SinglePlace'
+import Script from 'next/script'
+import { searchPlaces, getPlaceBySlug } from 'lib/services/place'
+import { NextSeo } from 'next-seo'
+import Head from 'next/head'
+import Logo from 'public/static/images/logo/png/logo-color.png'
 
 const Place = ({ place, slug }) => {
     return (
         <>
             <Head>
-                <title>
-                    {place?.name ||
-                        "Cafe Mine - Tổng hợp và đánh giá quán cafe đẹp ở Hà Nội"}
-                </title>
+                <title>{`${place?.name} ở ${place?.address?.specific}`}</title>
             </Head>
             <NextSeo
                 title={`${place?.name} ở ${place?.address?.specific}`}
                 description={place?.intro}
-                canonical="https://www.canonical.ie/"
+                canonical={window.location.origin}
                 openGraph={{
-                    url: "https://www.url.ie/a",
+                    url: `${window.location.origin}/place/${place?.slug}`,
                     title: place?.name,
                     description: place?.intro,
+                    type: 'website',
+                    locale: 'vi_VN',
                     images: [
                         {
-                            url: place?.photos[0]?.url || place?.photos[0],
+                            url:
+                                place?.photos[0]?.url ||
+                                place?.photos[0] ||
+                                Logo,
                             width: 800,
                             height: 600,
                             alt: place?.name,
-                            type: "image/jpeg",
                         },
                     ],
-                    siteName: "CoffeeMine",
-                }}
-                twitter={{
-                    handle: "@handle",
-                    site: "@site",
-                    cardType: "summary_large_image",
+                    siteName: 'CoffeeMine',
                 }}
             />
             <Script
