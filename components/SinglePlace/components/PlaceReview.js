@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"
-import { UserOutlined } from "@ant-design/icons"
+import { useState, useEffect } from 'react'
+import { UserOutlined } from '@ant-design/icons'
 import {
     Avatar,
     Button,
@@ -9,14 +9,14 @@ import {
     Switch,
     message,
     Pagination,
-} from "antd"
+} from 'antd'
 const { TextArea } = Input
-import Image from "next/image"
-import { getReviews, createReview } from "lib/services/review"
-import useBearStore from "lib/data/zustand"
-import moment from "moment"
-moment.locale("vi")
-const format = "DD-MM-YYYY"
+import Image from 'next/image'
+import { getReviews, createReview } from 'lib/services/review'
+import useBearStore from 'lib/data/zustand'
+import moment from 'moment'
+moment.locale('vi')
+const format = 'DD-MM-YYYY'
 message.config({
     top: 100,
     duration: 3,
@@ -24,7 +24,7 @@ message.config({
 })
 
 const getAnonymousText = (text) => {
-    return text.replace(/(?!^.?).(?!.{0}$)/g, "*")
+    return text.replace(/(?!^.?).(?!.{0}$)/g, '*')
 }
 
 const PlaceReview = (props) => {
@@ -38,8 +38,8 @@ const PlaceReview = (props) => {
         price: 5,
     })
     const [newReview, setNewReview] = useState({
-        title: "",
-        content: "",
+        title: `Đánh giá ${place?.name || ''}`,
+        content: '',
         anonymous: false,
     })
     const [pagination, setPagination] = useState({
@@ -47,15 +47,15 @@ const PlaceReview = (props) => {
         pageSize: 6,
     })
     const [reviews, setReviews] = useState([])
-    const desc = ["Quá tệ", "Trung bình", "Bình thường", "Tốt", "Tuyệt vời"]
-    const rates = ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"]
+    const desc = ['Quá tệ', 'Trung bình', 'Bình thường', 'Tốt', 'Tuyệt vời']
+    const rates = ['Vị trí', 'Không gian', 'Đồ uống', 'Phục vụ', 'Giá cả']
 
     const getListReview = async () => {
         try {
             const res = await getReviews(
                 place?._id,
                 pagination.page,
-                pagination.pageSize
+                pagination.pageSize,
             )
             if (res.success) {
                 setReviews(res)
@@ -71,7 +71,7 @@ const PlaceReview = (props) => {
 
     const onSubmitReview = async () => {
         if (!newReview.title || !newReview.content) {
-            message.error("Bạn cần nhập tiêu đề và nội dung đánh giá")
+            message.error('Bạn cần nhập tiêu đề và nội dung đánh giá')
             return
         }
 
@@ -81,19 +81,19 @@ const PlaceReview = (props) => {
             place: place?._id,
         }
         const formData = new FormData()
-        formData.append("data", JSON.stringify(body))
+        formData.append('data', JSON.stringify(body))
         try {
             const res = await createReview(formData)
             if (res?.success) {
                 state.toggleModalReview()
-                message.success("Viết đánh giá thành công!")
+                message.success('Viết đánh giá thành công!')
                 resetNewReview()
                 getListReview()
                 props.getPlace()
                 return
             }
         } catch (error) {
-            message.error("Đánh giá thất bại")
+            message.error('Đánh giá thất bại')
             console.log(error)
         }
     }
@@ -101,7 +101,7 @@ const PlaceReview = (props) => {
     const handleReviewChange = (e, name) => {
         setNewReview((prev) => ({
             ...prev,
-            [name]: name === "anonymous" ? !prev[name] : e.target.value,
+            [name]: name === 'anonymous' ? !prev[name] : e.target.value,
         }))
     }
 
@@ -121,8 +121,8 @@ const PlaceReview = (props) => {
             price: 5,
         })
         setNewReview({
-            title: "",
-            content: "",
+            title: '',
+            content: '',
             anonymous: false,
         })
     }
@@ -131,15 +131,15 @@ const PlaceReview = (props) => {
         <>
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">
-                    {"Đánh giá"}
-                    <span className="hidden md-block">{" từ cộng đồng"}</span>
-                    {" (0)"}
+                    {'Đánh giá'}
+                    <span className="hidden md-block">{' từ cộng đồng'}</span>
+                    {' (0)'}
                 </h2>
                 <button
                     onClick={state.toggleModalReview}
                     className="bg-rose-500 text-white text-base font-bold rounded-lg px-2 py-1 hover:bg-rose-700"
                 >
-                    {"Viết đánh giá"}
+                    {'Viết đánh giá'}
                 </button>
                 <Modal
                     title={
@@ -155,13 +155,13 @@ const PlaceReview = (props) => {
                             type="submit"
                             onClick={onSubmitReview}
                         >
-                            {"Gửi đánh giá"}
+                            {'Gửi đánh giá'}
                         </button>
                     }
                 >
                     <div>
                         <h4 className="!mb-1 text-base font-semibold">
-                            {"Xếp hạng của bạn"}
+                            {'Xếp hạng của bạn'}
                         </h4>
                         <div className="flex flex-col gap-2 pl-3 mb-3">
                             {/* ["Vị trí", "Không gian", "Đồ uống", "Phục vụ", "Giá cả"] */}
@@ -191,7 +191,7 @@ const PlaceReview = (props) => {
                                                     {desc[rate[key] - 1]}
                                                 </span>
                                             ) : (
-                                                ""
+                                                ''
                                             )}
                                         </span>
                                     </div>
@@ -201,19 +201,19 @@ const PlaceReview = (props) => {
                     </div>
                     <div>
                         <h4 className="!mb-3 text-base font-semibold">
-                            {"Đánh giá của bạn"}
+                            {'Đánh giá của bạn'}
                         </h4>
                         <div className="flex flex-col gap-2">
                             <Input
                                 placeholder="Nhập tiêu đề đánh giá"
                                 value={newReview?.title}
-                                onChange={(e) => handleReviewChange(e, "title")}
+                                onChange={(e) => handleReviewChange(e, 'title')}
                                 allowClear
                             />
                             <TextArea
                                 value={newReview?.content}
                                 onChange={(e) =>
-                                    handleReviewChange(e, "content")
+                                    handleReviewChange(e, 'content')
                                 }
                                 placeholder="Nhập nội dung đánh giá"
                                 showCount
@@ -225,17 +225,17 @@ const PlaceReview = (props) => {
                     <div className="flex justify-between mt-3">
                         <div className="basis-5/6">
                             <h4 className="text-base font-semibold">
-                                {"Đánh giá ẩn danh"}
+                                {'Đánh giá ẩn danh'}
                             </h4>
                             <span className="text-xs">
                                 {
-                                    "Tên của bạn sẽ hiển thị như h*****g và không hiển thị trên dòng thời gian của bạn"
+                                    'Tên của bạn sẽ hiển thị như h*****g và không hiển thị trên dòng thời gian của bạn'
                                 }
                             </span>
                         </div>
                         <Switch
-                            value={newReview?.anonymous}
-                            onChange={(e) => handleReviewChange(e, "anonymous")}
+                            checked={Boolean(newReview?.anonymous)}
+                            onChange={(e) => handleReviewChange(e, 'anonymous')}
                         />
                     </div>
                 </Modal>
@@ -255,17 +255,17 @@ const PlaceReview = (props) => {
                 </div>
                 <div className="basis-2/3 p-4">
                     <h3 className="text-xl font-bold !mb-3">
-                        {"Bạn đã từng đến đây?"}
+                        {'Bạn đã từng đến đây?'}
                     </h3>
                     <div>
                         {
-                            "Chia sẻ trải nghiệm và cảm nhận của bản thân cho mọi người cùng biết "
+                            'Chia sẻ trải nghiệm và cảm nhận của bản thân cho mọi người cùng biết '
                         }
                         <i className="fas fa-heart text-rose-500"></i>
                     </div>
                     <div>
                         {
-                            "Những review chất lượng sẽ được xuất hiện ở bảng tin đấy!"
+                            'Những review chất lượng sẽ được xuất hiện ở bảng tin đấy!'
                         }
                     </div>
                 </div>
@@ -302,13 +302,13 @@ const PlaceReview = (props) => {
                                                     {review?.anonymous
                                                         ? getAnonymousText(
                                                               review?.author
-                                                                  ?.name
+                                                                  ?.name,
                                                           )
                                                         : review?.author?.name}
                                                 </h3>
                                                 <span className="text-xs">
                                                     {moment(
-                                                        review?.createdAt
+                                                        review?.createdAt,
                                                     ).format(format)}
                                                 </span>
                                             </div>
@@ -330,16 +330,16 @@ const PlaceReview = (props) => {
                                                         data-src={
                                                             image?.url ||
                                                             image ||
-                                                            ""
+                                                            ''
                                                         }
                                                         style={{
                                                             backgroundImage: `url(${
                                                                 image?.url ||
                                                                 image ||
-                                                                ""
+                                                                ''
                                                             })`,
                                                             backgroundPosition:
-                                                                "50%",
+                                                                '50%',
                                                         }}
                                                         className={`relative w-[116px] h-[116px] rounded-lg bg-white bg-cover after:block after:absolute after:inset-0 after after:bg-black/30 after:opacity-0 hover:after:opacity-100 after:transition cursor-pointer`}
                                                     >
@@ -350,7 +350,7 @@ const PlaceReview = (props) => {
                                                             src={
                                                                 image?.url ||
                                                                 image ||
-                                                                ""
+                                                                ''
                                                             }
                                                             className="hidden"
                                                         />
@@ -388,7 +388,7 @@ const PlaceReview = (props) => {
             ) : (
                 <div className="min-h-[100px] text-base text-center flex items-center justify-center pt-4 mt-6 border-t">
                     {
-                        "Địa điểm này chưa có đánh giá nào. Hãy là người đầu tiên làm chuyện ấy!"
+                        'Địa điểm này chưa có đánh giá nào. Hãy là người đầu tiên làm chuyện ấy!'
                     }
                 </div>
             )}

@@ -89,7 +89,7 @@ const SearchBar = (props) => {
                                 : 'flex justify-between items-center p-1 md:p-3 border-b-2 border-transparent'
                         } ${openChild ? 'border-b border-slate-300 ' : ''}`}
                     >
-                        <div className="flex items-center justify-center gap-3 w-full flex-wrap">
+                        <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-nowrap">
                             <input
                                 onClick={() => setOpenChild(true)}
                                 type="text"
