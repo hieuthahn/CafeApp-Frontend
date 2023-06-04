@@ -74,23 +74,23 @@ const Place = ({ place, slug }) => {
     )
 }
 
-// export const getStaticPaths = async () => {
-//     const body = {
-//         page: 1,
-//         pageSize: -1,
-//     }
-//     const res = await searchPlaces(body)
-//     const paths = res?.data?.map((place) => ({
-//         params: { slug: place?.slug },
-//     }))
-//     return {
-//         paths,
-//         fallback: false, // can also be true or 'blocking'
-//     }
-// }
+export const getStaticPaths = async () => {
+    const body = {
+        page: 1,
+        pageSize: -1,
+    }
+    const res = await searchPlaces(body)
+    const paths = res?.data?.map((place) => ({
+        params: { slug: place?.slug },
+    }))
+    return {
+        paths,
+        fallback: true, // can also be true or 'blocking'
+    }
+}
 
 // `getStaticPaths` requires using `getStaticProps`
-export const getServerSideProps = async (context) => {
+export const getStaticProps = async (context) => {
     const params = context.params
     const res = await getPlaceBySlug(params.slug)
 
@@ -103,6 +103,7 @@ export const getServerSideProps = async (context) => {
     return {
         // Passed to the page component as props
         props: { place: res?.data || [], slug: params.slug },
+        revalidate: 60,
     }
 }
 
