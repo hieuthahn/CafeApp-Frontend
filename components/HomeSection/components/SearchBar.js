@@ -89,7 +89,7 @@ const SearchBar = (props) => {
                                 : 'flex justify-between items-center p-1 md:p-3 border-b-2 border-transparent'
                         } ${openChild ? 'border-b border-slate-300 ' : ''}`}
                     >
-                        <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-nowrap">
+                        <div className="flex items-center justify-center w-full gap-3 flex-nowrap">
                             <input
                                 onClick={() => setOpenChild(true)}
                                 type="text"
@@ -134,7 +134,7 @@ const SearchBar = (props) => {
                                     )
                                 ) : (
                                     <Button
-                                        className="font-semibold cursor-pointer p-5 hidden md:flex"
+                                        className="hidden p-5 font-semibold cursor-pointer md:flex"
                                         variant="solid"
                                         color="rose"
                                     >
@@ -188,7 +188,7 @@ const SearchBar = (props) => {
                                                         onClick={() =>
                                                             setOpenChild(false)
                                                         }
-                                                        className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
+                                                        className="flex gap-3 px-5 py-3 cursor-pointer hover:bg-slate-100"
                                                     >
                                                         <div>
                                                             <Image
@@ -229,7 +229,7 @@ const SearchBar = (props) => {
                                         legacyBehavior
                                     >
                                         <div
-                                            className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer"
+                                            className="flex gap-3 px-5 py-3 font-bold cursor-pointer hover:bg-slate-100"
                                             onClick={() => setOpenChild(false)}
                                         >
                                             <svg
@@ -261,7 +261,7 @@ const SearchBar = (props) => {
                                     </Link>
                                 )
                             ) : (
-                                <div className="px-5 py-3 font-bold flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                <div className="flex gap-3 px-5 py-3 font-bold cursor-pointer hover:bg-slate-100">
                                     <div className>
                                         Đang tìm kiếm
                                         {` "${textSearch}"...`}
@@ -273,7 +273,7 @@ const SearchBar = (props) => {
                                 <Link href="/search?q=" passHref legacyBehavior>
                                     <div
                                         onClick={() => setOpenChild(false)}
-                                        className="flex items-center gap-2 text-base font-semibold leading-none text-gray-800 py-3 px-5 hover:bg-slate-100 cursor-pointer"
+                                        className="flex items-center gap-2 px-5 py-3 text-base font-semibold leading-none text-gray-800 cursor-pointer hover:bg-slate-100"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -310,7 +310,7 @@ const SearchBar = (props) => {
                                                 legacyBehavior
                                             >
                                                 <div
-                                                    className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer"
+                                                    className="flex gap-3 px-5 py-3 cursor-pointer hover:bg-slate-100"
                                                     onClick={() =>
                                                         setOpenChild(false)
                                                     }
@@ -346,11 +346,11 @@ const SearchBar = (props) => {
                                     })}
                                 </div>
                                 {/* <div>
-                                    <div className="px-5 py-2 text-base font-bold leading-none text-gray-800 pt-4">
+                                    <div className="px-5 py-2 pt-4 text-base font-bold leading-none text-gray-800">
                                         Đã xem gần đây
                                     </div>
                                     <Link href="/place/ban-cong-cafe" passHref legacyBehavior>
-                                        <div className="px-5 py-3 flex gap-3 hover:bg-slate-100 cursor-pointer">
+                                        <div className="flex gap-3 px-5 py-3 cursor-pointer hover:bg-slate-100">
                                             <div className>
                                                 <Image alt='cafe-app'
                                                     className="rounded"

@@ -1,27 +1,27 @@
-import React from "react"
-import Link from "next/link"
-import Image from "next/image"
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const Footer = () => {
     const footerLinkItems = [
         {
-            path: "/",
-            title: "Giới thiệu",
+            path: '/',
+            title: 'Giới thiệu',
             icon: null,
         },
         {
-            path: "/",
-            title: "Giải đáp thắc mắc",
+            path: '/',
+            title: 'Giải đáp thắc mắc',
             icon: null,
         },
         {
-            path: "/",
-            title: "Liên hệ, góp ý",
+            path: '/',
+            title: 'Liên hệ, góp ý',
             icon: null,
         },
         {
-            path: "/",
-            title: "Điều khoản sử dụng",
+            path: '/',
+            title: 'Điều khoản sử dụng',
             icon: null,
         },
     ]
@@ -146,7 +146,7 @@ const Footer = () => {
                         </a>
                     </Link>
                 </div>
-                <div className="flex flex-wrap sm:gap-10 gap-8 items-center justify-center mt-4">
+                <div className="flex flex-wrap items-center justify-center gap-8 mt-4 sm:gap-10">
                     {footerLinkItems.map((item, index) => {
                         return (
                             <Link
@@ -156,7 +156,7 @@ const Footer = () => {
                                 legacyBehavior
                             >
                                 <a>
-                                    <p className="hover:text-rose-500 text-base text-semibold cursor-pointer leading-4 text-slate-50">
+                                    <p className="text-base leading-4 cursor-pointer hover:text-rose-500 text-semibold text-slate-50">
                                         {item.title}
                                     </p>
                                 </a>
@@ -164,7 +164,7 @@ const Footer = () => {
                         )
                     })}
                 </div>
-                <div className="flex items-center gap-x-8 mt-6">
+                <div className="flex items-center mt-6 gap-x-8">
                     <div className="cursor-pointer">
                         <svg
                             className="fill-current text-slate-50 hover:text-rose-500"
@@ -222,11 +222,12 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="flex items-center mt-6">
-                    <p className="text-base leading-4 text-slate-50 mb-0">
-                        2022 <span className="font-semibold">Coffee Mine</span>
+                    <p className="mb-0 text-base leading-4 text-slate-50">
+                        {new Date().getFullYear()}
+                        <span className="font-semibold"> Coffee Mine</span>
                     </p>
-                    <div className="border-l border-slate-50 pl-2 ml-2">
-                        <p className="text-base leading-4 text-slate-50 mb-0">
+                    <div className="pl-2 ml-2 border-l border-slate-50">
+                        <p className="mb-0 text-base leading-4 text-slate-50">
                             All Rights Reserved.
                         </p>
                     </div>

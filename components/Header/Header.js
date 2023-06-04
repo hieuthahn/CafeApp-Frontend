@@ -271,13 +271,13 @@ const Header = () => {
 
     return (
         <>
-            <div className="bg-gray-200 h-full w-full">
+            <div className="w-full h-full bg-gray-200">
                 {/* Navbar desktop */}
-                <nav className="w-full bg-white block shadow">
-                    <div className="container mx-auto px-3 h-16 flex justify-between items-center lg:items-stretch">
-                        <div className="w-full flex justify-between md:justify-start items-center">
+                <nav className="block w-full bg-white shadow">
+                    <div className="container flex items-center justify-between h-16 px-3 mx-auto lg:items-stretch">
+                        <div className="flex items-center justify-between w-full md:justify-start">
                             {/* Logo */}
-                            <h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight">
+                            <h3 className="text-base font-bold leading-tight tracking-normal text-gray-800">
                                 <Link href="/" passHref legacyBehavior>
                                     <a>
                                         <Logo />
@@ -358,8 +358,8 @@ const Header = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="h-full hidden lg:flex items-center justify-end">
-                            <div className="h-full flex items-center">
+                        <div className="items-center justify-end hidden h-full lg:flex">
+                            <div className="flex items-center h-full">
                                 <Link
                                     href="/new-review"
                                     passHref
@@ -377,7 +377,7 @@ const Header = () => {
                                 </Link>
                                 {session ? (
                                     <div
-                                        className="flex items-center ml-2 relative cursor-pointer gap-2"
+                                        className="relative flex items-center gap-2 ml-2 cursor-pointer"
                                         onClick={() => setProfile(!profile)}
                                     >
                                         {profile && (
@@ -493,7 +493,7 @@ const Header = () => {
                                                 )}
                                                 <li
                                                     onClick={() => signOut()}
-                                                    className="border-t mt-2 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-rose-500 focus:text-rose-500 focus:outline-none font-bold"
+                                                    className="py-2 mt-2 text-sm font-bold leading-3 tracking-normal text-gray-600 border-t cursor-pointer hover:text-rose-500 focus:text-rose-500 focus:outline-none"
                                                 >
                                                     <div className="flex items-center">
                                                         <svg
@@ -538,7 +538,7 @@ const Header = () => {
                         title={
                             session ? (
                                 <div
-                                    className="flex gap-4 items-center"
+                                    className="flex items-center gap-4"
                                     onClick={() => {
                                         push('/profile/setting') &&
                                             handleToggleShow('drawer')
@@ -549,7 +549,7 @@ const Header = () => {
                                         icon={<UserOutlined />}
                                     />
                                     <div className>
-                                        <h3 className="font-bold text-base">
+                                        <h3 className="text-base font-bold">
                                             {session?.name ||
                                                 session?.username ||
                                                 session?.email}
@@ -599,7 +599,7 @@ const Header = () => {
                         footer={
                             session ? (
                                 <Button
-                                    className="font-semibold cursor-pointer w-full"
+                                    className="w-full font-semibold cursor-pointer"
                                     color="rose"
                                     onClick={toggleModalLogin}
                                 >
@@ -613,12 +613,12 @@ const Header = () => {
                     >
                         <div id="mobile-nav">
                             <div
-                                className="bg-gray-800 opacity-50 w-full h-full"
+                                className="w-full h-full bg-gray-800 opacity-50"
                                 onClick={() => handleToggleShow('drawer')}
                             />
                             <div className="">
                                 <div className="h-full">
-                                    <div className="flex flex-col justify-between h-full w-full">
+                                    <div className="flex flex-col justify-between w-full h-full">
                                         <div>
                                             {navLinkItems.map((item) => {
                                                 return (
@@ -988,7 +988,7 @@ const Header = () => {
                                 />
                             )}
                             <Button
-                                className="cursor-pointer w-full"
+                                className="w-full cursor-pointer"
                                 type="submit"
                                 variant="solid"
                                 color="rose"
